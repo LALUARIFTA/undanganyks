@@ -52,8 +52,13 @@ const $ = (id) => document.getElementById(id);
 const setText = (id, val) => { const el=$(id); if(el) el.textContent = val; };
 const setHTML = (id, val) => { const el=$(id); if(el) el.innerHTML = val; };
 
+<<<<<<< HEAD
 function populateData(){ if(param("music")){const a=document.getElementById("bgm")||document.getElementById("bgAudio")||document.getElementById("bgMusic");if(a){a.src=param("music");let m=param("music").split("/").pop().split(".")[0].replace(/%20/g, " ");let t=document.querySelector(".a-title, .audio-title");if(t)t.textContent=decodeURI(m);}}
     if(param('music')) { const a = document.getElementById('bgAudio'); if(a) a.src = param('music'); }
+=======
+function populateData(){ 
+    if(param("music")){const a=document.getElementById("bgm")||document.getElementById("bgAudio")||document.getElementById("bgMusic");if(a){a.src=param("music");}}
+>>>>>>> 07d218d (kiw)
     
     // --- Image Params ---
     const iParam = (k) => { const v = param(k); return v ? decodeURIComponent(v) : null; };
@@ -62,24 +67,38 @@ function populateData(){ if(param("music")){const a=document.getElementById("bgm
             if(e.tagName === 'IMG') e.src = iParam('hero'); else e.style.backgroundImage = `url("${iParam('hero')}")`;
         });
     }
+<<<<<<< HEAD
     const mPx = document.querySelectorAll('.mempelai-photo img, .profile-photo img, .profile-img img');
+=======
+    const mPx = document.querySelectorAll('.mempelai-photo img, .profile-photo img, .profile-img img, .p-photo img');
+>>>>>>> 07d218d (kiw)
     if (mPx.length >= 2) {
         if (iParam('imgPria')) mPx[0].src = iParam('imgPria');
         if (iParam('imgWanita')) mPx[1].src = iParam('imgWanita');
     }
+<<<<<<< HEAD
     const arr = typeof GALLERY_IMGS !== 'undefined' ? GALLERY_IMGS : (typeof LB_IMGS !== 'undefined' ? LB_IMGS : null);
     const tgImg = document.querySelectorAll('.gallery-item img, .galeri-item img, .gallery-img img');
     for (let i = 1; i <= 6; i++) {
         const u = iParam(`gal${i}`);
+=======
+    const arr = typeof GALLERY_IMGS !== 'undefined' ? GALLERY_IMGS : (typeof LB_IMGS !== 'undefined' ? LB_IMGS : (typeof IMGS !== 'undefined' ? IMGS : null));
+    const tgImg = document.querySelectorAll('.gallery-item img, .galeri-item img, .gallery-img img, .gal-item img, .gal-it img');
+    for (let i = 1; i <= 6; i++) {
+        const u = iParam("gal" + i);
+>>>>>>> 07d218d (kiw)
         if(u) {
             if(arr && arr[i-1] !== undefined) arr[i-1] = u;
             if(tgImg.length >= i && tgImg[i-1]) tgImg[i-1].src = u;
         }
     }
+<<<<<<< HEAD
 
     const couple = `${D.groom} & ${D.bride}`;
+=======
+>>>>>>> 07d218d (kiw)
 
-    // Page title
+    const couple = `${D.groom} & ${D.bride}`;
     document.title = `Undangan Pernikahan | ${couple}`;
 
     // Cover
@@ -123,18 +142,8 @@ function populateData(){ if(param("music")){const a=document.getElementById("bgm
     setText('map-akad-addr',    D.akadAddress);
     setText('map-resepsi-name', D.resepsiPlace);
     setText('map-resepsi-addr', D.resepsiAddress);
-
-    // Amplop
-    setText('g-bank-name',   D.bankName);
-    setText('g-bank-acc',    D.bankAcc.replace(/(.{4})/g,'$1 ').trim());
-    setText('g-bank-holder', `a.n. ${D.bankHolder}`);
-    const copyBtn = $('btn-copy-acc');
-    if(copyBtn) copyBtn.dataset.copy = D.bankAcc;
-
-    // Penutup
-    setText('closing-names', couple);
-    setText('closing-date',  D.dateDisplay);
-    // Our Story
+    
+    // Story
     for (let i = 1; i <= 4; i++) {
         const t    = param(`s${i}t`);
         const d    = param(`s${i}d`);
@@ -144,9 +153,20 @@ function populateData(){ if(param("music")){const a=document.getElementById("bgm
         if (desc) setText(`s${i}-desc`,  desc);
     }
 
+    // Amplop
+    setText('g-bank-name',   D.bankName);
+    setText('g-bank-acc',    D.bankAcc.replace(/(.{4})/g,'$1 ').trim());
+    setText('g-bank-holder', `a.n. ${D.bankHolder}`);
+    const copyBtn = $('btn-copy-acc')||$('btn-copy');
+    if(copyBtn) copyBtn.dataset.copy = D.bankAcc;
+
+    // Penutup
+    setText('closing-names', couple);
+    setText('closing-date',  D.dateDisplay);
+
     // RSVP — Show Sheets button if sheetsUrl is configured
     const sheetsUrl = D.sheetsUrl;
-    const sheetsBtn = document.getElementById('btn-send-sheets');
+    const sheetsBtn = document.getElementById('btn-send-sheets')||document.getElementById('btn-sheets');
     if (sheetsBtn && sheetsUrl) sheetsBtn.style.display = 'flex';
 }
 
@@ -218,11 +238,11 @@ function triggerReveal() {
     const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry, i) => {
             if(entry.isIntersecting) {
-                setTimeout(() => entry.target.classList.add('visible'), i * 80);
+                setTimeout(() => entry.target.classList.add('visible'), i * 150);
                 observer.unobserve(entry.target);
             }
         });
-    }, { threshold: 0.1 });
+    }, { threshold: 0.15 });
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 }
 
@@ -232,7 +252,7 @@ function runCountdown(isoStr, ids) {
     function tick() {
         const diff = new Date(isoStr) - new Date();
         if(diff <= 0) {
-            ids.forEach(({id}) => { const e=document.getElementById(id); if(e) e.textContent='00'; });
+            ids.forEach(id => { const e=document.getElementById(id); if(e) e.textContent='00'; });
             return;
         }
         const d = Math.floor(diff/86400000);
@@ -240,15 +260,15 @@ function runCountdown(isoStr, ids) {
         const m = Math.floor((diff%3600000)/60000);
         const s = Math.floor((diff%60000)/1000);
         const vals = [d,h,m,s];
-        ids.forEach(({id},i) => { const e=document.getElementById(id); if(e) e.textContent=String(vals[i]).padStart(2,'0'); });
+        ids.forEach((id,i) => { const e=document.getElementById(id); if(e) e.textContent=String(vals[i]).padStart(2,'0'); });
     }
     tick();
     setInterval(tick, 1000);
 }
 
 function initCountdowns() {
-    runCountdown(D.akadISO,    [{id:'ak-d'},{id:'ak-h'},{id:'ak-m'},{id:'ak-s'}]);
-    runCountdown(D.resepsiISO, [{id:'rs-d'},{id:'rs-h'},{id:'rs-m'},{id:'rs-s'}]);
+    runCountdown(D.akadISO,    ['ak-d','ak-h','ak-m','ak-s']);
+    runCountdown(D.resepsiISO, ['rs-d','rs-h','rs-m','rs-s']);
 }
 
 

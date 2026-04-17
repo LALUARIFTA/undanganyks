@@ -43,7 +43,11 @@ const s  = (id, v) => { const e=$(id); if(e) e.textContent = v; };
 
 // ─── 2. POPULATE DATA ────────────────────────────────────────
 function pop() {
+<<<<<<< HEAD
     if(param('music')) { const a = document.getElementById('bgAudio'); if(a) a.src = param('music'); }
+=======
+    if(param('music')) { const a = document.getElementById('bgm')||document.getElementById('bgAudio')||document.getElementById('bgMusic'); if(a) a.src = param('music'); }
+>>>>>>> 07d218d (kiw)
     
     // --- Image Params ---
     const iParam = (k) => { const v = param(k); return v ? decodeURIComponent(v) : null; };
@@ -52,15 +56,26 @@ function pop() {
             if(e.tagName === 'IMG') e.src = iParam('hero'); else e.style.backgroundImage = `url("${iParam('hero')}")`;
         });
     }
+<<<<<<< HEAD
     const mPx = document.querySelectorAll('.mempelai-photo img, .profile-photo img, .profile-img img');
+=======
+    const mPx = document.querySelectorAll('.mempelai-photo img, .profile-photo img, .profile-img img, .p-photo img');
+>>>>>>> 07d218d (kiw)
     if (mPx.length >= 2) {
         if (iParam('imgPria')) mPx[0].src = iParam('imgPria');
         if (iParam('imgWanita')) mPx[1].src = iParam('imgWanita');
     }
+<<<<<<< HEAD
     const arr = typeof GALLERY_IMGS !== 'undefined' ? GALLERY_IMGS : (typeof LB_IMGS !== 'undefined' ? LB_IMGS : null);
     const tgImg = document.querySelectorAll('.gallery-item img, .galeri-item img, .gallery-img img');
     for (let i = 1; i <= 6; i++) {
         const u = iParam(`gal${i}`);
+=======
+    const arr = typeof GALLERY_IMGS !== 'undefined' ? GALLERY_IMGS : (typeof LB_IMGS !== 'undefined' ? LB_IMGS : (typeof IMGS !== 'undefined' ? IMGS : null));
+    const tgImg = document.querySelectorAll('.gallery-item img, .galeri-item img, .gallery-img img, .gal-item img');
+    for (let i = 1; i <= 6; i++) {
+        const u = iParam("gal" + i);
+>>>>>>> 07d218d (kiw)
         if(u) {
             if(arr && arr[i-1] !== undefined) arr[i-1] = u;
             if(tgImg.length >= i && tgImg[i-1]) tgImg[i-1].src = u;
@@ -82,9 +97,14 @@ function pop() {
     s('resepsi-date', D.resepsiDate); s('resepsi-time', D.resepsiTime); s('resepsi-place', D.resepsiPlace); s('resepsi-address', D.resepsiAddress);
 
     const qa = encodeURIComponent(D.akadMaps.replace(/\+/g,' ')), qr = encodeURIComponent(D.resepsiMaps.replace(/\+/g,' '));
-    if($('iframe-akad')) $('iframe-akad').src=`https://maps.google.com/maps?q=${qa}&output=embed&hl=id`;
-    if($('iframe-resepsi')) $('iframe-resepsi').src=`https://maps.google.com/maps?q=${qr}&output=embed&hl=id`;
-    s('mb-akad-name', D.akadPlace); s('mb-akad-addr', D.akadAddress); s('mb-resepsi-name', D.resepsiPlace); s('mb-resepsi-addr', D.resepsiAddress);
+    if($('iframe-akad')) $('iframe-akad').src=`https://maps.google.com/maps?q=${qa}&output=embed&hl=id&z=15`;
+    if($('iframe-resepsi')) $('iframe-resepsi').src=`https://maps.google.com/maps?q=${qr}&output=embed&hl=id&z=15`;
+    
+    // Standard label sync
+    s('mb-akad-name', D.akadPlace); s('mb-akad-addr', D.akadAddress); 
+    s('mb-resepsi-name', D.resepsiPlace); s('mb-resepsi-addr', D.resepsiAddress);
+    s('map-akad-name', D.akadPlace); s('map-akad-addr', D.akadAddress);
+    s('map-resepsi-name', D.resepsiPlace); s('map-resepsi-addr', D.resepsiAddress);
 
     for(let i=1;i<=4;i++){
         if(param(`s${i}t`)) s(`s${i}-title`, param(`s${i}t`));
@@ -92,7 +112,9 @@ function pop() {
         if(param(`s${i}desc`)) s(`s${i}-desc`, param(`s${i}desc`));
     }
 
-    s('g-bank-name', D.bankName); s('g-bank-acc', D.bankAcc.replace(/(.{4})/g,'$1 ').trim()); s('g-bank-holder', `a.n. ${D.bankHolder}`);
+    s('g-bank-name', D.bankName); 
+    s('g-bank-acc', D.bankAcc.replace(/(.{4})/g,'$1 ').trim()); 
+    s('g-bank-holder', `a.n. ${D.bankHolder}`);
     document.querySelectorAll('[data-copy]').forEach(b=>b.dataset.copy=D.bankAcc);
     s('closing-names', couple); s('closing-date', D.date);
 

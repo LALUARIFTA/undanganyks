@@ -509,8 +509,36 @@ const $=id=>document.getElementById(id);
 const set=(id,v)=>{const e=$(id);if(e)e.textContent=v};
 
 /* Populate */
+<<<<<<< HEAD
 function populate(){ if(p("music")){const a=document.getElementById("bgm")||document.getElementById("bgAudio")||document.getElementById("bgMusic");if(a){a.src=p("music");let m=p("music").split("/").pop().split(".")[0].replace(/%20/g, " ");let t=document.querySelector(".a-title, .audio-title");if(t)t.textContent=decodeURI(m);}}
     if(p('music')) { const a = document.getElementById('bgm'); if(a) a.src = p('music'); }
+=======
+function populate(){ 
+    if(p("music")){const a=document.getElementById("bgm")||document.getElementById("bgAudio")||document.getElementById("bgMusic");if(a){a.src=p("music");}}
+    
+    // --- Image Params ---
+    const iParam = (k) => { const v = typeof param !== 'undefined' ? param(k) : (typeof p !== 'undefined' ? p(k) : null); return v ? decodeURIComponent(v) : null; };
+    if (iParam('hero')) {
+        document.querySelectorAll('.hero-bg, .hero-batik-bg, .hero-bg-img, .hero-img').forEach(e => {
+            if(e.tagName === 'IMG') e.src = iParam('hero'); else e.style.backgroundImage = `url("${iParam('hero')}")`;
+        });
+    }
+    const mPx = document.querySelectorAll('.mempelai-photo img, .profile-photo img, .profile-img img, .p-photo img');
+    if (mPx.length >= 2) {
+        if (iParam('imgPria')) mPx[0].src = iParam('imgPria');
+        if (iParam('imgWanita')) mPx[1].src = iParam('imgWanita');
+    }
+    const arr = typeof GALLERY_IMGS !== 'undefined' ? GALLERY_IMGS : (typeof LB_IMGS !== 'undefined' ? LB_IMGS : (typeof IMGS !== 'undefined' ? IMGS : null));
+    const tgImg = document.querySelectorAll('.gallery-item img, .galeri-item img, .gallery-img img, .gal-item img');
+    for (let i = 1; i <= 6; i++) {
+        const u = iParam("gal" + i);
+        if(u) {
+            if(arr && arr[i-1] !== undefined) arr[i-1] = u;
+            if(tgImg.length >= i && tgImg[i-1]) tgImg[i-1].src = u;
+        }
+    }
+
+>>>>>>> 07d218d (kiw)
     const couple=`${D.groom} & ${D.bride}`;
     
     // --- Image Params ---
@@ -536,23 +564,31 @@ function populate(){ if(p("music")){const a=document.getElementById("bgm")||docu
     }
 
     document.title=`Undangan | ${couple}`;
+    
     set('c-guest',D.guest); set('c-names',couple); set('c-date',D.date);
     set('h-names',couple); set('h-date',D.dateFull);
     set('groom-fn',D.groomFull); set('bride-fn',D.brideFull);
     set('groom-p',D.groomP); set('bride-p',D.brideP);
+    
     set('akad-date',D.akadDate); set('akad-time',D.akadTime);
     set('akad-place',D.akadPlace); set('akad-address',D.akadAddress);
     set('resepsi-date',D.resepsiDate); set('resepsi-time',D.resepsiTime);
     set('resepsi-place',D.resepsiPlace); set('resepsi-address',D.resepsiAddress);
+    
+    // Standard Map Info Sync
     set('ml-akad-n',D.akadPlace); set('ml-akad-a',D.akadAddress);
     set('ml-resepsi-n',D.resepsiPlace); set('ml-resepsi-a',D.resepsiAddress);
+    set('map-akad-name', D.akadPlace); set('map-akad-addr', D.akadAddress);
+    set('map-resepsi-name', D.resepsiPlace); set('map-resepsi-addr', D.resepsiAddress);
+
     set('g-bank',D.bankName); set('g-acc',D.bankAcc.replace(/(.{4})/g,'$1 ').trim()); set('g-holder',`a.n. ${D.bankHolder}`);
     const cb=$('btn-copy'); if(cb)cb.dataset.copy=D.bankAcc;
     set('cl-names',couple); set('cl-date',D.date);
+    
     // Maps iframes
     const aq=encodeURIComponent(D.akadMaps.replace(/\+/g,' '));
     const rq=encodeURIComponent(D.resepsiMaps.replace(/\+/g,' '));
-    const ia=$('ifr-akad'),ir=$('ifr-resepsi');
+    const ia=$('ifr-akad')||$('iframe-akad'), ir=$('ifr-resepsi')||$('iframe-resepsi');
     if(ia)ia.src=`https://maps.google.com/maps?q=${aq}&output=embed&hl=id&z=15`;
     if(ir)ir.src=`https://maps.google.com/maps?q=${rq}&output=embed&hl=id&z=15`;
 }

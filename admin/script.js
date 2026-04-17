@@ -12,6 +12,10 @@ const TEMPLATE_PATHS = {
     jawa:     '../templates/wedding-jawa/index.html',
     bali:     '../templates/wedding-bali/index.html',
     aether:   '../templates/wedding-aether/index.html',
+<<<<<<< HEAD
+=======
+    premium:  '../templates/wedding-premium/index.html',
+>>>>>>> 07d218d (kiw)
 };
 const TEMPLATE_META = {
     midnight: { icon: '🌙', color: 'rgba(212,175,55,0.15)', label: 'Midnight Gold' },
@@ -20,6 +24,10 @@ const TEMPLATE_META = {
     jawa:     { icon: '🏯', color: 'rgba(92,10,20,0.15)',   label: 'Jawa Kraton'    },
     bali:     { icon: '🌺', color: 'rgba(13,77,77,0.15)',   label: 'Bali Pura'      },
     aether:   { icon: '✨', color: 'rgba(212,175,55,0.15)', label: '3D Aether'      },
+<<<<<<< HEAD
+=======
+    premium:  { icon: '💎', color: 'rgba(99,102,241,0.15)', label: 'Premium Luxe'   },
+>>>>>>> 07d218d (kiw)
 };
 
 // ─── State
@@ -58,6 +66,38 @@ function initAuth() {
     $('btnLogin')?.addEventListener('click', doLogin);
     $('loginPassword')?.addEventListener('keypress', e => { if (e.key === 'Enter') doLogin(); });
 
+    // Interactive Mouse Parallax (Luxe Feature)
+    document.addEventListener('mousemove', e => {
+        if (sessionStorage.getItem('lumina_admin') === 'true') return;
+        const x = (e.clientX / window.innerWidth) - 0.5;
+        const y = (e.clientY / window.innerHeight) - 0.5;
+        document.documentElement.style.setProperty('--mx', x);
+        document.documentElement.style.setProperty('--my', y);
+    });
+
+    // Caps Lock Detection
+    $('loginPassword')?.addEventListener('keyup', e => {
+        const warn = $('capsWarning');
+        if (e.getModifierState && e.getModifierState('CapsLock')) {
+            warn?.classList.remove('hidden');
+        } else {
+            warn?.classList.add('hidden');
+        }
+    });
+
+    // Password Toggle Logic
+    $('togglePw')?.addEventListener('click', () => {
+        const inp = $('loginPassword');
+        const ico = $('togglePw').querySelector('i');
+        if (inp.type === 'password') {
+            inp.type = 'text';
+            ico.classList.replace('fa-eye', 'fa-eye-slash');
+        } else {
+            inp.type = 'password';
+            ico.classList.replace('fa-eye-slash', 'fa-eye');
+        }
+    });
+
     function doLogin() {
         const pw = $('loginPassword')?.value;
         if (pw === ADMIN_PASS) {
@@ -67,20 +107,22 @@ function initAuth() {
             onDashboardReady();
         } else {
             const err = $('loginError');
-            if (err) err.textContent = '❌ Password salah. Coba lagi.';
-            $('loginPassword').style.borderColor = 'var(--red)';
-            setTimeout(() => {
-                if (err) err.textContent = '';
-                $('loginPassword').style.borderColor = '';
-            }, 2500);
+            if (err) err.textContent = '❌ Invalid security key. Access denied.';
+            if ($('loginPassword')) {
+                $('loginPassword').style.borderColor = 'var(--danger)';
+                $('loginPassword').parentElement.classList.add('shake');
+                setTimeout(() => {
+                    if (err) err.textContent = '';
+                    $('loginPassword').style.borderColor = '';
+                    $('loginPassword').parentElement.classList.remove('shake');
+                }, 2500);
+            }
         }
     }
 
     $('btnLogout')?.addEventListener('click', () => {
         sessionStorage.removeItem('lumina_admin');
-        dashboard.classList.add('hidden');
-        loginScreen.classList.remove('hidden');
-        if ($('loginPassword')) $('loginPassword').value = '';
+        window.location.reload(); // Hard reload for clean state
     });
 }
 
@@ -100,7 +142,11 @@ function initNav() {
     const links    = document.querySelectorAll('.sl[data-page]');
     const pages    = document.querySelectorAll('.admin-page');
     const sidebar  = $('sidebar');
+<<<<<<< HEAD
     const toggle   = $('topbarToggle');
+=======
+    const toggle   = $('sidebarToggle');
+>>>>>>> 07d218d (kiw)
     const overlay  = $('sidebarOverlay');
     const closeBtn = $('sidebarClose');
 
@@ -317,7 +363,7 @@ function initEditor() {
 
 function schedulePreviewUpdate() {
     clearTimeout(debounceTimer);
-    debounceTimer = setTimeout(updatePreview, 600);
+    debounceTimer = setTimeout(updatePreview, 300);
 }
 
 function buildParams() {
@@ -342,7 +388,7 @@ function buildParams() {
     };
     Object.entries(fields).forEach(([key, id]) => {
         const v = val(id);
-        if (v) params.set(key, v);
+        params.set(key, v); // Send even if empty to override template defaults
     });
 
     // Our Story data
@@ -356,10 +402,16 @@ function buildParams() {
     }
 
     // Gallery Data (Momen Bersama)
+<<<<<<< HEAD
     document.querySelectorAll('.f-gallery').forEach(input => {
         const idx = input.dataset.idx;
         const val = input.value.trim();
         if (val) params.set(`gal${idx}`, val);
+=======
+    document.querySelectorAll('.f-gallery').forEach((input, i) => {
+        const val = input.value.trim();
+        if (val) params.set(`gal${i + 1}`, val);
+>>>>>>> 07d218d (kiw)
     });
 
     return params;

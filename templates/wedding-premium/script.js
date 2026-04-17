@@ -1,102 +1,210 @@
+/* ============================================================
+   TEMPLATE: PREMIUM LUXE — CRYSTAL LUXURY SCRIPT
+   ============================================================ */
+
 document.addEventListener('DOMContentLoaded', () => {
-    // === 1. DEKLARASI VARIABEL DOM ===
-    const btnOpen = document.getElementById('open-invitation-btn');
-    const coverScreen = document.getElementById('cover-screen');
-    const mainContent = document.getElementById('main-content');
-    
-    // Audio Player
-    const bgMusic = document.getElementById('bg-music');
-    const audioControl = document.getElementById('audio-control');
-    const audioIcon = audioControl.querySelector('i');
-    
-    // Interaktif Navigasi Bawah
-    const sections = document.querySelectorAll('.invite-section');
-    const navItems = document.querySelectorAll('.nav-item');
+    // ─── 1. URL PARAMETER READER ───────────────────────────────
+    function p(key, fallback = '') {
+        const val = new URLSearchParams(location.search).get(key);
+        return (val === null) ? fallback : val;
+    }
 
-    // Panel Admin (Menu Modifikasi)
-    const adminEditor = document.getElementById('admin-editor');
-    const toggleAdminBtn = document.getElementById('toggle-admin');
-    
-    // Input Admin
-    const inputGroom = document.getElementById('input-groom');
-    const inputBride = document.getElementById('input-bride');
-    const inputDate = document.getElementById('input-date');
-    
-    // Target Teks di Undangan yang akan diubah Admin
-    const coverNames = document.getElementById('cover-names');
-    const heroNames = document.getElementById('hero-names');
-    const heroDate = document.getElementById('hero-date');
-    const groomFullName = document.getElementById('groom-fullname');
-    const brideFullName = document.getElementById('bride-fullname');
+    const D = {
+        groom:          p('groom',          'Romeo'),
+        bride:          p('bride',          'Juliet'),
+        groomFull:      p('groomFull',      'Romeo Montague, S.T.'),
+        brideFull:      p('brideFull',      'Juliet Capulet, S.H.'),
+        groomParent:    p('groomParent',    'Son of Mr. Montague & Mrs. Montague'),
+        brideParent:    p('brideParent',    'Daughter of Mr. Capulet & Mrs. Capulet'),
+        groomIg:        p('groomIg',        '@romeo_m'),
+        brideIg:        p('brideIg',        '@juliet_c'),
+        
+        dateDisplay:    p('date',           'Friday, 25 Dec 2026'),
+        dateFull:       p('dateFull',       '25 . 12 . 2026'),
+        
+        akadDate:       p('akadDate',       'Friday, 25 Dec 2026'),
+        akadTime:       p('akadTime',       '08:00 AM – 10:00 AM'),
+        akadPlace:      p('akadPlace',      'The Grand Cathedral'),
+        akadAddress:    p('akadAddress',    'Victory Street No. 1, Italy'),
+        akadISO:        p('akadISO',        '2026-12-25T08:00:00'),
+        akadMaps:       p('akadMaps',       'The Grand Cathedral'),
+        
+        resepsiDate:    p('resepsiDate',    'Friday, 25 Dec 2026'),
+        resepsiTime:    p('resepsiTime',    '11:00 AM – 02:00 PM'),
+        resepsiPlace:   p('resepsiPlace',   'Verona Castle Ballroom'),
+        resepsiAddress: p('resepsiAddress', 'Victory Street No. 10, Italy'),
+        resepsiISO:     p('resepsiISO',     '2026-12-25T11:00:00'),
+        resepsiMaps:    p('resepsiMaps',    'Verona Castle'),
+        
+        bankName:       p('bankName',       'BANK BCA'),
+        bankAcc:        p('bankAcc',        '1234 5678 90'),
+        bankHolder:     p('bankHolder',     'Romeo Montague'),
+        
+        wa:             p('wa',             '6281234567890'),
+        guest:          p('guest',          'Bapak / Ibu / Saudara/i'),
+        music:          p('music',          'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3'),
+        sheetsUrl:      p('sheetsUrl',      ''),
+        invId:          p('invId',          ''),
+    };
 
-    // === 2. LOGIKA BUKA UNDANGAN & PLAY MUSIK ===
-    btnOpen.addEventListener('click', () => {
-        // Efek Transisi Layar Utama
-        coverScreen.classList.add('slide-up');
-        mainContent.classList.remove('hidden');
-        
-        // Putar Backsound Musik (Browser biasanya membutuhkan interaksi klik dulu untuk play audio)
-        bgMusic.play().catch(err => console.log("Autoplay dicegah oleh browser"));
-        
-        // Hapus cover dari pembacaan memori agar lebih ringan setelah animasi (1.2 detik)
-        setTimeout(() => {
-            coverScreen.style.display = 'none';
-        }, 1200);
+    const $ = (id) => document.getElementById(id);
+    const setText = (id, val) => { const el=$(id); if(el) el.textContent = val; };
+
+    // ─── 2. POPULATE DATA ───────────────────────────────────────
+    function populateData() {
+        const couple = `${D.groom} & ${D.bride}`;
+        setText('page-title', `Wedding Invitation | ${couple}`);
+        setText('c-couple', couple);
+        setText('c-guest', D.guest);
+        setText('c-date', D.dateDisplay);
+        setText('hero-names', couple);
+        setText('hero-date', D.dateFull);
+        setText('closing-names', couple);
+        setText('closing-date', D.dateDisplay.toUpperCase());
+
+        setText('groom-fullname', D.groomFull);
+        setText('groom-parent', D.groomParent);
+        setText('bride-fullname', D.brideFull);
+        setText('bride-parent', D.brideParent);
+        if($('groom-ig')) $('groom-ig').innerHTML = `<i class="fa-brands fa-instagram"></i> <span>${D.groomIg}</span>`;
+        if($('bride-ig')) $('bride-ig').innerHTML = `<i class="fa-brands fa-instagram"></i> <span>${D.brideIg}</span>`;
+
+        // Photos
+        const iParam = (k) => { const v = p(k); return v ? decodeURIComponent(v) : null; };
+        const groomImg = iParam('imgPria');
+        const brideImg = iParam('imgWanita');
+        const heroImg = iParam('hero');
+        const mPhotos = document.querySelectorAll('.mempelai-photo-wrap img');
+        if(groomImg && mPhotos[0]) mPhotos[0].src = groomImg;
+        if(brideImg && mPhotos[1]) mPhotos[1].src = brideImg;
+        if(heroImg && document.querySelector('.hero-bg')) document.querySelector('.hero-bg').style.backgroundImage = `url("${heroImg}")`;
+
+        // Events
+        setText('akad-date', D.akadDate);
+        setText('akad-time', D.akadTime);
+        setText('akad-place', D.akadPlace);
+        setText('akad-address', D.akadAddress);
+        setText('resepsi-date', D.resepsiDate);
+        setText('resepsi-time', D.resepsiTime);
+        setText('resepsi-place', D.resepsiPlace);
+        setText('resepsi-address', D.resepsiAddress);
+
+        if(D.akadMaps) {
+            $('btn-akad-maps').onclick = () => window.open(`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(D.akadMaps)}`, '_blank');
+        }
+        if(D.resepsiMaps) {
+            $('btn-resepsi-maps').onclick = () => window.open(`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(D.resepsiMaps)}`, '_blank');
+        }
+
+        // Gallery
+        const galleryImgs = document.querySelectorAll('.galeri-item img');
+        for(let i=0; i<6; i++) {
+            const url = p(`gal${i+1}`);
+            if(url && galleryImgs[i]) galleryImgs[i].src = url;
+        }
+
+        // Bank
+        setText('g-bank-name', D.bankName);
+        setText('g-bank-acc', D.bankAcc);
+        setText('g-bank-holder', D.bankHolder);
+        if(document.querySelector('.btn-copy')) document.querySelector('.btn-copy').setAttribute('data-copy', D.bankAcc.replace(/\//g,''));
+
+        // Music
+        if(D.music && $('bgAudio')) {
+            $('bgAudio').src = D.music;
+            $('bgAudio').load();
+        }
+
+        if(D.sheetsUrl && $('btn-sheets')) $('btn-sheets').style.display = 'block';
+    }
+
+    // ─── 3. CORE INTERACTION ────────────────────────────────────
+    const cover = $('cover');
+    const main = $('main');
+    const btnOpen = $('btn-open');
+    const audio = $('bgAudio');
+    const audioBtn = $('audioBtn');
+    const audioIcon = $('audioIcon');
+    const audioDisc = $('audioDisc');
+
+    btnOpen?.addEventListener('click', () => {
+        cover?.classList.add('away');
+        main?.classList.remove('hidden');
+        audio?.play().catch(() => {});
+        setTimeout(handleReveal, 100);
     });
 
-    // === 3. KONTROL AUDIO (ON/OFF) ===
-    audioControl.addEventListener('click', () => {
-        if (bgMusic.paused) {
-            bgMusic.play();
-            audioIcon.classList.add('spin');
-            // Menukar icon play menjadi disc yang berputar
-            audioIcon.classList.replace('fa-play', 'fa-compact-disc');
-            audioControl.style.borderColor = "var(--gold-primary)";
+    audioBtn?.addEventListener('click', () => {
+        if(!audio) return;
+        if(audio.paused) {
+            audio.play();
+            if(audioIcon) audioIcon.className = 'fa-solid fa-pause';
+            if(audioDisc) audioDisc.style.animationPlayState = 'running';
         } else {
-            bgMusic.pause();
-            audioIcon.classList.remove('spin');
-            // Menukar icon disc menjadi tombol play
-            audioIcon.classList.replace('fa-compact-disc', 'fa-play');
-            audioControl.style.borderColor = "gray";
+            audio.pause();
+            if(audioIcon) audioIcon.className = 'fa-solid fa-play';
+            if(audioDisc) audioDisc.style.animationPlayState = 'paused';
         }
     });
 
-    // === 4. SISTEM NAVIGASI BAWAH (SCROLL SPY) ===
-    window.addEventListener('scroll', () => {
-        let currentSectionId = '';
-        
-        sections.forEach(section => {
-            const sectionTop = section.offsetTop;
-            const sectionHeight = section.clientHeight;
-            // Jika scroll melewati 1/3 bagian atas section, anggap kita berada di section tersebut
-            if (scrollY >= (sectionTop - sectionHeight / 3)) {
-                currentSectionId = section.getAttribute('id');
-            }
+    // ─── 4. SCROLL & REVEAL ──────────────────────────────────────
+    function handleReveal() {
+        const reveals = document.querySelectorAll('.reveal');
+        reveals.forEach(el => {
+            const windowHeight = window.innerHeight;
+            const elementTop = el.getBoundingClientRect().top;
+            if(elementTop < windowHeight - 80) el.classList.add('up');
         });
+    }
 
+    function scrollSpy() {
+        const sections = document.querySelectorAll('section');
+        const navItems = document.querySelectorAll('.bn-item');
+        let current = "hero";
+        sections.forEach(sec => {
+            if(pageYOffset >= sec.offsetTop - 200) current = sec.id;
+        });
         navItems.forEach(item => {
             item.classList.remove('active');
-            if (item.getAttribute('href').includes(currentSectionId)) {
-                item.classList.add('active');
-            }
+            if(item.getAttribute('data-sec') === current) item.classList.add('active');
+        });
+    }
+
+    window.addEventListener('scroll', () => {
+        handleReveal();
+        scrollSpy();
+        const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+        const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const scrolled = (winScroll / height) * 100;
+        if($('scrollProgress')) $('scrollProgress').style.width = scrolled + "%";
+    });
+
+    // ─── 5. COMPONENTS ──────────────────────────────────────────
+    // Copy
+    document.querySelector('.btn-copy')?.addEventListener('click', function() {
+        const num = this.getAttribute('data-copy');
+        navigator.clipboard.writeText(num).then(() => {
+            const old = this.innerText;
+            this.innerText = 'Copied!';
+            setTimeout(() => { this.innerText = old; }, 2000);
         });
     });
 
-    // === 5. LOGIKA MENU ADMIN (FITUR: MUDAH DIMODIFIKASI) ===
-    // Fitur luar biasa ini membaca ketikan di panel dan langsung menampilkannya di undangan!
 
-    // Toggle Sembunyikan/Tampilkan Panel Admin
-    toggleAdminBtn.addEventListener('click', () => {
-        adminEditor.classList.toggle('hidden-panel');
-        const icon = toggleAdminBtn.querySelector('i');
-        
-        if(adminEditor.classList.contains('hidden-panel')) {
-            icon.classList.replace('fa-chevron-down', 'fa-chevron-right');
-        } else {
-            icon.classList.replace('fa-chevron-right', 'fa-chevron-down');
-        }
+    // RSVP
+    const btnWa = $('btn-wa');
+    const btnSheets = $('btn-sheets');
+
+    btnWa?.addEventListener('click', () => {
+        const name = $('rsvp-name').value.trim();
+        const att = $('rsvp-att').value;
+        const msg = $('rsvp-msg').value.trim();
+        if(!name) return alert("Please enter your name");
+        const text = `Dear ${D.groom} & ${D.bride},\n\nMy name is *${name}* and I'm confirming my attendance: *${att}*.\n\nMessage: ${msg || '-'}\n\nThank you.`;
+        window.open(`https://wa.me/${D.wa}?text=${encodeURIComponent(text)}`, '_blank');
     });
 
+<<<<<<< HEAD
     // === 6. INTEGRASI DATA DARI URL (DYNAMIS) ===
     function initDataFromUrl() {
         const params = new URLSearchParams(window.location.search);
@@ -169,6 +277,46 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     initDataFromUrl();
+=======
+    btnSheets?.addEventListener('click', () => {
+        const name = $('rsvp-name').value.trim();
+        const att = $('rsvp-att').value;
+        const msg = $('rsvp-msg').value.trim();
+        if(!name) return alert("Please enter your name");
+        btnSheets.disabled = true;
+        btnSheets.innerText = "Sending...";
+        fetch(D.sheetsUrl, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name, attendance: att, message: msg, invId: D.invId })
+        }).then(() => {
+            $('rsvp-ok').style.display = 'block';
+            btnSheets.innerText = "Sent Successfully";
+        }).catch(() => {
+            btnSheets.disabled = false;
+            btnSheets.innerText = "Error, try again";
+        });
+    });
+
+    // Countdown
+    function startCD(iso, prefix) {
+        const target = new Date(iso).getTime();
+        setInterval(() => {
+            const diff = target - new Date().getTime();
+            if(diff <= 0) return;
+            setText(`${prefix}-d`, String(Math.floor(diff / 86400000)).padStart(2, '0'));
+            setText(`${prefix}-h`, String(Math.floor((diff % 86400000) / 3600000)).padStart(2, '0'));
+            setText(`${prefix}-m`, String(Math.floor((diff % 3600000) / 60000)).padStart(2, '0'));
+            setText(`${prefix}-s`, String(Math.floor((diff % 60000) / 1000)).padStart(2, '0'));
+        }, 1000);
+    }
+
+    // START
+    populateData();
+    startCD(D.akadISO, 'ak');
+    startCD(D.resepsiISO, 'rs');
+>>>>>>> 07d218d (kiw)
 });
 
 

@@ -44,8 +44,13 @@ const s  = (id, v) => { const e=$(id); if(e) e.textContent = v; };
 const h  = (id, v) => { const e=$(id); if(e) e.innerHTML  = v; };
 
 // ─── 3. POPULATE DATA ────────────────────────────────────────
+<<<<<<< HEAD
 function populateData(){ if(param("music")){const a=document.getElementById("bgm")||document.getElementById("bgAudio")||document.getElementById("bgMusic");if(a){a.src=param("music");let m=param("music").split("/").pop().split(".")[0].replace(/%20/g, " ");let t=document.querySelector(".a-title, .audio-title");if(t)t.textContent=decodeURI(m);}}
     if(param('music')) { const a = document.getElementById('bgAudio'); if(a) a.src = param('music'); }
+=======
+function populateData(){ 
+    if(param("music")){const a=document.getElementById("bgm")||document.getElementById("bgAudio")||document.getElementById("bgMusic");if(a){a.src=param("music");}}
+>>>>>>> 07d218d (kiw)
     
     // --- Image Params ---
     const iParam = (k) => { const v = param(k); return v ? decodeURIComponent(v) : null; };
@@ -54,15 +59,26 @@ function populateData(){ if(param("music")){const a=document.getElementById("bgm
             if(e.tagName === 'IMG') e.src = iParam('hero'); else e.style.backgroundImage = `url("${iParam('hero')}")`;
         });
     }
+<<<<<<< HEAD
     const mPx = document.querySelectorAll('.mempelai-photo img, .profile-photo img, .profile-img img');
+=======
+    const mPx = document.querySelectorAll('.mempelai-photo img, .profile-photo img, .profile-img img, .p-photo img');
+>>>>>>> 07d218d (kiw)
     if (mPx.length >= 2) {
         if (iParam('imgPria')) mPx[0].src = iParam('imgPria');
         if (iParam('imgWanita')) mPx[1].src = iParam('imgWanita');
     }
+<<<<<<< HEAD
     const arr = typeof GALLERY_IMGS !== 'undefined' ? GALLERY_IMGS : (typeof LB_IMGS !== 'undefined' ? LB_IMGS : null);
     const tgImg = document.querySelectorAll('.gallery-item img, .galeri-item img, .gallery-img img');
     for (let i = 1; i <= 6; i++) {
         const u = iParam(`gal${i}`);
+=======
+    const arr = typeof GALLERY_IMGS !== 'undefined' ? GALLERY_IMGS : (typeof LB_IMGS !== 'undefined' ? LB_IMGS : (typeof IMGS !== 'undefined' ? IMGS : null));
+    const tgImg = document.querySelectorAll('.gallery-item img, .galeri-item img, .gallery-img img, .gal-item img');
+    for (let i = 1; i <= 6; i++) {
+        const u = iParam("gal" + i);
+>>>>>>> 07d218d (kiw)
         if(u) {
             if(arr && arr[i-1] !== undefined) arr[i-1] = u;
             if(tgImg.length >= i && tgImg[i-1]) tgImg[i-1].src = u;
@@ -72,52 +88,32 @@ function populateData(){ if(param("music")){const a=document.getElementById("bgm
     const couple = `${D.groom} & ${D.bride}`;
     document.title = `Undangan Pernikahan Adat Jawa | ${couple}`;
 
-    // Cover
-    s('c-guest',  D.guest);
-    s('c-couple', couple);
-    s('c-date',   D.date);
-
-    // Hero
-    s('hero-names', couple);
-    s('hero-date',  D.dateFull);
-
-    // Mempelai
-    s('groom-fullname', D.groomFull);
-    s('bride-fullname', D.brideFull);
-    s('groom-parent',   D.groomParent);
-    s('bride-parent',   D.brideParent);
+    // Text Content Sync
+    s('c-guest', D.guest); s('c-couple', couple); s('c-date', D.date);
+    s('hero-names', couple); s('hero-date', D.dateFull);
+    s('groom-fullname', D.groomFull); s('bride-fullname', D.brideFull);
+    s('groom-parent', D.groomParent); s('bride-parent', D.brideParent);
+    
+    // Socials
     const igs = document.querySelectorAll('.mempelai-ig span');
     if(igs[0]) igs[0].textContent = D.groomIg;
     if(igs[1]) igs[1].textContent = D.brideIg;
 
-    // Acara
-    s('akad-date',     D.akadDate);
-    s('akad-time',     D.akadTime);
-    s('akad-place',    D.akadPlace);
-    s('akad-address',  D.akadAddress);
-    s('resepsi-date',  D.resepsiDate);
-    s('resepsi-time',  D.resepsiTime);
-    s('resepsi-place', D.resepsiPlace);
-    s('resepsi-address',D.resepsiAddress);
+    // Events
+    s('akad-date', D.akadDate); s('akad-time', D.akadTime); s('akad-place', D.akadPlace); s('akad-address', D.akadAddress);
+    s('resepsi-date', D.resepsiDate); s('resepsi-time', D.resepsiTime); s('resepsi-place', D.resepsiPlace); s('resepsi-address', D.resepsiAddress);
 
-    // Maps iframes
-    const aq = encodeURIComponent(D.akadMaps.replace(/\+/g,' '));
-    const rq = encodeURIComponent(D.resepsiMaps.replace(/\+/g,' '));
+    // Maps iframe & labels
+    const aq = encodeURIComponent(D.akadMaps.replace(/\+/g,' ')), rq = encodeURIComponent(D.resepsiMaps.replace(/\+/g,' '));
     const ia = $('iframe-akad'), ir = $('iframe-resepsi');
     if(ia) ia.src = `https://maps.google.com/maps?q=${aq}&output=embed&hl=id&z=15`;
     if(ir) ir.src = `https://maps.google.com/maps?q=${rq}&output=embed&hl=id&z=15`;
-
-    // Map bars
-    s('mb-akad-name',    D.akadPlace);
-    s('mb-akad-addr',    D.akadAddress);
-    s('mb-resepsi-name', D.resepsiPlace);
-    s('mb-resepsi-addr', D.resepsiAddress);
-
-    // Amplop
-    s('g-bank-name',   D.bankName);
-    s('g-bank-acc',    D.bankAcc.replace(/(.{4})/g,'$1 ').trim());
-    s('g-bank-holder', `a.n. ${D.bankHolder}`);
-    document.querySelectorAll('[data-copy]').forEach(b => b.dataset.copy = D.bankAcc);
+    
+    // Standardizing label sync
+    s('map-akad-name', D.akadPlace); s('map-akad-addr', D.akadAddress);
+    s('map-resepsi-name', D.resepsiPlace); s('map-resepsi-addr', D.resepsiAddress);
+    s('mb-akad-name', D.akadPlace); s('mb-akad-addr', D.akadAddress);
+    s('mb-resepsi-name', D.resepsiPlace); s('mb-resepsi-addr', D.resepsiAddress);
 
     // Our Story
     for(let i=1;i<=4;i++){
@@ -127,12 +123,16 @@ function populateData(){ if(param("music")){const a=document.getElementById("bgm
         if(desc) s(`s${i}-desc`,  desc);
     }
 
-    // Closing
-    s('closing-names', couple);
-    s('closing-date',  D.date);
+    // Gift
+    s('g-bank-name', D.bankName); 
+    s('g-bank-acc', D.bankAcc.replace(/(.{4})/g,'$1 ').trim()); 
+    s('g-bank-holder', `a.n. ${D.bankHolder}`);
+    document.querySelectorAll('[data-copy]').forEach(b => b.dataset.copy = D.bankAcc);
 
-    // Google Sheets RSVP button
-    if(D.sheetsUrl) $('btn-sheets')?.style && ($('btn-sheets').style.display='flex');
+    // Closing
+    s('closing-names', couple); s('closing-date', D.date);
+
+    if (D.sheetsUrl && $('btn-sheets')) $('btn-sheets').style.display = 'flex';
 }
 
 // ─── 4. COVER ────────────────────────────────────────────────

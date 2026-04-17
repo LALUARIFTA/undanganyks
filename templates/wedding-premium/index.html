@@ -1,31 +1,44 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Undangan Pernikahan Premium | Midnight Gold</title>
-    <!-- Template Style -->
+    <title id="page-title">Invitation | Romeo & Juliet</title>
+    <meta name="description" content="Official Wedding Invitation - The Celebration of Eternal Love">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@300;400;500;600&family=Great+Vibes&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
-    <!-- Google Fonts for Premium Look -->
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
-    <!-- FontAwesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
+
 <body>
 
-    <!-- Cover Depan (Fullscreen overlay) -->
-    <div id="cover-screen" class="cover-screen">
-        <div class="cover-content box-glass">
-            <h4 class="the-wedding-of">The Wedding Of</h4>
-            <!-- ID ini akan diubah oleh file script via panel admin -->
-            <h1 class="groom-bride-name" id="cover-names">Romeo & Juliet</h1>
-            <p>Kepada Yth. Bapak/Ibu/Saudara/i</p>
-            <h3 class="guest-name">Tamu Kehormatan</h3>
-            <p class="apology">*Mohon maaf apabila ada kesalahan penulisan nama maupun gelar</p>
-            <button id="open-invitation-btn" class="btn-gold"><i class="fa-solid fa-envelope-open-text"></i> Buka Undangan</button>
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <!-- ══════════════════════ COVER ══════════════════════ -->
+    <div id="cover" class="cover">
+        <div class="cover-bg">
+            <div class="cover-marble"></div>
+            <div class="cover-overlay"></div>
+        </div>
+        <div class="cover-content">
+            <p class="cover-eyebrow">The Celebration of Love</p>
+            <h1 class="cover-names" id="c-couple">Romeo &amp; Juliet</h1>
+            <div class="cover-guest-box">
+                <span class="cover-guest-label">Warmly Invited:</span>
+                <h2 class="cover-guest" id="c-guest">Bapak / Ibu / Saudara/i</h2>
+            </div>
+            <p class="cover-date" id="c-date">Friday, 25 December 2026</p>
+            <button id="btn-open" class="cover-open-btn">
+                <span>View Invitation</span>
+                <i class="fa-solid fa-arrow-right"></i>
+            </button>
         </div>
     </div>
 
+<<<<<<< HEAD
     <!-- Konten Utama Undangan -->
     <div id="main-content" class="main-content hidden">
         
@@ -40,18 +53,77 @@
             <!-- Scroll down indicator -->
             <div class="scroll-down-indicator">
                 <i class="fa-solid fa-chevron-down scroll-bounce"></i>
+=======
+    <!-- ══════════════════════ MAIN CONTENT ══════════════════════ -->
+    <div id="main" class="main hidden">
+
+        <!-- HERO -->
+        <section class="section hero-section" id="hero">
+            <div class="hero-bg"></div>
+            <div class="hero-overlay"></div>
+            <div class="hero-content">
+                <div class="hero-line reveal"></div>
+                <p class="section-eyebrow reveal">Inviting You To Share Our Joy</p>
+                <h1 class="hero-names reveal" id="hero-names">Romeo &amp; Juliet</h1>
+                <p class="hero-date reveal" id="hero-date">25 . 12 . 2026</p>
+>>>>>>> 07d218d (kiw)
             </div>
         </section>
 
-        <!-- Bagian 2: Profil Mempelai -->
-        <section id="mempelai" class="invite-section dark-bg">
-            <div class="container text-center">
-                <!-- Elemen kaligrafi/Bismillah dummy -->
-                <div class="bismillah-wrapper">
-                    <p class="arabic">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</p>
+        <!-- QUOTE -->
+        <section class="section" id="quote">
+            <div class="container narrow">
+                <div class="quote-box reveal">
+                    <p class="quote-text">"And among His signs is that He created for you from yourselves mates that you may find tranquility in them; and He placed between you affection and mercy."</p>
+                    <p class="quote-author">Ar-Rum: 21</p>
                 </div>
-                <p class="intro-text">Menautkan dua hati dalam ikatan suci pernikahan, dengan memohon rahmat dan ridho Allah SWT, kami bermaksud menyelenggarakan acara pernikahan putra-putri kami:</p>
+                <div class="text-center" style="margin-top: 60px;">
+                    <p class="section-desc reveal">By the grace of God, we cordially invite you to witness the union of two souls in an eternal bond of marriage.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- MEMPELAI -->
+        <section class="section mempelai-section" id="mempelai">
+            <div class="container">
+                <div class="section-header reveal">
+                    <span class="section-eyebrow">The Couple</span>
+                    <h2 class="section-title">Meet the Bride & Groom</h2>
+                </div>
+                <div class="mempelai-grid">
+                    <!-- Groom -->
+                    <div class="mempelai-card reveal">
+                        <div class="mempelai-photo-wrap">
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=800" alt="Groom">
+                        </div>
+                        <span class="mempelai-label">The Groom</span>
+                        <h3 class="mempelai-name" id="groom-fullname">Romeo Montague, S.T.</h3>
+                        <p class="mempelai-parent" id="groom-parent">Son of Mr. Montague &amp; Mrs. Montague</p>
+                        <a href="#" class="mempelai-ig" id="groom-ig"><i class="fa-brands fa-instagram"></i> <span>@romeo_m</span></a>
+                    </div>
+                    <!-- Bride -->
+                    <div class="mempelai-card reveal">
+                        <div class="mempelai-photo-wrap">
+                            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=800" alt="Bride">
+                        </div>
+                        <span class="mempelai-label">The Bride</span>
+                        <h3 class="mempelai-name" id="bride-fullname">Juliet Capulet, S.H.</h3>
+                        <p class="mempelai-parent" id="bride-parent">Daughter of Mr. Capulet &amp; Mrs. Capulet</p>
+                        <a href="#" class="mempelai-ig" id="bride-ig"><i class="fa-brands fa-instagram"></i> <span>@juliet_c</span></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ACARA -->
+        <section class="section acara-section" id="acara">
+            <div class="container">
+                <div class="section-header reveal">
+                    <span class="section-eyebrow" style="color: var(--gold-l);">Timeline</span>
+                    <h2 class="section-title" style="color: var(--white);">Wedding Events</h2>
+                </div>
                 
+<<<<<<< HEAD
                 <div class="couple-grid">
                     <!-- Mempelai Pria -->
                     <div class="person">
@@ -73,11 +145,67 @@
                         <h2 class="name-gold" id="bride-fullname">Juliet Capulet</h2>
                         <p class="parents" id="bride-parents">Putri dari<br>Bpk. Capulet & Ibu Capulet</p>
                         <a href="javascript:void(0)" class="social-link" id="bride-ig"><i class="fa-brands fa-instagram"></i> @juliet_c</a>
+=======
+                <!-- Akad -->
+                <div class="acara-card reveal">
+                    <div>
+                        <span class="acara-badge">The Ceremony</span>
+                        <h3 class="acara-title" id="akad-date">Friday, 25 Dec 2026</h3>
+                        <div class="acara-info-item">
+                            <i class="fa-regular fa-clock"></i>
+                            <span id="akad-time">08:00 AM – 10:00 AM</span>
+                        </div>
+                        <div class="acara-info-item">
+                            <i class="fa-solid fa-location-dot"></i>
+                            <span><strong id="akad-place">The Grand Cathedral</strong><br><small id="akad-address">Victory Street No. 1, Italy</small></span>
+                        </div>
+                        <div class="btn-group" style="margin-top: 30px;">
+                            <button class="btn-outline" id="btn-akad-maps">View Map</button>
+                            <button class="btn-outline">Add to Calendar</button>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="acara-countdown">
+                            <div class="cd-unit"><span class="num" id="ak-d">00</span><span class="lab">Days</span></div>
+                            <div class="cd-unit"><span class="num" id="ak-h">00</span><span class="lab">Hrs</span></div>
+                            <div class="cd-unit"><span class="num" id="ak-m">00</span><span class="lab">Min</span></div>
+                            <div class="cd-unit"><span class="num" id="ak-s">00</span><span class="lab">Sec</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Resepsi -->
+                <div class="acara-card reveal">
+                    <div>
+                        <span class="acara-badge">The Reception</span>
+                        <h3 class="acara-title" id="resepsi-date">Friday, 25 Dec 2026</h3>
+                        <div class="acara-info-item">
+                            <i class="fa-regular fa-clock"></i>
+                            <span id="resepsi-time">11:00 AM – 02:00 PM</span>
+                        </div>
+                        <div class="acara-info-item">
+                            <i class="fa-solid fa-location-dot"></i>
+                            <span><strong id="resepsi-place">Verona Castle Ballroom</strong><br><small id="resepsi-address">Victory Street No. 10, Italy</small></span>
+                        </div>
+                        <div class="btn-group" style="margin-top: 30px;">
+                            <button class="btn-outline" id="btn-resepsi-maps">View Map</button>
+                            <button class="btn-outline">Add to Calendar</button>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="acara-countdown">
+                            <div class="cd-unit"><span class="num" id="rs-d">00</span><span class="lab">Days</span></div>
+                            <div class="cd-unit"><span class="num" id="rs-h">00</span><span class="lab">Hrs</span></div>
+                            <div class="cd-unit"><span class="num" id="rs-m">00</span><span class="lab">Min</span></div>
+                            <div class="cd-unit"><span class="num" id="rs-s">00</span><span class="lab">Sec</span></div>
+                        </div>
+>>>>>>> 07d218d (kiw)
                     </div>
                 </div>
             </div>
         </section>
 
+<<<<<<< HEAD
         <!-- Bagian Galeri (Momen Bersama) -->
         <section id="galeri" class="invite-section dark-bg-2">
             <div class="container text-center">
@@ -102,21 +230,45 @@
                             <p><i class="fa-solid fa-location-dot"></i> <strong id="akad-location">Masjid Agung Verona</strong><br>Jl. Cinta Damai No.1, Italia</p>
                         </div>
                         <button class="btn-outline-gold mt-15"><i class="fa-solid fa-map-location-dot"></i> Buka Google Maps</button>
+=======
+        <!-- GALLERY -->
+        <section class="section" id="gallery">
+            <div class="container">
+                <div class="section-header reveal">
+                    <span class="section-eyebrow">Our Gallery</span>
+                    <h2 class="section-title">Captured Moments</h2>
+                </div>
+                <div class="galeri-grid reveal">
+                    <div class="galeri-item">
+                        <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=800" alt="Moment 1">
+                        <div class="galeri-overlay"><i class="fa-solid fa-camera"></i></div>
+>>>>>>> 07d218d (kiw)
                     </div>
-
-                    <div class="event-card box-glass">
-                        <h3>Resepsi Pernikahan</h3>
-                        <div class="event-details">
-                            <p><i class="fa-regular fa-calendar-check"></i> <span id="resepsi-date">Jumat, 25 Desember 2026</span></p>
-                            <p><i class="fa-regular fa-clock"></i> 11.00 - Selesai</p>
-                            <p><i class="fa-solid fa-location-dot"></i> <strong id="resepsi-location">Grand Verona Castle Ballroom</strong><br>Jl. Cinta Damai No.10, Italia</p>
-                        </div>
-                        <button class="btn-outline-gold mt-15"><i class="fa-solid fa-map-location-dot"></i> Buka Google Maps</button>
+                    <div class="galeri-item">
+                        <img src="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=600" alt="Moment 2">
+                        <div class="galeri-overlay"><i class="fa-solid fa-camera"></i></div>
+                    </div>
+                    <div class="galeri-item">
+                        <img src="https://images.unsplash.com/photo-1520854221256-17451cc331bf?q=80&w=600" alt="Moment 3">
+                        <div class="galeri-overlay"><i class="fa-solid fa-camera"></i></div>
+                    </div>
+                    <div class="galeri-item">
+                        <img src="https://images.unsplash.com/photo-1549417229-aa67d3263c09?q=80&w=800" alt="Moment 4">
+                        <div class="galeri-overlay"><i class="fa-solid fa-camera"></i></div>
+                    </div>
+                    <div class="galeri-item">
+                        <img src="https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?q=80&w=600" alt="Moment 5">
+                        <div class="galeri-overlay"><i class="fa-solid fa-camera"></i></div>
+                    </div>
+                    <div class="galeri-item">
+                        <img src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?q=80&w=600" alt="Moment 6">
+                        <div class="galeri-overlay"><i class="fa-solid fa-camera"></i></div>
                     </div>
                 </div>
-           </div>
+            </div>
         </section>
 
+<<<<<<< HEAD
         <!-- Menu Navigasi Melayang di Bawah (Mobile Friendly) -->
         <nav class="mobile-bottom-nav box-glass">
             <a href="#beranda" class="nav-item active"><i class="fa-solid fa-house"></i><span>Home</span></a>
@@ -132,44 +284,91 @@
         <!-- Musik Latar (Akan diputar otomatis saat klik tombol buka undangan) -->
         <audio id="bg-music" loop>
             <source src="https://files.catbox.moe/jndoqq.mp3" type="audio/mpeg">
+=======
+        <!-- GIFT & RSVP -->
+        <section class="section gift-section" id="gift">
+            <div class="container narrow">
+                <div class="section-header reveal">
+                    <span class="section-eyebrow">Engagement</span>
+                    <h2 class="section-title">Gift and RSVP</h2>
+                </div>
+
+                <div class="bank-card reveal" style="margin-bottom: 40px;">
+                    <span class="bank-logo" id="g-bank-name">BANK BCA</span>
+                    <h4 class="account-number" id="g-bank-acc">1234 5678 90</h4>
+                    <p class="account-name" id="g-bank-holder">Romeo Montague</p>
+                    <button class="btn-gold btn-copy">Copy Account Number</button>
+                </div>
+
+                <div class="rsvp-card reveal">
+                    <div class="form-group">
+                        <label>Your Name</label>
+                        <input type="text" id="rsvp-name" class="form-control" placeholder="Enter your full name">
+                    </div>
+                    <div class="form-group">
+                        <label>Will You Attend?</label>
+                        <select id="rsvp-att" class="form-control">
+                            <option value="Hadir">Yes, I'll be there</option>
+                            <option value="Tidak Hadir">Sorry, I can't come</option>
+                            <option value="Masih Ragu">I'm still unsure</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Well Wishes</label>
+                        <textarea id="rsvp-msg" class="form-control" rows="4" placeholder="Send your prayers and wishes"></textarea>
+                    </div>
+                    <button id="btn-wa" class="btn-primary-luxe">Send via WhatsApp</button>
+                    <button id="btn-sheets" class="btn-primary-luxe" style="display:none; margin-top: 10px; background: #64748B;">Save to Database</button>
+                    <p id="rsvp-ok" style="display:none; text-align:center; color:#059669; margin-top:20px; font-weight: 600;">✅ Thank you! Your wishes have been received.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <section class="footer-section" id="footer">
+            <div class="container">
+                <h1 class="footer-logo" id="closing-names">Romeo &amp; Juliet</h1>
+                <p class="footer-gratitude">Our sincerest gratitude for your prayers and for sharing this beautiful moment with us.</p>
+                <div class="footer-divider">
+                    <span></span>
+                    <i class="fa-solid fa-gem"></i>
+                    <span></span>
+                </div>
+                <p class="footer-dated">DATED : <span id="closing-date">25 DECEMBER 2026</span></p>
+            </div>
+        </section>
+
+        <!-- AUDIO PLAYER -->
+        <audio id="bgAudio" loop>
+            <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" type="audio/mpeg">
+>>>>>>> 07d218d (kiw)
         </audio>
+        <div class="audio-player" id="audioPlayer">
+            <div class="audio-disc" id="audioDisc"><i class="fa-solid fa-music"></i></div>
+            <div class="audio-meta">
+                <span>The Eternal Love Theme</span>
+            </div>
+            <button class="audio-btn" id="audioBtn"><i class="fa-solid fa-pause" id="audioIcon"></i></button>
+        </div>
 
+        <!-- NAVIGATION -->
+        <nav class="bottom-nav">
+            <a href="#hero" class="bn-item active" data-sec="hero"><i class="fa-solid fa-house"></i></a>
+            <a href="#mempelai" class="bn-item" data-sec="mempelai"><i class="fa-solid fa-heart"></i></a>
+            <a href="#acara" class="bn-item" data-sec="acara"><i class="fa-solid fa-calendar-check"></i></a>
+            <a href="#gallery" class="bn-item" data-sec="gallery"><i class="fa-solid fa-image"></i></a>
+            <a href="#gift" class="bn-item" data-sec="gift"><i class="fa-solid fa-envelope-open-text"></i></a>
+        </nav>
     </div>
 
-    <!-- ======================================================= -->
-    <!-- MENU ADMIN / DEMO EDITOR AGAR MUDAH MODIFIKASI (REQ: MENU) -->
-    <!-- Menu ini membuktikan bahwa website ini sangat dinamis! -->
-    <!-- ======================================================= -->
-    <div class="admin-editor active" id="admin-editor">
-        <div class="admin-header">
-            <h3><i class="fa-solid fa-pen-nib"></i> Menu Modifikasi Cepat</h3>
-            <button id="toggle-admin"><i class="fa-solid fa-chevron-down"></i></button>
-        </div>
-        <div class="admin-body">
-            <p class="admin-info">Halo! Ubah text di bawah dan lihat template undangan ter-update secara <b>Real-Time</b>!</p>
-            
-            <div class="form-group">
-                <label>Nama Pria (Contoh: Budi)</label>
-                <input type="text" id="input-groom" value="Romeo">
-            </div>
-            
-            <div class="form-group">
-                <label>Nama Wanita (Contoh: Siti)</label>
-                <input type="text" id="input-bride" value="Juliet">
-            </div>
-
-            <div class="form-group">
-                <label>Tanggal Acara Induk</label>
-                <input type="text" id="input-date" value="25 Desember 2026">
-            </div>
-            
-            <hr style="margin:15px 0; border:1px solid #e2e8f0;">
-            <p style="font-size: 0.75rem; color:#64748b;"><i>Menu ini didesain agar Anda (pemilik layanan) mudah mengganti data tanpa menyentuh source code HTML-nya.</i></p>
-        </div>
-    </div>
 
     <script src="script.js"></script>
 </body>
+<<<<<<< HEAD
 </html>
 
 
+=======
+
+</html>
+>>>>>>> 07d218d (kiw)

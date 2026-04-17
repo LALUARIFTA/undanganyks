@@ -380,19 +380,23 @@ img{display:block;max-width:100%}
             </div>
             <div class="map-wrap">
                 <div class="m-tab active" id="mt-akad">
-                    <div class="m-bar"><div class="m-place"><strong id="ml-akad-n">Gedung Serbaguna</strong><span id="ml-akad-a">Jl. Taman Asri No.12</span></div><button class="m-nav" id="btn-nav-akad"><i class="fa-solid fa-diamond-turn-right"></i> Navigasi</button></div>
-                    <div class="m-frame"><iframe id="ifr-akad" src="https://maps.google.com/maps?q=Gedung+Serbaguna+Jakarta&output=embed&hl=id&z=14" allowfullscreen loading="lazy"></iframe></div>
+                    <div class="m-bar"><div class="m-place"><strong id="map-akad-name">Gedung Serbaguna</strong><span id="map-akad-addr">Jl. Taman Asri No.12</span></div><button class="m-nav" id="btn-nav-akad"><i class="fa-solid fa-diamond-turn-right"></i> Navigasi</button></div>
+                    <div class="m-frame"><iframe id="iframe-akad" src="https://maps.google.com/maps?q=Gedung+Serbaguna+Jakarta&output=embed&hl=id&z=14" allowfullscreen loading="lazy"></iframe></div>
                 </div>
                 <div class="m-tab" id="mt-resepsi">
-                    <div class="m-bar"><div class="m-place"><strong id="ml-resepsi-n">Rustic Garden Venue</strong><span id="ml-resepsi-a">Jl. Kebun Raya No.55</span></div><button class="m-nav" id="btn-nav-resepsi"><i class="fa-solid fa-diamond-turn-right"></i> Navigasi</button></div>
-                    <div class="m-frame"><iframe id="ifr-resepsi" src="https://maps.google.com/maps?q=Kebun+Raya+Bogor&output=embed&hl=id&z=14" allowfullscreen loading="lazy"></iframe></div>
+                    <div class="m-bar"><div class="m-place"><strong id="map-resepsi-name">Rustic Garden Venue</strong><span id="map-resepsi-addr">Jl. Kebun Raya No.55</span></div><button class="m-nav" id="btn-nav-resepsi"><i class="fa-solid fa-diamond-turn-right"></i> Navigasi</button></div>
+                    <div class="m-frame"><iframe id="iframe-resepsi" src="https://maps.google.com/maps?q=Kebun+Raya+Bogor&output=embed&hl=id&z=14" allowfullscreen loading="lazy"></iframe></div>
                 </div>
             </div>
         </div></div>
     </section>
 
     <!-- GALERI -->
+<<<<<<< HEAD
     <section id="s-galeri" class="inv-s gal-s">
+=======
+    <section id="s-galeri" class="inv-section gal-s">
+>>>>>>> 07d218d (kiw)
         <div class="ctr"><div class="s-head rv rv-u"><p class="s-eye">Galeri</p><h2 class="s-title">Momen <em>Berharga</em></h2></div>
         <div class="gal-g rv rv-z">
             <div class="gal-it big" onclick="openLb(0)"><img src="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=800" alt=""><div class="gal-ov"><i class="fa-solid fa-expand"></i></div></div>
@@ -400,18 +404,19 @@ img{display:block;max-width:100%}
             <div class="gal-it" onclick="openLb(2)"><img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=500" alt=""><div class="gal-ov"><i class="fa-solid fa-expand"></i></div></div>
             <div class="gal-it" onclick="openLb(3)"><img src="https://images.unsplash.com/photo-1520854221256-17451cc331bf?q=80&w=500" alt=""><div class="gal-ov"><i class="fa-solid fa-expand"></i></div></div>
             <div class="gal-it" onclick="openLb(4)"><img src="https://images.unsplash.com/photo-1606800052052-a08af7148866?q=80&w=500" alt=""><div class="gal-ov"><i class="fa-solid fa-expand"></i></div></div>
+             <div class="gal-it" onclick="openLb(5)"><img src="https://images.unsplash.com/photo-1606800052052-a08af7148866?q=80&w=500" alt=""><div class="gal-ov"><i class="fa-solid fa-expand"></i></div></div>
         </div>
         <div class="lb" id="lb" onclick="closeLb()">
             <button class="lb-x" onclick="closeLb()"><i class="fa-solid fa-xmark"></i></button>
             <button class="lb-p" onclick="event.stopPropagation();lbNav(-1)"><i class="fa-solid fa-chevron-left"></i></button>
             <img id="lb-img" src="" alt="">
             <button class="lb-n" onclick="event.stopPropagation();lbNav(1)"><i class="fa-solid fa-chevron-right"></i></button>
-            <p class="lb-c" id="lb-c">1 / 5</p>
+            <p class="lb-c" id="lb-c">1 / 6</p>
         </div></div>
     </section>
 
     <!-- AMPLOP DIGITAL -->
-    <section id="s-amplop" class="inv-s gift-s">
+    <section id="s-amplop" class="inv-section gift-s">
         <div class="ctr narrow"><div class="s-head rv"><p class="s-eye">Hadiah</p><h2 class="s-title">Amplop <em>Digital</em></h2></div>
         <div class="g-tabs rv">
             <button class="g-tab active" data-gt="bank"><i class="fa-solid fa-building-columns"></i> Bank Transfer</button>
@@ -419,7 +424,7 @@ img{display:block;max-width:100%}
         </div>
         <div class="rv">
             <div class="g-panel active" id="gp-bank">
-                <div class="bank-card"><div class="bank-ico2"><i class="fa-solid fa-building-columns"></i></div><div class="bank-d"><p class="bank-prov" id="g-bank">Bank BCA</p><p class="bank-num" id="g-acc">1234 5678 90</p><p class="bank-nm" id="g-holder">a.n. Candra Wijaya</p></div><button class="copy-b" id="btn-copy" data-copy="1234567890"><i class="fa-regular fa-copy"></i> Salin</button></div>
+                <div class="bank-card"><div class="bank-ico2"><i class="fa-solid fa-building-columns"></i></div><div class="bank-d"><p class="bank-prov" id="g-bank-name">Bank BCA</p><p class="bank-num" id="g-bank-acc">1234 5678 90</p><p class="bank-nm" id="g-bank-holder">a.n. Candra Wijaya</p></div><button class="copy-b" id="btn-copy-acc" data-copy="1234567890"><i class="fa-regular fa-copy"></i> Salin</button></div>
             </div>
             <div class="g-panel" id="gp-qris">
                 <div class="qris-card"><p class="qris-lbl">Scan untuk memberikan hadiah</p><div class="qris-box"><i class="fa-solid fa-qrcode"></i><p>QRIS</p></div><p class="qris-cap">Berlaku di semua e-wallet & m-banking</p></div>
@@ -428,10 +433,10 @@ img{display:block;max-width:100%}
     </section>
 
     <!-- RSVP -->
-    <section id="s-rsvp" class="inv-s rsvp-s">
+    <section id="s-rsvp" class="inv-section rsvp-s">
         <div class="ctr narrow"><div class="s-head rv"><p class="s-eye">RSVP</p><h2 class="s-title">Sampaikan <em>Doa & Ucapan</em></h2></div>
         <div class="rsvp-card rv">
-            <div class="rfg"><label>Nama Lengkap</label><input type="text" id="rsvp-n" placeholder="Nama Anda..."></div>
+            <div class="rfg"><label>Nama Lengkap</label><input type="text" id="rsvp-name" placeholder="Nama Anda..."></div>
             <div class="rfg"><label>Konfirmasi Kehadiran</label>
                 <div class="att-row">
                     <label class="att-opt"><input type="radio" name="att" value="Hadir" checked><span class="att-box"><i class="fa-solid fa-check"></i> Hadir</span></label>
@@ -439,13 +444,13 @@ img{display:block;max-width:100%}
                     <label class="att-opt"><input type="radio" name="att" value="Masih Ragu"><span class="att-box"><i class="fa-solid fa-circle-question"></i> Masih Ragu</span></label>
                 </div>
             </div>
-            <div class="rfg"><label>Doa & Ucapan</label><textarea id="rsvp-m" rows="4" placeholder="Tuliskan ucapan & doa terbaik Anda..."></textarea></div>
+            <div class="rfg"><label>Doa & Ucapan</label><textarea id="rsvp-msg" rows="4" placeholder="Tuliskan ucapan & doa terbaik Anda..."></textarea></div>
             <button id="btn-rsvp" class="rsvp-btn"><i class="fa-brands fa-whatsapp"></i> Kirim via WhatsApp</button>
         </div></div>
     </section>
 
     <!-- CLOSING -->
-    <section id="s-closing" class="inv-s closing-s">
+    <section id="s-closing" class="inv-section closing-s">
         <div class="ctr narrow"><div class="cl-inner rv">
             <p class="cl-orn">— 🌿 —</p>
             <p class="cl-sub">Wassalamu'alaikum Warahmatullahi Wabarakatuh</p>
@@ -496,11 +501,19 @@ const D={
 };
 const $=id=>document.getElementById(id), set=(id,v)=>{const e=$(id);if(e)e.textContent=v};
 
+<<<<<<< HEAD
 function populate(){ if(p("music")){const a=document.getElementById("bgm")||document.getElementById("bgAudio")||document.getElementById("bgMusic");if(a){a.src=p("music");let m=p("music").split("/").pop().split(".")[0].replace(/%20/g, " ");let t=document.querySelector(".a-title, .audio-title");if(t)t.textContent=decodeURI(m);}}
     const c=`${D.groom} & ${D.bride}`;
     
     // --- Image Params ---
     const iParam = (k) => { const v = typeof param !== 'undefined' ? param(k) : (typeof p !== 'undefined' ? p(k) : null); return v ? decodeURIComponent(v) : null; };
+=======
+function populate(){ if(p("music")){const a=document.getElementById("bgm")||document.getElementById("bgAudio")||document.getElementById("bgMusic");if(a){a.src=p("music");}}
+    const c=`${D.groom} & ${D.bride}`;
+    
+    // --- Image Params ---
+    const iParam = (k) => { const v = p(k); return v ? decodeURIComponent(v) : null; };
+>>>>>>> 07d218d (kiw)
     if (iParam('hero')) {
         document.querySelectorAll('.hero-bg, .hero-batik-bg, .hero-bg-img, .hero-img').forEach(e => {
             if(e.tagName === 'IMG') e.src = iParam('hero'); else e.style.backgroundImage = `url("${iParam('hero')}")`;
@@ -511,8 +524,13 @@ function populate(){ if(p("music")){const a=document.getElementById("bgm")||docu
         if (iParam('imgPria')) mPx[0].src = iParam('imgPria');
         if (iParam('imgWanita')) mPx[1].src = iParam('imgWanita');
     }
+<<<<<<< HEAD
     const arr = typeof GALLERY_IMGS !== 'undefined' ? GALLERY_IMGS : (typeof LB_IMGS !== 'undefined' ? LB_IMGS : (typeof IMGS !== 'undefined' ? IMGS : null));
     const tgImg = document.querySelectorAll('.gallery-item img, .galeri-item img, .gallery-img img, .gal-item img');
+=======
+    const arr = typeof IMGS !== 'undefined' ? IMGS : null;
+    const tgImg = document.querySelectorAll('.gallery-item img, .galeri-item img, .gallery-img img, .gal-item img, .gal-it img');
+>>>>>>> 07d218d (kiw)
     for (let i = 1; i <= 6; i++) {
         const u = iParam("gal" + i);
         if(u) {
@@ -530,13 +548,13 @@ function populate(){ if(p("music")){const a=document.getElementById("bgm")||docu
     set('akad-place',D.akadPlace); set('akad-address',D.akadAddress);
     set('resepsi-date',D.resepsiDate); set('resepsi-time',D.resepsiTime);
     set('resepsi-place',D.resepsiPlace); set('resepsi-address',D.resepsiAddress);
-    set('ml-akad-n',D.akadPlace); set('ml-akad-a',D.akadAddress);
-    set('ml-resepsi-n',D.resepsiPlace); set('ml-resepsi-a',D.resepsiAddress);
-    set('g-bank',D.bankName); set('g-acc',D.bankAcc.replace(/(.{4})/g,'$1 ').trim()); set('g-holder',`a.n. ${D.bankHolder}`);
-    const cb=$('btn-copy'); if(cb)cb.dataset.copy=D.bankAcc;
+    set('map-akad-name',D.akadPlace); set('map-akad-addr',D.akadAddress);
+    set('map-resepsi-name',D.resepsiPlace); set('map-resepsi-addr',D.resepsiAddress);
+    set('g-bank-name',D.bankName); set('g-bank-acc',D.bankAcc.replace(/(.{4})/g,'$1 ').trim()); set('g-bank-holder',`a.n. ${D.bankHolder}`);
+    const cb=$('btn-copy-acc'); if(cb)cb.dataset.copy=D.bankAcc;
     set('cl-names',c); set('cl-date',D.date);
     const aq=encodeURIComponent(D.akadMaps.replace(/\+/g,' ')), rq=encodeURIComponent(D.resepsiMaps.replace(/\+/g,' '));
-    const ia=$('ifr-akad'), ir=$('ifr-resepsi');
+    const ia=$('iframe-akad'), ir=$('iframe-resepsi');
     if(ia)ia.src=`https://maps.google.com/maps?q=${aq}&output=embed&hl=id&z=14`;
     if(ir)ir.src=`https://maps.google.com/maps?q=${rq}&output=embed&hl=id&z=14`;
 }
@@ -558,7 +576,7 @@ document.addEventListener('DOMContentLoaded',()=>{
     // Nav
     const navItems=document.querySelectorAll('.bni');
     navItems.forEach(i=>i.addEventListener('click',e=>{e.preventDefault();document.getElementById(i.dataset.s)?.scrollIntoView({behavior:'smooth'});}));
-    window.addEventListener('scroll',()=>{let cur='';document.querySelectorAll('.inv-s[id]').forEach(s=>{if(scrollY>=s.offsetTop-200)cur=s.id;});navItems.forEach(i=>i.classList.toggle('active',i.dataset.s===cur));},{passive:true});
+    window.addEventListener('scroll',()=>{let cur='';document.querySelectorAll('.inv-section[id]').forEach(s=>{if(scrollY>=s.offsetTop-200)cur=s.id;});navItems.forEach(i=>i.classList.toggle('active',i.dataset.s===cur));},{passive:true});
     // Location tabs
     document.querySelectorAll('.loc-tab').forEach(t=>t.addEventListener('click',()=>{document.querySelectorAll('.loc-tab').forEach(x=>x.classList.remove('active'));t.classList.add('active');document.querySelectorAll('.m-tab').forEach(x=>x.classList.remove('active'));$(`mt-${t.dataset.lt}`)?.classList.add('active');}));
     $('btn-nav-akad')?.addEventListener('click',()=>window.open(`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(D.akadMaps.replace(/\+/g,' '))}` ,'_blank'));
@@ -570,7 +588,7 @@ document.addEventListener('DOMContentLoaded',()=>{
     // Copy
     document.querySelectorAll('[data-copy]').forEach(b=>b.addEventListener('click',()=>navigator.clipboard.writeText(b.dataset.copy).then(()=>toast('✅ Nomor berhasil disalin!'))));
     // RSVP
-    $('btn-rsvp')?.addEventListener('click',()=>{const n=$('rsvp-n')?.value.trim();const h=document.querySelector('input[name=att]:checked')?.value||'-';const m=$('rsvp-m')?.value.trim();if(!n){toast('⚠️ Isi nama dulu ya!');return;}window.open(`https://wa.me/${D.wa}?text=${encodeURIComponent(`🌿 *RSVP Pernikahan*\n${D.groom} & ${D.bride}\n\n👤 *Nama:* ${n}\n✅ *Kehadiran:* ${h}\n💌 *Pesan:* ${m||'(tidak ada)'}`)}` ,'_blank');});
+    $('btn-rsvp')?.addEventListener('click',()=>{const n=$('rsvp-name')?.value.trim();const h=document.querySelector('input[name=att]:checked')?.value||'-';const m=$('rsvp-msg')?.value.trim();if(!n){toast('⚠️ Isi nama dulu ya!');return;}window.open(`https://wa.me/${D.wa}?text=${encodeURIComponent(`🌿 *RSVP Pernikahan*\n${D.groom} & ${D.bride}\n\n👤 *Nama:* ${n}\n✅ *Kehadiran:* ${h}\n💌 *Pesan:* ${m||'(tidak ada)'}`)}` ,'_blank');});
     // Audio
     const m=$('bgm'),disc=$('a-disc'),icon=$('a-icon'),tog=$('a-tog'),bar=$('a-bar');
     if(m&&tog){tog.addEventListener('click',()=>{if(m.paused){m.play();disc?.classList.remove('paused');if(icon)icon.className='fa-solid fa-pause';}else{m.pause();disc?.classList.add('paused');if(icon)icon.className='fa-solid fa-play';}});m.addEventListener('timeupdate',()=>{if(m.duration&&bar)bar.style.width=(m.currentTime/m.duration*100)+'%';});}

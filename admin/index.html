@@ -12,6 +12,7 @@
 
 <body>
 
+<<<<<<< HEAD
     <!-- ═══ LOGIN SCREEN ═══ -->
     <div id="loginScreen" class="login-screen">
         <div class="login-box">
@@ -31,6 +32,43 @@
         <button id="btnLogin" class="btn-p w100"><i class="fa-solid fa-right-to-bracket"></i> Masuk ke Dashboard</button>
       
 >>>>>>> b4b7732174d5cafb84c89686ef0287d8d79ce98e
+=======
+    <div id="loginScreen" class="login-screen">
+        <div class="login-bg-decor">
+            <div class="orb o1"></div>
+            <div class="orb o2"></div>
+            <div class="orb o3"></div>
+            <div class="noise-overlay"></div>
+        </div>
+        <div class="login-box rv-login" id="loginBox">
+            <div class="login-border"></div>
+            <div class="login-brand">
+                <div class="brand-icon"><i class="fa-solid fa-crown"></i></div>
+                <div class="login-logo luxe">Lumina<span>LUXE</span></div>
+            </div>
+            <p class="login-sub">Secure Gateway to Invitation Management</p>
+
+            <div class="fg-admin mb20">
+                <label>Admin Access Key</label>
+                <div class="input-pw-wrap">
+                    <i class="fa-solid fa-key pw-icon"></i>
+                    <input type="password" id="loginPassword" placeholder="Enter your password..." autofocus>
+                    <button type="button" id="togglePw" class="btn-toggle-pw"><i class="fa-solid fa-eye"></i></button>
+                </div>
+                <div id="capsWarning" class="caps-warning hidden">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                    Caps Lock is ON
+                </div>
+                <p id="loginError" class="login-error"></p>
+            </div>
+
+            <button id="btnLogin" class="btn-p w100">
+                <span>Access Dashboard</span>
+                <i class="fa-solid fa-arrow-right"></i>
+            </button>
+            <p class="login-footer">© 2026 Lumina Studio • v3.5</p>
+        </div>
+>>>>>>> 07d218d (kiw)
     </div>
 
     <!-- ═══ DASHBOARD ═══ -->
@@ -74,7 +112,11 @@
 
             <!-- ─── PAGE: LIVE EDITOR ─── -->
             <div id="page-editor" class="admin-page editor-page active">
+<<<<<<< HEAD
                 <div class="editor-form" id="editorForm">
+=======
+                <form class="editor-form" id="editorForm" onsubmit="return false">
+>>>>>>> 07d218d (kiw)
 
                     <!-- Template Picker -->
                     <div class="form-section">
@@ -110,10 +152,28 @@
                                 <p>Bali Pura</p>
                             </div>
                             <div class="tpl-opt" data-tpl="aether">
+<<<<<<< HEAD
                                 <div class="tpl-prev" style="background:linear-gradient(135deg,#0f172a,#1e293b);box-shadow:inset 0 0 15px rgba(212,175,55,0.4)"><span
                                         style="color:#fde08b;font-style:italic;font-size:.85rem;text-shadow:0 0 5px #d4af37">Aether</span></div>
                                 <p>Aether 3D</p>
                             </div>
+=======
+                                <div class="tpl-prev"
+                                    style="background:linear-gradient(135deg,#0f172a,#1e293b);box-shadow:inset 0 0 15px rgba(212,175,55,0.4)">
+                                    <span
+                                        style="color:#fde08b;font-style:italic;font-size:.85rem;text-shadow:0 0 5px #d4af37">Aether</span>
+                                </div>
+                                <p>Aether 3D</p>
+                            </div>
+                            <div class="tpl-opt" data-tpl="premium">
+                                <div class="tpl-prev"
+                                    style="background:linear-gradient(135deg,#1e1b4b,#312e81);box-shadow:inset 0 0 20px rgba(99,102,241,0.3)">
+                                    <span
+                                        style="color:#a5b4fc;font-style:italic;font-size:.85rem;text-shadow:0 0 8px #6366f1">Premium</span>
+                                </div>
+                                <p>Premium Luxe</p>
+                            </div>
+>>>>>>> 07d218d (kiw)
                         </div>
                     </div>
 
@@ -470,9 +530,34 @@
                     <div class="generated-url" id="generatedUrl">
                         <p class="url-ph"><i class="fa-solid fa-arrow-up"></i> Klik "Generate Link" untuk membuat tautan
                         </p>
+<<<<<<< HEAD
+=======
+                    </div>
+                </form>
+
+                <!-- PREVIEW PANEL -->
+                <div class="editor-preview">
+                    <div class="preview-topbar">
+                        <div class="preview-device-switch">
+                            <button class="pdev-btn active" data-w="100%" data-mode="desktop"><i
+                                    class="fa-solid fa-desktop"></i></button>
+                            <button class="pdev-btn" data-w="430px" data-mode="mobile"><i
+                                    class="fa-solid fa-mobile-screen"></i></button>
+                        </div>
+                        <div class="preview-status" id="previewStatus"><span class="pulse-dot"></span> Live Preview
+                        </div>
+                        <button id="btnOpenNewTab" class="btn-s btn-sm"><i
+                                class="fa-solid fa-arrow-up-right-from-square"></i> Buka Tab Baru</button>
+                    </div>
+                    <div class="preview-frame-wrap" id="previewFrameWrap">
+                        <iframe id="previewIframe" class="preview-iframe" src="../templates/wedding-midnight/index.html"
+                            allowfullscreen></iframe>
+>>>>>>> 07d218d (kiw)
                     </div>
                 </div>
+            </div>
 
+<<<<<<< HEAD
                 <!-- PREVIEW PANEL -->
                 <div class="editor-preview">
                     <div class="preview-topbar">
@@ -494,6 +579,8 @@
                 </div>
             </div>
 
+=======
+>>>>>>> 07d218d (kiw)
             <!-- ─── PAGE: DAFTAR TAMU ─── -->
             <div id="page-tamu" class="admin-page">
                 <div class="page-desc"><i class="fa-solid fa-circle-info"></i> Generate link unik untuk setiap tamu
@@ -705,6 +792,7 @@
                     <div class="fg-grid mt-16">
                         <div class="fg"><label>API Endpoint</label><input type="text" id="awEndpoint"
                                 placeholder="https://cloud.appwrite.io/v1"></div>
+<<<<<<< HEAD
                         <div class="fg"><label>Project ID <span style="color:#ef4444">*wajib untuk upload foto</span></label><input type="text" id="awProject"
                                 placeholder="Contoh: 65abc123..."></div>
                         <div class="fg"><label>Database ID <small style="color:var(--text-tertiary)">(opsional, untuk simpan ke cloud)</small></label><input type="text" id="awDb" placeholder="invites_db">
@@ -717,13 +805,39 @@
                     <div class="page-desc" style="background:rgba(245,158,11,0.08);border-color:#f59e0b;margin-top:16px;margin-bottom:0">
                         <i class="fa-solid fa-triangle-exclamation" style="color:#f59e0b"></i>
                         <p>Pastikan <strong>localhost</strong> sudah ditambahkan ke daftar <em>Web Platforms</em> di Settings project Appwrite Anda, agar upload dari local bisa berjalan.</p>
+=======
+                        <div class="fg"><label>Project ID <span style="color:#ef4444">*wajib untuk upload
+                                    foto</span></label><input type="text" id="awProject"
+                                placeholder="Contoh: 65abc123..."></div>
+                        <div class="fg"><label>Database ID <small style="color:var(--text-tertiary)">(opsional, untuk
+                                    simpan ke cloud)</small></label><input type="text" id="awDb"
+                                placeholder="invites_db">
+                        </div>
+                        <div class="fg"><label>Collection ID <small
+                                    style="color:var(--text-tertiary)">(opsional)</small></label><input type="text"
+                                id="awCol" placeholder="saved_invs"></div>
+                        <div class="fg"><label><i class="fa-solid fa-bucket" style="color:#f59e0b"></i> Bucket ID
+                                (Storage)</label><input type="text" id="awBucket" value="69e1ebb1000fefd0d33a"
+                                placeholder="69e1ebb1000fefd0d33a"></div>
+                    </div>
+                    <div class="page-desc"
+                        style="background:rgba(245,158,11,0.08);border-color:#f59e0b;margin-top:16px;margin-bottom:0">
+                        <i class="fa-solid fa-triangle-exclamation" style="color:#f59e0b"></i>
+                        <p>Pastikan <strong>localhost</strong> sudah ditambahkan ke daftar <em>Web Platforms</em> di
+                            Settings project Appwrite Anda, agar upload dari local bisa berjalan.</p>
+>>>>>>> 07d218d (kiw)
                     </div>
 
                     <div class="aw-actions">
                         <button id="btnConnectAw" class="btn-p"><i class="fa-solid fa-plug"></i> Simpan & Hubungkan
                             Database</button>
                         <p id="awStatus" class="aw-status-text"><i class="fa-solid fa-circle-dot"></i> Status:
+<<<<<<< HEAD
                             <span>Belum terhubung</span></p>
+=======
+                            <span>Belum terhubung</span>
+                        </p>
+>>>>>>> 07d218d (kiw)
                     </div>
                 </div>
 
@@ -842,6 +956,47 @@
                             <i class="fa-solid fa-pen"></i> Mulai Edit
                         </button>
                     </div>
+<<<<<<< HEAD
+=======
+
+                    <!-- AETHER 3D TEMPLATE -->
+                    <div class="tpl-card">
+                        <div class="tpl-card-prev" style="background:linear-gradient(135deg,#0f172a,#1e293b); box-shadow:inset 0 0 15px rgba(212,175,55,0.4)">
+                            <p style="font-family:serif;font-style:italic;font-size:1.8rem;color:#fde08b; text-shadow:0 0 5px #d4af37">Aether 3D Art</p>
+                            <div class="tpl-overlay">
+                                <a href="../templates/wedding-aether/index.html" target="_blank" class="btn-preview-overlay">
+                                    <i class="fa-solid fa-eye"></i> Preview
+                                </a>
+                            </div>
+                        </div>
+                        <div class="tpl-card-info">
+                            <h3>Aether 3D Art</h3>
+                            <p>Karya seni 3 Dimensi berlayer dengan efek paralaks yang memukau. Dilengkapi animasi interaktif.</p>
+                        </div>
+                        <button class="btn-edit-full" onclick="selectTemplate('aether')">
+                            <i class="fa-solid fa-pen"></i> Mulai Edit
+                        </button>
+                    </div>
+
+                    <!-- PREMIUM LUXE TEMPLATE -->
+                    <div class="tpl-card">
+                        <div class="tpl-card-prev" style="background:linear-gradient(135deg,#1e1b4b,#312e81); box-shadow:inset 0 0 20px rgba(99,102,241,0.3)">
+                            <p style="font-family:serif;font-style:italic;font-size:1.8rem;color:#a5b4fc; text-shadow:0 0 8px #6366f1">Premium Luxe</p>
+                            <div class="tpl-overlay">
+                                <a href="../templates/wedding-premium/index.html" target="_blank" class="btn-preview-overlay">
+                                    <i class="fa-solid fa-eye"></i> Preview
+                                </a>
+                            </div>
+                        </div>
+                        <div class="tpl-card-info">
+                            <h3>Premium Luxe</h3>
+                            <p>Desain eksklusif dengan tema gelap elegan dan tipografi cantik. Menawarkan interaksi mewah untuk tamu Anda.</p>
+                        </div>
+                        <button class="btn-edit-full" onclick="selectTemplate('premium')">
+                            <i class="fa-solid fa-pen"></i> Mulai Edit
+                        </button>
+                    </div>
+>>>>>>> 07d218d (kiw)
                 </div>
             </div>
 
