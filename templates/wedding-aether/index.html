@@ -478,7 +478,7 @@
                 const u = iParam("gal" + i);
                 if(u) {
                     if(GALLERY_IMGS[i-1] !== undefined) GALLERY_IMGS[i-1] = u;
-                    const tgImg = document.querySelectorAll('.gallery-item img, .galeri-item img');
+                    const tgImg = document.querySelectorAll('.gallery-item img, .galeri-item img, .gal-item img');
                     if(tgImg[i-1]) tgImg[i-1].src = u;
                 }
             }
