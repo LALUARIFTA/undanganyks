@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel — Lumina Invites</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ═══ LOGIN SCREEN ═══ -->
+<div id="loginScreen" class="login-screen">
+    <div class="login-box">
+        <div class="login-logo">Lumina<span>Admin</span></div>
+        <p class="login-sub">Panel Manajemen Undangan Digital</p>
+        <div class="fg-admin mb20">
+            <label><i class="fa-solid fa-lock"></i> Password Admin</label>
+            <input type="password" id="loginPassword" placeholder="Masukkan password..." autofocus>
+            <p id="loginError" class="login-error"></p>
+        </div>
+        <button id="btnLogin" class="btn-p w100"><i class="fa-solid fa-right-to-bracket"></i> Masuk ke Dashboard</button>
+        <p class="login-hint">Default: <code>admin123</code></p>
+    </div>
+</div>
+
+<!-- ═══ DASHBOARD ═══ -->
+<div id="dashboard" class="dashboard hidden">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-logo">Lumina<span>Admin</span></div>
+        <nav class="sidebar-nav">
+            <a href="#" class="sl active" data-page="editor"><i class="fa-solid fa-wand-magic-sparkles"></i> Live Editor</a>
+            <a href="#" class="sl" data-page="tamu"><i class="fa-solid fa-users"></i> Daftar Tamu</a>
+            <a href="#" class="sl" data-page="rsvp"><i class="fa-solid fa-chart-pie"></i> RSVP Dashboard</a>
+            <a href="#" class="sl" data-page="daftar"><i class="fa-solid fa-list-ul"></i> Undangan Tersimpan</a>
+            <div class="sl-sep"></div>
+            <a href="#" class="sl" data-page="template"><i class="fa-solid fa-palette"></i> Template Gallery</a>
+            <a href="#" class="sl" data-page="panduan"><i class="fa-solid fa-circle-question"></i> Panduan</a>
+        </nav>
+        <div class="sidebar-footer">
+            <a href="../index.html" class="sl2"><i class="fa-solid fa-house"></i> Website Utama</a>
+            <button id="btnLogout" class="sl2 sl-danger"><i class="fa-solid fa-right-from-bracket"></i> Keluar</button>
+        </div>
+    </aside>
+
+    <!-- MAIN -->
+    <div class="admin-main">
+        <header class="topbar">
+            <button id="sidebarToggle" class="topbar-toggle"><i class="fa-solid fa-bars"></i></button>
+            <h1 class="topbar-title" id="topbarTitle">Live Editor</h1>
+            <div class="topbar-badges">
+                <span class="tbadge green"><i class="fa-solid fa-circle"></i> Server Aktif</span>
+                <button id="btnSaveGlobal" class="btn-p btn-sm hidden"><i class="fa-solid fa-floppy-disk"></i> Simpan</button>
+            </div>
+        </header>
+
+        <!-- ─── PAGE: LIVE EDITOR ─── -->
+        <div id="page-editor" class="admin-page editor-page active">
+            <div class="editor-form" id="editorForm">
+
+                <!-- Template Picker -->
+                <div class="form-section">
+                    <h3 class="fst"><span class="num">1</span> Template</h3>
+                    <div class="tpl-picker" id="tplPicker">
+                        <div class="tpl-opt selected" data-tpl="midnight">
+                            <div class="tpl-prev" style="background:linear-gradient(135deg,#07080a,#1a1a2e)"><span style="color:#d4af37;font-style:italic;font-size:.85rem">Midnight Gold</span></div>
+                            <p>Midnight Gold</p>
+                        </div>
+                        <div class="tpl-opt" data-tpl="blossom">
+                            <div class="tpl-prev" style="background:linear-gradient(135deg,#fff0f3,#fce7f3)"><span style="color:#be185d;font-style:italic;font-size:.85rem">Blossom Blush</span></div>
+                            <p>Blossom Blush</p>
+                        </div>
+                        <div class="tpl-opt" data-tpl="rustic">
+                            <div class="tpl-prev" style="background:linear-gradient(135deg,#4a2c17,#2d1810)"><span style="color:#d4956a;font-style:italic;font-size:.85rem">Rustic Garden</span></div>
+                            <p>Rustic Garden</p>
+                        </div>
+                        <div class="tpl-opt" data-tpl="jawa">
+                            <div class="tpl-prev" style="background:linear-gradient(135deg,#5c0a14,#3d0609)"><span style="color:#c8a45a;font-style:italic;font-size:.85rem">Jawa Kraton</span></div>
+                            <p>Jawa Kraton</p>
+                        </div>
+                        <div class="tpl-opt" data-tpl="bali">
+                            <div class="tpl-prev" style="background:linear-gradient(135deg,#0d4d4d,#062020)"><span style="color:#e8b86d;font-style:italic;font-size:.85rem">Bali Pura</span></div>
+                            <p>Bali Pura</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mempelai -->
+                <div class="form-section">
+                    <h3 class="fst"><span class="num">2</span> Mempelai</h3>
+                    <div class="fg2">
+                        <div class="fg"><label>Nama Panggilan Pria</label><input type="text" id="f-groom" value="Romeo" placeholder="Budi"></div>
+                        <div class="fg"><label>Nama Panggilan Wanita</label><input type="text" id="f-bride" value="Juliet" placeholder="Siti"></div>
+                    </div>
+                    <div class="fg2">
+                        <div class="fg"><label>Nama Lengkap Pria</label><input type="text" id="f-groomFull" value="Romeo Montague, S.T."></div>
+                        <div class="fg"><label>Nama Lengkap Wanita</label><input type="text" id="f-brideFull" value="Juliet Capulet, S.H."></div>
+                    </div>
+                    <div class="fg2">
+                        <div class="fg"><label>Orang Tua Pria</label><input type="text" id="f-groomParent" value="Putra dari Bpk. Montague & Ibu Montague"></div>
+                        <div class="fg"><label>Orang Tua Wanita</label><input type="text" id="f-brideParent" value="Putri dari Bpk. Capulet & Ibu Capulet"></div>
+                    </div>
+                    <div class="fg2">
+                        <div class="fg"><label><i class="fa-brands fa-instagram" style="color:#e1306c"></i> Instagram Pria</label><input type="text" id="f-groomIg" value="@romeo_m"></div>
+                        <div class="fg"><label><i class="fa-brands fa-instagram" style="color:#e1306c"></i> Instagram Wanita</label><input type="text" id="f-brideIg" value="@juliet_c"></div>
+                    </div>
+                </div>
+
+                <!-- Detail Acara -->
+                <div class="form-section">
+                    <h3 class="fst"><span class="num">3</span> Detail Acara</h3>
+                    <div class="fg2">
+                        <div class="fg"><label>Tanggal (Display)</label><input type="text" id="f-date" value="25 Desember 2026"></div>
+                        <div class="fg"><label>Tanggal Lengkap</label><input type="text" id="f-dateFull" value="Jumat, 25 Desember 2026"></div>
+                    </div>
+                    <p class="section-sub-label">Akad Nikah</p>
+                    <div class="fg2">
+                        <div class="fg"><label>Tanggal (Teks)</label><input type="text" id="f-akadDate" value="Jumat, 25 Desember 2026"></div>
+                        <div class="fg"><label>Jam</label><input type="text" id="f-akadTime" value="08.00 – 10.00 WIB"></div>
+                    </div>
+                    <div class="fg2">
+                        <div class="fg"><label>Nama Tempat</label><input type="text" id="f-akadPlace" value="Masjid Agung Verona"></div>
+                        <div class="fg"><label>Tanggal ISO (countdown)</label><input type="datetime-local" id="f-akadISO" value="2026-12-25T08:00"></div>
+                    </div>
+                    <div class="fg"><label>Alamat Akad</label><input type="text" id="f-akadAddress" value="Jl. Cinta Damai No.1, Italia"></div>
+                    <div class="fg"><label>Query Maps (untuk embed)</label><input type="text" id="f-akadMaps" value="Masjid+Agung+Jakarta" placeholder="Nama+Tempat+Kota"></div>
+                    <p class="section-sub-label">Resepsi</p>
+                    <div class="fg2">
+                        <div class="fg"><label>Tanggal (Teks)</label><input type="text" id="f-resepsiDate" value="Jumat, 25 Desember 2026"></div>
+                        <div class="fg"><label>Jam</label><input type="text" id="f-resepsiTime" value="11.00 – Selesai WIB"></div>
+                    </div>
+                    <div class="fg2">
+                        <div class="fg"><label>Nama Tempat</label><input type="text" id="f-resepsiPlace" value="Grand Verona Ballroom"></div>
+                        <div class="fg"><label>Tanggal ISO (countdown)</label><input type="datetime-local" id="f-resepsiISO" value="2026-12-25T11:00"></div>
+                    </div>
+                    <div class="fg"><label>Alamat Resepsi</label><input type="text" id="f-resepsiAddress" value="Jl. Cinta Damai No.10, Italia"></div>
+                    <div class="fg"><label>Query Maps (untuk embed)</label><input type="text" id="f-resepsiMaps" value="Ritz+Carlton+Jakarta" placeholder="Nama+Tempat+Kota"></div>
+                </div>
+
+                <!-- Our Story (Fitur Baru) -->
+                <div class="form-section">
+                    <h3 class="fst"><span class="num">4</span> Perjalanan Cinta <span class="badge-new">NEW</span></h3>
+                    <p class="fg-hint">Ceritakan momen penting perjalanan cinta mempelai (tampil di section "Our Story").</p>
+                    <div id="storyList">
+                        <div class="story-item">
+                            <div class="story-header"><span class="story-num">Momen 1</span></div>
+                            <div class="fg2">
+                                <div class="fg"><label>Judul</label><input type="text" class="s-title" data-idx="1" value="Pertama Bertemu" placeholder="Judul momen..."></div>
+                                <div class="fg"><label>Tanggal</label><input type="text" class="s-date" data-idx="1" value="2020" placeholder="2020"></div>
+                            </div>
+                            <div class="fg"><label>Deskripsi</label><input type="text" class="s-desc" data-idx="1" value="Kami dipertemukan dalam sebuah acara bersama teman yang sama." placeholder="Cerita singkat..."></div>
+                        </div>
+                        <div class="story-item">
+                            <div class="story-header"><span class="story-num">Momen 2</span></div>
+                            <div class="fg2">
+                                <div class="fg"><label>Judul</label><input type="text" class="s-title" data-idx="2" value="Mulai Berpacaran"></div>
+                                <div class="fg"><label>Tanggal</label><input type="text" class="s-date" data-idx="2" value="2021"></div>
+                            </div>
+                            <div class="fg"><label>Deskripsi</label><input type="text" class="s-desc" data-idx="2" value="Setelah setahun berteman, kami memutuskan untuk bersama."></div>
+                        </div>
+                        <div class="story-item">
+                            <div class="story-header"><span class="story-num">Momen 3</span></div>
+                            <div class="fg2">
+                                <div class="fg"><label>Judul</label><input type="text" class="s-title" data-idx="3" value="Lamaran"></div>
+                                <div class="fg"><label>Tanggal</label><input type="text" class="s-date" data-idx="3" value="2024"></div>
+                            </div>
+                            <div class="fg"><label>Deskripsi</label><input type="text" class="s-desc" data-idx="3" value="Dengan penuh keberanian, ia melamar di tempat yang penuh kenangan."></div>
+                        </div>
+                        <div class="story-item">
+                            <div class="story-header"><span class="story-num">Momen 4</span></div>
+                            <div class="fg2">
+                                <div class="fg"><label>Judul</label><input type="text" class="s-title" data-idx="4" value="Hari Pernikahan"></div>
+                                <div class="fg"><label>Tanggal</label><input type="text" class="s-date" data-idx="4" value="2026"></div>
+                            </div>
+                            <div class="fg"><label>Deskripsi</label><input type="text" class="s-desc" data-idx="4" value="Dan hari ini, kami resmi menjadi satu dalam ikatan suci pernikahan."></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Amplop & Kontak -->
+                <div class="form-section">
+                    <h3 class="fst"><span class="num">5</span> Amplop & Kontak</h3>
+                    <div class="fg3">
+                        <div class="fg"><label>Bank</label><input type="text" id="f-bankName" value="Bank BCA"></div>
+                        <div class="fg"><label>No. Rekening</label><input type="text" id="f-bankAcc" value="1234567890"></div>
+                        <div class="fg"><label>Atas Nama</label><input type="text" id="f-bankHolder" value="Romeo Montague"></div>
+                    </div>
+                    <div class="fg"><label><i class="fa-brands fa-whatsapp" style="color:#25d366"></i> No. WA RSVP (format: 628xxx)</label><input type="text" id="f-wa" value="6281234567890"></div>
+                </div>
+
+                <!-- Google Sheets RSVP (Fitur Baru) -->
+                <div class="form-section">
+                    <h3 class="fst"><span class="num">6</span> Google Sheets RSVP <span class="badge-new">NEW</span></h3>
+                    <div class="sheets-info">
+                        <i class="fa-brands fa-google"></i>
+                        <p>RSVP tamu akan otomatis tersimpan ke Google Sheets Anda. <a href="#" class="link-sheets-guide" id="linkSheetsGuide">Lihat cara setup →</a></p>
+                    </div>
+                    <div class="fg"><label>URL Google Apps Script (opsional)</label><input type="url" id="f-sheetsUrl" placeholder="https://script.google.com/macros/s/.../exec"></div>
+                    <div class="fg"><label>ID Undangan (untuk filter di sheets)</label><input type="text" id="f-invId" value="romeo-juliet-2026" placeholder="nama-mempelai-tahun"></div>
+                </div>
+
+                <!-- Nama Tamu -->
+                <div class="form-section">
+                    <h3 class="fst"><span class="num">7</span> Nama Tamu</h3>
+                    <div class="fg"><label>Nama Tamu (isi saat membagi link per-tamu)</label><input type="text" id="f-guest" value="Bapak/Ibu/Saudara/i"></div>
+                </div>
+
+                <!-- Editor Actions -->
+                <div class="editor-actions">
+                    <button id="btnGenLink" class="btn-p"><i class="fa-solid fa-link"></i> Generate Link</button>
+                    <button id="btnCopyLink" class="btn-s" disabled><i class="fa-regular fa-copy"></i> Salin Link</button>
+                    <button id="btnSaveInv" class="btn-gold"><i class="fa-solid fa-floppy-disk"></i> Simpan Undangan</button>
+                </div>
+                <div class="generated-url" id="generatedUrl"><p class="url-ph"><i class="fa-solid fa-arrow-up"></i> Klik "Generate Link" untuk membuat tautan</p></div>
+            </div>
+
+            <!-- PREVIEW PANEL -->
+            <div class="editor-preview">
+                <div class="preview-topbar">
+                    <div class="preview-device-switch">
+                        <button class="pdev-btn active" data-w="100%" data-mode="desktop"><i class="fa-solid fa-desktop"></i></button>
+                        <button class="pdev-btn" data-w="430px" data-mode="mobile"><i class="fa-solid fa-mobile-screen"></i></button>
+                    </div>
+                    <div class="preview-status" id="previewStatus"><span class="pulse-dot"></span> Live Preview</div>
+                    <button id="btnOpenNewTab" class="btn-s btn-sm"><i class="fa-solid fa-arrow-up-right-from-square"></i> Buka Tab Baru</button>
+                </div>
+                <div class="preview-frame-wrap" id="previewFrameWrap">
+                    <iframe id="previewIframe" class="preview-iframe" src="../templates/wedding-midnight/index.html" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+
+        <!-- ─── PAGE: DAFTAR TAMU ─── -->
+        <div id="page-tamu" class="admin-page">
+            <div class="page-desc"><i class="fa-solid fa-circle-info"></i> Generate link unik untuk setiap tamu undangan. Semua link menggunakan data undangan yang tersimpan, hanya nama tamu yang berbeda.</div>
+            <div class="tamu-setup" id="tamuSetup">
+                <div class="form-section">
+                    <h3 class="fst"><i class="fa-solid fa-link"></i> Base URL Undangan</h3>
+                    <p class="fg-hint">Pilih dari undangan tersimpan atau paste URL secara manual:</p>
+                    <div class="fg2">
+                        <div class="fg">
+                            <label>Pilih Undangan Tersimpan</label>
+                            <select id="tamuSelectInv"><option value="">-- Pilih undangan --</option></select>
+                        </div>
+                        <div class="fg">
+                            <label>Atau Paste URL Manual</label>
+                            <input type="text" id="tamuBaseUrl" placeholder="URL template undangan...">
+                        </div>
+                    </div>
+                    <div class="fg"><label>Daftar Nama Tamu <small>(satu nama per baris)</small></label>
+                        <textarea id="tamuNames" rows="8" placeholder="Bapak Ahmad Fauzi&#10;Ibu Siti Rahayu&#10;Keluarga Besar Wahyono&#10;Sdr. Rizky Pratama"></textarea>
+                    </div>
+                    <button id="btnGenTamu" class="btn-p"><i class="fa-solid fa-wand-magic-sparkles"></i> Generate Link Tamu</button>
+                </div>
+            </div>
+            <div id="tamuResult" class="tamu-result hidden">
+                <div class="tamu-result-header">
+                    <p class="tamu-count" id="tamuCount">0 Link Generated</p>
+                    <div style="display:flex;gap:8px">
+                        <button id="btnCopyAll" class="btn-s btn-sm"><i class="fa-regular fa-copy"></i> Salin Semua</button>
+                        <button id="btnExportTxt" class="btn-s btn-sm"><i class="fa-solid fa-file-arrow-down"></i> Export .txt</button>
+                    </div>
+                </div>
+                <div class="tamu-table-wrap">
+                    <table class="tamu-table" id="tamuTable">
+                        <thead><tr><th>#</th><th>Nama Tamu</th><th>Link Undangan</th><th>Aksi</th></tr></thead>
+                        <tbody id="tamuTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- ─── PAGE: RSVP DASHBOARD ─── -->
+        <div id="page-rsvp" class="admin-page">
+            <div class="rsvp-setup-bar" id="rsvpSetupBar">
+                <div class="rsvp-setup-icon"><i class="fa-brands fa-google-drive"></i></div>
+                <div class="rsvp-setup-text">
+                    <strong>Hubungkan Google Sheets</strong>
+                    <p>Masukkan URL Google Apps Script Anda untuk melihat data RSVP secara real-time.</p>
+                </div>
+                <div class="rsvp-setup-form">
+                    <input type="url" id="rsvpSheetsUrl" placeholder="https://script.google.com/macros/s/.../exec">
+                    <button id="btnConnectSheets" class="btn-p btn-sm"><i class="fa-solid fa-plug"></i> Hubungkan</button>
+                </div>
+            </div>
+
+            <div class="rsvp-dashboard" id="rsvpDashboard">
+                <!-- Stats -->
+                <div class="rsvp-stats" id="rsvpStats">
+                    <div class="stat-card total"><div class="stat-icon"><i class="fa-solid fa-users"></i></div><div class="stat-info"><span class="stat-num" id="stat-total">0</span><span class="stat-label">Total RSVP</span></div></div>
+                    <div class="stat-card hadir"><div class="stat-icon"><i class="fa-solid fa-check-circle"></i></div><div class="stat-info"><span class="stat-num" id="stat-hadir">0</span><span class="stat-label">Konfirmasi Hadir</span></div></div>
+                    <div class="stat-card tidak"><div class="stat-icon"><i class="fa-solid fa-circle-xmark"></i></div><div class="stat-info"><span class="stat-num" id="stat-tidak">0</span><span class="stat-label">Tidak Hadir</span></div></div>
+                    <div class="stat-card ragu"><div class="stat-icon"><i class="fa-solid fa-circle-question"></i></div><div class="stat-info"><span class="stat-num" id="stat-ragu">0</span><span class="stat-label">Masih Ragu</span></div></div>
+                </div>
+
+                <!-- Chart -->
+                <div class="rsvp-chart-section">
+                    <div class="rsvp-chart-card">
+                        <h3 class="rsvp-card-title"><i class="fa-solid fa-chart-bar"></i> Persentase Kehadiran</h3>
+                        <div class="chart-bars" id="chartBars">
+                            <div class="chart-bar-item">
+                                <span class="cb-label">Hadir</span>
+                                <div class="cb-track"><div class="cb-fill hadir-fill" id="bar-hadir" style="width:0%"></div></div>
+                                <span class="cb-pct" id="pct-hadir">0%</span>
+                            </div>
+                            <div class="chart-bar-item">
+                                <span class="cb-label">Tidak Hadir</span>
+                                <div class="cb-track"><div class="cb-fill tidak-fill" id="bar-tidak" style="width:0%"></div></div>
+                                <span class="cb-pct" id="pct-tidak">0%</span>
+                            </div>
+                            <div class="chart-bar-item">
+                                <span class="cb-label">Masih Ragu</span>
+                                <div class="cb-track"><div class="cb-fill ragu-fill" id="bar-ragu" style="width:0%"></div></div>
+                                <span class="cb-pct" id="pct-ragu">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="rsvp-actions-card">
+                        <h3 class="rsvp-card-title"><i class="fa-solid fa-gear"></i> Aksi</h3>
+                        <div class="rsvp-action-btns">
+                            <button id="btnRefreshRsvp" class="btn-p"><i class="fa-solid fa-rotate"></i> Refresh Data</button>
+                            <button id="btnOpenSheets" class="btn-s"><i class="fa-brands fa-google"></i> Buka Google Sheets</button>
+                            <button id="btnShowGuide" class="btn-s"><i class="fa-solid fa-book"></i> Panduan Setup</button>
+                        </div>
+                        <div class="rsvp-url-display" id="rsvpUrlDisplay">
+                            <span class="rsvp-url-label">Terhubung ke:</span>
+                            <span class="rsvp-url-val" id="rsvpUrlVal">Belum terhubung</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Response Table -->
+                <div class="rsvp-table-card">
+                    <div class="rsvp-table-header">
+                        <h3 class="rsvp-card-title"><i class="fa-solid fa-table"></i> Data Tamu</h3>
+                        <div style="display:flex;gap:8px;align-items:center">
+                            <input type="text" class="rsvp-search" id="rsvpSearch" placeholder="🔍 Cari nama...">
+                            <select class="rsvp-filter" id="rsvpFilter">
+                                <option value="">Semua</option>
+                                <option value="Hadir">Hadir</option>
+                                <option value="Tidak Hadir">Tidak Hadir</option>
+                                <option value="Masih Ragu">Masih Ragu</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="rsvp-table-wrap">
+                        <table class="rsvp-table" id="rsvpTable">
+                            <thead><tr><th>#</th><th>Waktu</th><th>Nama</th><th>Kehadiran</th><th>Ucapan</th></tr></thead>
+                            <tbody id="rsvpTableBody">
+                                <tr><td colspan="5" class="empty-row"><i class="fa-solid fa-inbox"></i><br>Belum ada data RSVP.<br><small>Hubungkan Google Sheets untuk melihat data.</small></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Setup Guide Modal -->
+            <div class="modal hidden" id="sheetsModal">
+                <div class="modal-box">
+                    <div class="modal-header">
+                        <h3><i class="fa-brands fa-google"></i> Cara Setup Google Sheets RSVP</h3>
+                        <button class="modal-close" onclick="document.getElementById('sheetsModal').classList.add('hidden')"><i class="fa-solid fa-xmark"></i></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="guide-step"><div class="gs-num">1</div><div class="gs-txt"><strong>Buat Google Sheet baru</strong><p>Buka <a href="https://sheets.google.com" target="_blank">sheets.google.com</a> → buat spreadsheet baru → beri nama "RSVP Undangan".</p></div></div>
+                        <div class="guide-step"><div class="gs-num">2</div><div class="gs-txt"><strong>Buka Script Editor</strong><p>Klik menu <code>Extensions</code> → <code>Apps Script</code>. Hapus kode yang ada, lalu paste kode dari file <code>admin/apps-script.js</code>.</p></div></div>
+                        <div class="guide-step"><div class="gs-num">3</div><div class="gs-txt"><strong>Deploy sebagai Web App</strong><p>Klik <code>Deploy</code> → <code>New deployment</code> → pilih type <code>Web app</code>. Set <em>Execute as: Me</em> dan <em>Who has access: Anyone</em>. Klik <code>Deploy</code>.</p></div></div>
+                        <div class="guide-step"><div class="gs-num">4</div><div class="gs-txt"><strong>Salin URL Web App</strong><p>Salin URL yang diberikan (berbentuk <code>https://script.google.com/macros/s/.../exec</code>), lalu paste di field "URL Google Apps Script" di form editor.</p></div></div>
+                        <div class="guide-step"><div class="gs-num">5</div><div class="gs-txt"><strong>Selesai!</strong><p>RSVP dari tamu akan otomatis masuk ke Google Sheets Anda. Cek di halaman RSVP Dashboard.</p></div></div>
+                        <div class="guide-code-preview">
+                            <strong>Kode Apps Script:</strong>
+                            <pre id="appsScriptPreview">function doPost(e) {
+  try {
+    var sheet = SpreadsheetApp.getActiveSheet();
+    var data = JSON.parse(e.postData.contents);
+    sheet.appendRow([
+      new Date(), data.invId, data.couple,
+      data.name, data.attendance, data.message
+    ]);
+    return ContentService
+      .createTextOutput(JSON.stringify({status:'ok'}))
+      .setMimeType(ContentService.MimeType.JSON);
+  } catch(err) {
+    return ContentService
+      .createTextOutput(JSON.stringify({status:'error'}))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+}
+
+function doGet(e) {
+  var sheet = SpreadsheetApp.getActiveSheet();
+  var rows = sheet.getDataRange().getValues();
+  var result = [];
+  for (var i = 1; i < rows.length; i++) {
+    result.push({
+      timestamp: rows[i][0],
+      invId: rows[i][1],
+      couple: rows[i][2],
+      name: rows[i][3],
+      attendance: rows[i][4],
+      message: rows[i][5]
+    });
+  }
+  return ContentService
+    .createTextOutput(JSON.stringify(result))
+    .setMimeType(ContentService.MimeType.JSON);
+}</pre>
+                            <button class="btn-s btn-sm" onclick="navigator.clipboard.writeText(document.getElementById('appsScriptPreview').textContent).then(()=>showToast('✅ Kode disalin!'))"><i class="fa-regular fa-copy"></i> Salin Kode</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ─── PAGE: UNDANGAN TERSIMPAN ─── -->
+        <div id="page-daftar" class="admin-page">
+            <div class="page-desc"><i class="fa-solid fa-cloud"></i> Semua undangan tersimpan aman dan terpusat menggunakan <strong>Appwrite Cloud Database</strong>.</div>
+            
+            <div class="rsvp-setup-bar" style="margin-bottom:20px; background:rgba(253,54,110,0.05); border-color:rgba(253,54,110,0.2)">
+                <div class="rsvp-setup-icon" style="color:#fd366e"><i class="fa-solid fa-server"></i></div>
+                <div class="rsvp-setup-text">
+                    <strong>Konfigurasi Appwrite Cloud</strong>
+                    <p>Masukkan API keys dari project Appwrite Anda untuk menyimpan undangan.</p>
+                </div>
+                <div class="rsvp-setup-form" style="flex-wrap:wrap; gap:8px">
+                    <input type="text" id="awEndpoint" placeholder="API Endpoint (https://.../v1)" value="https://cloud.appwrite.io/v1" style="max-width:200px">
+                    <input type="text" id="awProject" placeholder="Project ID" style="max-width:140px">
+                    <input type="text" id="awDb" placeholder="Database ID" style="max-width:140px">
+                    <input type="text" id="awCol" placeholder="Collection ID" style="max-width:140px">
+                    <button id="btnConnectAw" class="btn-p btn-sm" style="background:#fd366e"><i class="fa-solid fa-plug"></i> Hubungkan</button>
+                    <button id="btnGuideAw" class="btn-s btn-sm"><i class="fa-solid fa-circle-question"></i> Cara Setup</button>
+                </div>
+            </div>
+
+            <div id="invList" class="inv-list">
+                <div class="empty-state"><i class="fa-solid fa-box-open"></i><p>Memeriksa koneksi Appwrite...</p><small>Pastikan konfigurasi sudah diisi dan terhubung.</small></div>
+            </div>
+        </div>
+
+        <!-- ─── PAGE: TEMPLATE ─── -->
+        <div id="page-template" class="admin-page">
+            <div class="page-desc"><i class="fa-solid fa-circle-info"></i> Preview semua template yang tersedia. Klik untuk melihat live demo.</div>
+            <div class="tpl-gallery">
+                <div class="tpl-card">
+                    <div class="tpl-card-prev" style="background:linear-gradient(135deg,#07080a,#1a1a2e)"><p style="font-family:serif;font-style:italic;font-size:1.8rem;color:#d4af37">Midnight Gold</p></div>
+                    <div class="tpl-card-info">
+                        <h3>Midnight Gold</h3>
+                        <p>Tema gelap mewah dengan aksen emas. Cocok untuk pernikahan formal & eksklusif.</p>
+                        <div style="display:flex;gap:8px">
+                            <a href="../templates/wedding-midnight/index.html" target="_blank" class="btn-p btn-sm" style="flex:1;text-align:center"><i class="fa-solid fa-eye"></i> Preview</a>
+                            <button class="btn-s btn-sm" onclick="selectTemplate('midnight')"><i class="fa-solid fa-pen"></i> Edit</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="tpl-card">
+                    <div class="tpl-card-prev" style="background:linear-gradient(135deg,#fff0f3,#fce7f3)"><p style="font-family:serif;font-style:italic;font-size:1.8rem;color:#be185d">Blossom Blush</p></div>
+                    <div class="tpl-card-info">
+                        <h3>Blossom Blush</h3>
+                        <p>Tema bunga merah muda romantis. Ideal untuk outdoor & garden wedding.</p>
+                        <div style="display:flex;gap:8px">
+                            <a href="../templates/wedding-blossom/index.html" target="_blank" class="btn-p btn-sm" style="flex:1;text-align:center"><i class="fa-solid fa-eye"></i> Preview</a>
+                            <button class="btn-s btn-sm" onclick="selectTemplate('blossom')"><i class="fa-solid fa-pen"></i> Edit</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="tpl-card">
+                    <div class="tpl-card-prev" style="background:linear-gradient(135deg,#4a2c17,#2d1810)"><p style="font-family:serif;font-style:italic;font-size:1.8rem;color:#d4956a">Rustic Garden</p></div>
+                    <div class="tpl-card-info">
+                        <h3>Rustic Garden</h3>
+                        <p>Nuansa kayu hangat bernuansa alam. Sempurna untuk acara intim outdoor.</p>
+                        <div style="display:flex;gap:8px">
+                            <a href="../templates/wedding-rustic/index.html" target="_blank" class="btn-p btn-sm" style="flex:1;text-align:center"><i class="fa-solid fa-eye"></i> Preview</a>
+                            <button class="btn-s btn-sm" onclick="selectTemplate('rustic')"><i class="fa-solid fa-pen"></i> Edit</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="tpl-card">
+                    <div class="tpl-card-prev" style="background:linear-gradient(135deg,#5c0a14,#3d0609)"><p style="font-family:serif;font-style:italic;font-size:1.8rem;color:#c8a45a">Jawa Kraton</p></div>
+                    <div class="tpl-card-info">
+                        <h3>Jawa Kraton</h3>
+                        <p>Tema adat Jawa Kraton yang premium dengan ornamen batik dan perpaduan warna merah bata dan emas.</p>
+                        <div style="display:flex;gap:8px">
+                            <a href="../templates/wedding-jawa/index.html" target="_blank" class="btn-p btn-sm" style="flex:1;text-align:center"><i class="fa-solid fa-eye"></i> Preview</a>
+                            <button class="btn-s btn-sm" onclick="selectTemplate('jawa')"><i class="fa-solid fa-pen"></i> Edit</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="tpl-card">
+                    <div class="tpl-card-prev" style="background:linear-gradient(135deg,#0d4d4d,#062020)"><p style="font-family:serif;font-style:italic;font-size:1.8rem;color:#e8b86d">Bali Pura</p></div>
+                    <div class="tpl-card-info">
+                        <h3>Bali Pura</h3>
+                        <p>Tema adat Bali dengan gerbang pura, nuansa tropis, dan perpaduan warna hijau kebiruan mewah.</p>
+                        <div style="display:flex;gap:8px">
+                            <a href="../templates/wedding-bali/index.html" target="_blank" class="btn-p btn-sm" style="flex:1;text-align:center"><i class="fa-solid fa-eye"></i> Preview</a>
+                            <button class="btn-s btn-sm" onclick="selectTemplate('bali')"><i class="fa-solid fa-pen"></i> Edit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ─── PAGE: PANDUAN ─── -->
+        <div id="page-panduan" class="admin-page">
+            <div class="guide-wrap">
+                <h2><i class="fa-solid fa-book-open"></i> Panduan Penggunaan</h2>
+                <div class="guide-grid">
+                    <div class="guide-step-card"><div class="gs-num">1</div><div class="gs-txt"><strong>Live Editor</strong><p>Buka halaman <em>Live Editor</em>. Isi semua data klien di form kiri. Preview undangan akan terupdate otomatis di sebelah kanan secara real-time.</p></div></div>
+                    <div class="guide-step-card"><div class="gs-num">2</div><div class="gs-txt"><strong>Our Story</strong><p>Isi bagian "Perjalanan Cinta" untuk menambahkan timeline kisah cinta mempelai di undangan (minimal 2 momen).</p></div></div>
+                    <div class="guide-step-card"><div class="gs-num">3</div><div class="gs-txt"><strong>Google Sheets RSVP</strong><p>Setup Google Apps Script sekali saja, lalu masukkan URL-nya. RSVP tamu akan masuk otomatis ke spreadsheet Anda.</p></div></div>
+                    <div class="guide-step-card"><div class="gs-num">4</div><div class="gs-txt"><strong>Generate & Simpan</strong><p>Setelah selesai, klik Generate Link untuk membuat tautan. Klik Simpan untuk menyimpan ke daftar undangan.</p></div></div>
+                    <div class="guide-step-card"><div class="gs-num">5</div><div class="gs-txt"><strong>Daftar Tamu</strong><p>Buka halaman <em>Daftar Tamu</em>. Pilih undangan yang sudah dibuat, lalu paste daftar nama tamu (satu per baris). Sistem akan generate link unik per tamu.</p></div></div>
+                    <div class="guide-step-card"><div class="gs-num">6</div><div class="gs-txt"><strong>Share via WhatsApp</strong><p>Di tabel Daftar Tamu, klik tombol WhatsApp di samping setiap nama untuk langsung membuka chat WA dengan pesan dan link yang sudah terisi otomatis.</p></div></div>
+                </div>
+            </div>
+        </div>
+
+    </div><!-- /admin-main -->
+</div><!-- /dashboard -->
+
+<!-- Appwrite Setup Modal -->
+<div class="modal hidden" id="awModal">
+    <div class="modal-box">
+        <div class="modal-header">
+            <h3 style="color:#fd366e"><i class="fa-solid fa-cloud"></i> Cara Setup Appwrite Cloud</h3>
+            <button class="modal-close" onclick="document.getElementById('awModal').classList.add('hidden')"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="modal-body">
+            <div class="guide-step"><div class="gs-num">1</div><div class="gs-txt"><strong>Buat Akun Appwrite & Project</strong><p>Daftar di <a href="https://cloud.appwrite.io" target="_blank" style="color:#fd366e">cloud.appwrite.io</a>, dan klik <b>Create Project</b>.</p></div></div>
+            <div class="guide-step"><div class="gs-num">2</div><div class="gs-txt"><strong>Dapatkan Project ID & Endpoint</strong><p>Ke menu <i>Settings</i>. Salin **API Endpoint** (biasanya <code>https://cloud.appwrite.io/v1</code>) dan **Project ID** ke form.</p></div></div>
+            <div class="guide-step"><div class="gs-num">3</div><div class="gs-txt"><strong>Buat Database</strong><p>Masuk ke menu <b>Databases</b> -> <i>Create Database</i> (Contoh nama: <code>invites_db</code>). Salin nilain <b>Database ID</b>.</p></div></div>
+            <div class="guide-step"><div class="gs-num">4</div><div class="gs-txt"><strong>Buat Collection</strong><p>Di dalam database yang baru dibuat, klik <b>Create Collection</b> (Contoh nama: <code>saved_invites</code>). Salin <b>Collection ID</b>.</p></div></div>
+            <div class="guide-step"><div class="gs-num">5</div><div class="gs-txt"><strong>Buat Attributes</strong><p>Masuk ke koleksi, ke tab <b>Attributes</b> dan buat field tipe <strong style="color:red">String</strong> berikut:<br>
+            - <code>uid</code> (size 50)<br>
+            - <code>groom</code> (size 100)<br>
+            - <code>bride</code> (size 100)<br>
+            - <code>date</code> (size 100)<br>
+            - <code>template</code> (size 50)<br>
+            - <code>url</code> (size 2000)<br>
+            - <code>formData</code> (size 5000)<br>
+            </p></div></div>
+            <div class="guide-step"><div class="gs-num">6</div><div class="gs-txt"><strong>Update Permissions (PENTING)</strong><p>Pergi ke tab <b>Settings</b> dalam Collection. Pada bagian <i>Permissions</i>, centang <i>Any</i>, lalu pilih akses <b>Read, Create, Update, Delete</b> agar admin panel bisa menyimpan dan membaca data.</p></div></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOAST -->
+<div id="toast" class="toast-admin"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/appwrite@14.0.1"></script>
+<script src="script.js"></script>
+</body>
+</html>

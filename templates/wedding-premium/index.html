@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Undangan Pernikahan Premium | Midnight Gold</title>
+    <!-- Template Style -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts for Premium Look -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- Cover Depan (Fullscreen overlay) -->
+    <div id="cover-screen" class="cover-screen">
+        <div class="cover-content box-glass">
+            <h4 class="the-wedding-of">The Wedding Of</h4>
+            <!-- ID ini akan diubah oleh file script via panel admin -->
+            <h1 class="groom-bride-name" id="cover-names">Romeo & Juliet</h1>
+            <p>Kepada Yth. Bapak/Ibu/Saudara/i</p>
+            <h3 class="guest-name">Tamu Kehormatan</h3>
+            <p class="apology">*Mohon maaf apabila ada kesalahan penulisan nama maupun gelar</p>
+            <button id="open-invitation-btn" class="btn-gold"><i class="fa-solid fa-envelope-open-text"></i> Buka Undangan</button>
+        </div>
+    </div>
+
+    <!-- Konten Utama Undangan -->
+    <div id="main-content" class="main-content hidden">
+        
+        <!-- Bagian 1: Beranda / Hero Acara -->
+        <section id="beranda" class="invite-section hero-wedding">
+            <div class="overlay-dark"></div>
+            <div class="hero-wedding-text">
+                <h4 class="heading-subtitle">Pernikahan Suci</h4>
+                <h1 id="hero-names" class="heading-names">Romeo & Juliet</h1>
+                <p id="hero-date" class="heading-date">25 Desember 2026</p>
+            </div>
+            <!-- Scroll down indicator -->
+            <div class="scroll-down-indicator">
+                <i class="fa-solid fa-chevron-down scroll-bounce"></i>
+            </div>
+        </section>
+
+        <!-- Bagian 2: Profil Mempelai -->
+        <section id="mempelai" class="invite-section dark-bg">
+            <div class="container text-center">
+                <!-- Elemen kaligrafi/Bismillah dummy -->
+                <div class="bismillah-wrapper">
+                    <p class="arabic">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</p>
+                </div>
+                <p class="intro-text">Menautkan dua hati dalam ikatan suci pernikahan, dengan memohon rahmat dan ridho Allah SWT, kami bermaksud menyelenggarakan acara pernikahan putra-putri kami:</p>
+                
+                <div class="couple-grid">
+                    <!-- Mempelai Pria -->
+                    <div class="person">
+                        <div class="person-img">
+                            <img src="https://images.unsplash.com/photo-1549416878-b9ca95e26903?q=80&w=300&auto=format&fit=crop" alt="Pria">
+                        </div>
+                        <h2 class="name-gold" id="groom-fullname">Romeo Montague</h2>
+                        <p class="parents" id="groom-parents">Putra dari<br>Bpk. Montague & Ibu Montague</p>
+                        <a href="javascript:void(0)" class="social-link"><i class="fa-brands fa-instagram"></i> @romeo_m</a>
+                    </div>
+                    
+                    <div class="and-symbol">&</div>
+                    
+                    <!-- Mempelai Wanita -->
+                    <div class="person">
+                        <div class="person-img">
+                            <img src="https://images.unsplash.com/photo-1583939411023-14783179e581?q=80&w=300&auto=format&fit=crop" alt="Wanita">
+                        </div>
+                        <h2 class="name-gold" id="bride-fullname">Juliet Capulet</h2>
+                        <p class="parents" id="bride-parents">Putri dari<br>Bpk. Capulet & Ibu Capulet</p>
+                        <a href="javascript:void(0)" class="social-link"><i class="fa-brands fa-instagram"></i> @juliet_c</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bagian 3: Detail Acara (Akad & Resepsi) -->
+        <section id="acara" class="invite-section dark-bg-2">
+           <div class="container text-center">
+                <h2 class="section-title-gold">Waktu & Tempat</h2>
+                
+                <div class="event-cards">
+                    <div class="event-card box-glass">
+                        <h3>Akad Nikah</h3>
+                        <div class="event-details">
+                            <p><i class="fa-regular fa-calendar-check"></i> <span id="akad-date">Jumat, 25 Desember 2026</span></p>
+                            <p><i class="fa-regular fa-clock"></i> 08.00 - 10.00 WIB</p>
+                            <p><i class="fa-solid fa-location-dot"></i> <strong id="akad-location">Masjid Agung Verona</strong><br>Jl. Cinta Damai No.1, Italia</p>
+                        </div>
+                        <button class="btn-outline-gold mt-15"><i class="fa-solid fa-map-location-dot"></i> Buka Google Maps</button>
+                    </div>
+
+                    <div class="event-card box-glass">
+                        <h3>Resepsi Pernikahan</h3>
+                        <div class="event-details">
+                            <p><i class="fa-regular fa-calendar-check"></i> <span id="resepsi-date">Jumat, 25 Desember 2026</span></p>
+                            <p><i class="fa-regular fa-clock"></i> 11.00 - Selesai</p>
+                            <p><i class="fa-solid fa-location-dot"></i> <strong id="resepsi-location">Grand Verona Castle Ballroom</strong><br>Jl. Cinta Damai No.10, Italia</p>
+                        </div>
+                        <button class="btn-outline-gold mt-15"><i class="fa-solid fa-map-location-dot"></i> Buka Google Maps</button>
+                    </div>
+                </div>
+           </div>
+        </section>
+
+        <!-- Menu Navigasi Melayang di Bawah (Mobile Friendly) -->
+        <nav class="mobile-bottom-nav box-glass">
+            <a href="#beranda" class="nav-item active"><i class="fa-solid fa-house"></i><span>Home</span></a>
+            <a href="#mempelai" class="nav-item"><i class="fa-solid fa-heart"></i><span>Couple</span></a>
+            <a href="#acara" class="nav-item"><i class="fa-solid fa-calendar-check"></i><span>Event</span></a>
+        </nav>
+        
+        <!-- Kontrol Audio Pemutar Musik -->
+        <div class="audio-control box-glass" id="audio-control">
+            <i class="fa-solid fa-compact-disc spin"></i>
+        </div>
+        
+        <!-- Musik Latar (Akan diputar otomatis saat klik tombol buka undangan) -->
+        <audio id="bg-music" loop>
+            <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+        </audio>
+
+    </div>
+
+    <!-- ======================================================= -->
+    <!-- MENU ADMIN / DEMO EDITOR AGAR MUDAH MODIFIKASI (REQ: MENU) -->
+    <!-- Menu ini membuktikan bahwa website ini sangat dinamis! -->
+    <!-- ======================================================= -->
+    <div class="admin-editor active" id="admin-editor">
+        <div class="admin-header">
+            <h3><i class="fa-solid fa-pen-nib"></i> Menu Modifikasi Cepat</h3>
+            <button id="toggle-admin"><i class="fa-solid fa-chevron-down"></i></button>
+        </div>
+        <div class="admin-body">
+            <p class="admin-info">Halo! Ubah text di bawah dan lihat template undangan ter-update secara <b>Real-Time</b>!</p>
+            
+            <div class="form-group">
+                <label>Nama Pria (Contoh: Budi)</label>
+                <input type="text" id="input-groom" value="Romeo">
+            </div>
+            
+            <div class="form-group">
+                <label>Nama Wanita (Contoh: Siti)</label>
+                <input type="text" id="input-bride" value="Juliet">
+            </div>
+
+            <div class="form-group">
+                <label>Tanggal Acara Induk</label>
+                <input type="text" id="input-date" value="25 Desember 2026">
+            </div>
+            
+            <hr style="margin:15px 0; border:1px solid #e2e8f0;">
+            <p style="font-size: 0.75rem; color:#64748b;"><i>Menu ini didesain agar Anda (pemilik layanan) mudah mengganti data tanpa menyentuh source code HTML-nya.</i></p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

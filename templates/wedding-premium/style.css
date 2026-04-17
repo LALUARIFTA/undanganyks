@@ -1,0 +1,183 @@
+/* =========================================
+   STYLE UNTUK TEMPLATE UNDANGAN "MIDNIGHT GOLD"
+   ========================================= */
+
+   :root {
+    /* Palet Warna Premium (Gelap + Emas) */
+    --gold-primary: #d4af37;
+    --gold-light: #f3e5ab;
+    --gold-gradient: linear-gradient(45deg, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
+    
+    --bg-dark: #0a0a0b;
+    --bg-dark-elem: #131416;
+    
+    --text-white: #fafafa;
+    --text-muted: #a1a1aa;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body, html {
+    font-family: 'Montserrat', sans-serif;
+    background-color: var(--bg-dark);
+    color: var(--text-white);
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+}
+
+/* Tipografi untuk Elemen Elegan */
+h1, h2, h3, h4, .the-wedding-of, .name-gold, .section-title-gold, .arabic, .heading-subtitle { 
+    font-family: 'Cinzel', serif; 
+    color: var(--gold-primary); 
+    font-weight: 600;
+}
+
+/* Utility Glassmorphism Gold */
+.box-glass {
+    background: rgba(20, 20, 22, 0.6);
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+    border-radius: 12px;
+}
+
+.mt-15 { margin-top: 15px; }
+
+/* -------------------------------
+   1. COVER OVERLAY (BUKA UNDANGAN)
+   ------------------------------- */
+.cover-screen {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100vh; 
+    /* Aesthetic Background dengan overlay gelap */
+    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.8)), url('https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1000&auto=format&fit=crop') center/cover;
+    z-index: 1000; display: flex; justify-content: center; align-items: center; text-align: center;
+    transition: transform 1.2s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.8s ease-in-out;
+}
+.cover-screen.slide-up {
+    transform: translateY(-100vh);
+    opacity: 0;
+    pointer-events: none;
+}
+
+.cover-content { padding: 3rem 2rem; width: 90%; max-width: 500px; }
+.the-wedding-of { font-size: 1.1rem; letter-spacing: 4px; margin-bottom: 1rem; color: var(--text-white); }
+.groom-bride-name { font-size: 2.8rem; margin-bottom: 2rem; background: var(--gold-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;}
+.guest-name { font-size: 1.5rem; margin: 1rem 0; color: var(--gold-light); border-bottom: 1px solid var(--gold-primary); display: inline-block; padding-bottom: 5px; }
+.apology { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 2.5rem; }
+
+/* Tombol Premium */
+.btn-gold { 
+    background: var(--gold-gradient);
+    color: #111; border: none; padding: 12px 30px; font-weight: bold; border-radius: 30px; font-size: 1rem; cursor: pointer; transition: transform 0.3s, box-shadow 0.3s;
+}
+.btn-gold:hover { transform: scale(1.05); box-shadow: 0 0 20px rgba(212, 175, 55, 0.4); }
+
+.btn-outline-gold {
+    background: transparent; border: 1px solid var(--gold-primary); color: var(--gold-primary); padding: 10px 20px; border-radius: 30px; font-weight: bold; cursor: pointer; transition: 0.3s;
+}
+.btn-outline-gold:hover { background: var(--gold-primary); color: #111; }
+
+/* -------------------------------
+   2. KONTEN UTAMA UNDANGAN
+   ------------------------------- */
+.main-content { position: relative; padding-bottom: 90px; } /* Padding untuk bottom nav */
+.hidden { display: none; }
+
+.invite-section { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 6rem 1.5rem; position: relative; }
+.container { max-width: 900px; width: 100%; margin: 0 auto; }
+.text-center { text-align: center; }
+
+/* Hero Beranda */
+.hero-wedding { background: url('https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=1000&auto=format&fit=crop') center/cover; background-attachment: fixed; }
+.overlay-dark { position: absolute; top:0; left:0; width:100%; height:100%; background: linear-gradient(to bottom, rgba(10,10,11,0.5), rgba(10,10,11,1)); }
+.hero-wedding-text { z-index: 2; text-align: center; }
+.heading-subtitle { font-size: 1.5rem; letter-spacing: 5px; color: var(--text-white); margin-bottom: 1rem; }
+.heading-names { font-size: 5rem; margin-bottom: 1rem; text-shadow: 0 5px 15px rgba(0,0,0,1); }
+.heading-date { font-size: 1.2rem; letter-spacing: 2px; color: var(--gold-light); }
+
+.scroll-down-indicator { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); z-index: 2; color: var(--gold-primary); font-size: 1.5rem; }
+.scroll-bounce { animation: bounce 2s infinite; }
+@keyframes bounce { 0%, 20%, 50%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-15px); } 60% { transform: translateY(-7px); } }
+
+/* Profile Mempelai */
+.dark-bg { background-color: var(--bg-dark); }
+.arabic { font-size: 2rem; margin-bottom: 1rem; color: var(--gold-primary); }
+.intro-text { font-size: 0.95rem; line-height: 1.6; margin-bottom: 4rem; color: var(--text-muted); max-width: 600px; margin-left: auto; margin-right: auto; }
+
+.couple-grid { display: flex; flex-direction: column; gap: 4rem; align-items: center; }
+@media(min-width: 768px) { .couple-grid { flex-direction: row; justify-content: space-around; gap: 2rem;} }
+.person { text-align: center; flex: 1; }
+.person-img { width: 220px; height: 220px; margin: 0 auto 1.5rem; border-radius: 50%; border: 3px solid var(--gold-primary); overflow: hidden; padding: 5px; }
+.person-img img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+.name-gold { font-size: 2.2rem; margin-bottom: 0.5rem; }
+.parents { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1rem; line-height: 1.5; }
+.social-link { color: var(--gold-light); text-decoration: none; font-size: 0.9rem; padding: 5px 15px; border-radius: 20px; background: rgba(255,255,255,0.05); }
+
+.and-symbol { font-size: 4rem; color: var(--gold-primary); opacity: 0.5; }
+
+/* Acara / Events */
+.dark-bg-2 { background-color: var(--bg-dark-elem); }
+.section-title-gold { font-size: 3rem; margin-bottom: 3rem; }
+.event-cards { display: flex; flex-direction: column; gap: 2rem; }
+@media(min-width: 768px) { .event-cards { flex-direction: row; } }
+.event-card { flex: 1; padding: 2.5rem 2rem; transition: transform 0.3s; }
+.event-card:hover { transform: translateY(-5px); }
+.event-card h3 { font-size: 1.8rem; margin-bottom: 1.5rem; border-bottom: 1px solid rgba(212, 175, 55, 0.3); padding-bottom: 1rem; }
+.event-details p { margin-bottom: 1.2rem; line-height: 1.6; color: var(--text-white); font-size: 0.95rem;}
+.event-details i { color: var(--gold-primary); width: 25px; text-align: center; font-size: 1.1rem; margin-right: 10px;}
+.event-details strong { color: var(--gold-light); font-size: 1.1rem;}
+
+
+/* -------------------------------
+   3. BOTTOM NAV & AUDIO BUTTON
+   ------------------------------- */
+.mobile-bottom-nav {
+    position: fixed; bottom: 0; left: 0; width: 100%; 
+    display: flex; justify-content: space-around; padding: 12px 0; 
+    border-radius: 15px 15px 0 0; z-index: 100;
+    border-bottom: none; border-left: none; border-right: none;
+}
+.nav-item { display: flex; flex-direction: column; align-items: center; color: var(--text-muted); text-decoration: none; font-size: 0.75rem; gap: 6px; transition: color 0.3s; width: 25%; }
+.nav-item i { font-size: 1.3rem; }
+.nav-item.active, .nav-item:hover { color: var(--gold-primary); }
+
+.audio-control { 
+    position: fixed; bottom: 90px; right: 20px; width: 45px; height: 45px; 
+    border-radius: 50%; color: var(--gold-primary); display: flex; justify-content: center; align-items: center; font-size: 1.5rem; cursor: pointer; z-index: 100; border: 1px solid var(--gold-primary);
+}
+.spin { animation: spin 4s linear infinite; }
+@keyframes spin { 100% { transform: rotate(360deg); } }
+
+
+/* -------------------------------
+   4. MODUL PANEL ADMIN (MENU DEMO MODIFIKASI)
+   ------------------------------- */
+.admin-editor { 
+    position: fixed; top: 20px; left: 20px; width: 320px; 
+    background: #ffffff; color: #1e293b; z-index: 2000; 
+    border-radius: 12px; box-shadow: 0 15px 40px rgba(0,0,0,0.3); 
+    font-family: sans-serif; transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55); 
+}
+.admin-editor.hidden-panel { transform: translateX(calc(-100% - 30px)); }
+
+.admin-header { 
+    background: linear-gradient(135deg, #2563eb, #1d4ed8); color: white; 
+    padding: 15px 20px; border-radius: 12px 12px 0 0; 
+    display: flex; justify-content: space-between; align-items: center; 
+}
+.admin-header h3 { font-family: sans-serif; font-size: 1.1rem; color: white; margin: 0; display: flex; align-items: center; gap: 8px;}
+.admin-header button { background: transparent; border: none; color: white; cursor: pointer; font-size: 1.2rem; }
+
+.admin-body { padding: 20px; background: #f8fafc; border-radius: 0 0 12px 12px; }
+.admin-info { font-size: 0.85rem; color: #475569; margin-bottom: 20px; line-height: 1.5; background: #e0e7ff; padding: 10px; border-radius: 6px; border-left: 3px solid #4f46e5;}
+
+.form-group { margin-bottom: 15px; }
+.form-group label { display: block; font-size: 0.85rem; font-weight: bold; margin-bottom: 6px; color: #334155; }
+.form-group input { width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.95rem; color: #1e293b; transition: border 0.3s; }
+.form-group input:focus { outline: none; border-color: #3b82f6; box-shadow: 0 0 0 2px rgba(59,130,246,0.2); }
+
+@media (max-width: 600px) {
+    .heading-names { font-size: 3rem; }
+    .event-card { padding: 1.5rem; }
+}

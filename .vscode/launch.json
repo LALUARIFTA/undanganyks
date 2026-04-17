@@ -1,0 +1,18 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Buka di Chrome (Local Server)",
+            "type": "chrome",
+            "request": "launch",
+            "url": "http://localhost:8045",
+            "webRoot": "${workspaceFolder}"
+        },
+        {
+            "name": "Buka File Langsung",
+            "type": "chrome",
+            "request": "launch",
+            "file": "${workspaceFolder}/index.html"
+        }
+    ]
+}
