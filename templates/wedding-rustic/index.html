@@ -392,11 +392,7 @@ img{display:block;max-width:100%}
     </section>
 
     <!-- GALERI -->
-<<<<<<< HEAD
-    <section id="s-galeri" class="inv-s gal-s">
-=======
     <section id="s-galeri" class="inv-section gal-s">
->>>>>>> 07d218d (kiw)
         <div class="ctr"><div class="s-head rv rv-u"><p class="s-eye">Galeri</p><h2 class="s-title">Momen <em>Berharga</em></h2></div>
         <div class="gal-g rv rv-z">
             <div class="gal-it big" onclick="openLb(0)"><img src="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=800" alt=""><div class="gal-ov"><i class="fa-solid fa-expand"></i></div></div>
@@ -501,19 +497,11 @@ const D={
 };
 const $=id=>document.getElementById(id), set=(id,v)=>{const e=$(id);if(e)e.textContent=v};
 
-<<<<<<< HEAD
 function populate(){ if(p("music")){const a=document.getElementById("bgm")||document.getElementById("bgAudio")||document.getElementById("bgMusic");if(a){a.src=p("music");let m=p("music").split("/").pop().split(".")[0].replace(/%20/g, " ");let t=document.querySelector(".a-title, .audio-title");if(t)t.textContent=decodeURI(m);}}
     const c=`${D.groom} & ${D.bride}`;
     
     // --- Image Params ---
-    const iParam = (k) => { const v = typeof param !== 'undefined' ? param(k) : (typeof p !== 'undefined' ? p(k) : null); return v ? decodeURIComponent(v) : null; };
-=======
-function populate(){ if(p("music")){const a=document.getElementById("bgm")||document.getElementById("bgAudio")||document.getElementById("bgMusic");if(a){a.src=p("music");}}
-    const c=`${D.groom} & ${D.bride}`;
-    
-    // --- Image Params ---
     const iParam = (k) => { const v = p(k); return v ? decodeURIComponent(v) : null; };
->>>>>>> 07d218d (kiw)
     if (iParam('hero')) {
         document.querySelectorAll('.hero-bg, .hero-batik-bg, .hero-bg-img, .hero-img').forEach(e => {
             if(e.tagName === 'IMG') e.src = iParam('hero'); else e.style.backgroundImage = `url("${iParam('hero')}")`;
@@ -524,13 +512,8 @@ function populate(){ if(p("music")){const a=document.getElementById("bgm")||docu
         if (iParam('imgPria')) mPx[0].src = iParam('imgPria');
         if (iParam('imgWanita')) mPx[1].src = iParam('imgWanita');
     }
-<<<<<<< HEAD
     const arr = typeof GALLERY_IMGS !== 'undefined' ? GALLERY_IMGS : (typeof LB_IMGS !== 'undefined' ? LB_IMGS : (typeof IMGS !== 'undefined' ? IMGS : null));
-    const tgImg = document.querySelectorAll('.gallery-item img, .galeri-item img, .gallery-img img, .gal-item img');
-=======
-    const arr = typeof IMGS !== 'undefined' ? IMGS : null;
     const tgImg = document.querySelectorAll('.gallery-item img, .galeri-item img, .gallery-img img, .gal-item img, .gal-it img');
->>>>>>> 07d218d (kiw)
     for (let i = 1; i <= 6; i++) {
         const u = iParam("gal" + i);
         if(u) {
@@ -608,7 +591,7 @@ function initLeaves(){
         b.appendChild(l);
     }
 }
-const IMGS=['https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1200','https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?q=80&w=1200','https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=1200','https://images.unsplash.com/photo-1520854221256-17451cc331bf?q=80&w=1200','https://images.unsplash.com/photo-1606800052052-a08af7148866?q=80&w=1200'];
+const IMGS=['https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1200','https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?q=80&w=1200','https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=1200','https://images.unsplash.com/photo-1520854221256-17451cc331bf?q=80&w=1200','https://images.unsplash.com/photo-1606800052052-a08af7148866?q=80&w=1200','https://images.unsplash.com/photo-1606800052052-a08af7148866?q=80&w=1200'];
 let lbI=0;
 function openLb(i){lbI=i;const lb=$('lb'),img=$('lb-img'),c=$('lb-c');if(!lb||!img)return;img.src=IMGS[i];if(c)c.textContent=`${i+1} / ${IMGS.length}`;lb.classList.add('open');document.body.style.overflow='hidden';}
 function closeLb(){$('lb')?.classList.remove('open');document.body.style.overflow='';}
@@ -617,5 +600,3 @@ document.addEventListener('keydown',e=>{if(!$('lb')?.classList.contains('open'))
 </script>
 </body>
 </html>
-
-

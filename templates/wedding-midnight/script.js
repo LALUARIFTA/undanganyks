@@ -52,13 +52,8 @@ const $ = (id) => document.getElementById(id);
 const setText = (id, val) => { const el=$(id); if(el) el.textContent = val; };
 const setHTML = (id, val) => { const el=$(id); if(el) el.innerHTML = val; };
 
-<<<<<<< HEAD
-function populateData(){ if(param("music")){const a=document.getElementById("bgm")||document.getElementById("bgAudio")||document.getElementById("bgMusic");if(a){a.src=param("music");let m=param("music").split("/").pop().split(".")[0].replace(/%20/g, " ");let t=document.querySelector(".a-title, .audio-title");if(t)t.textContent=decodeURI(m);}}
-    if(param('music')) { const a = document.getElementById('bgAudio'); if(a) a.src = param('music'); }
-=======
 function populateData(){ 
-    if(param("music")){const a=document.getElementById("bgm")||document.getElementById("bgAudio")||document.getElementById("bgMusic");if(a){a.src=param("music");}}
->>>>>>> 07d218d (kiw)
+    if(param("music")){const a=document.getElementById("bgm")||document.getElementById("bgAudio")||document.getElementById("bgMusic");if(a){a.src=param("music");let m=param("music").split("/").pop().split(".")[0].replace(/%20/g, " ");let t=document.querySelector(".a-title, .audio-title");if(t)t.textContent=decodeURI(m);}}
     
     // --- Image Params ---
     const iParam = (k) => { const v = param(k); return v ? decodeURIComponent(v) : null; };
@@ -67,36 +62,20 @@ function populateData(){
             if(e.tagName === 'IMG') e.src = iParam('hero'); else e.style.backgroundImage = `url("${iParam('hero')}")`;
         });
     }
-<<<<<<< HEAD
-    const mPx = document.querySelectorAll('.mempelai-photo img, .profile-photo img, .profile-img img');
-=======
     const mPx = document.querySelectorAll('.mempelai-photo img, .profile-photo img, .profile-img img, .p-photo img');
->>>>>>> 07d218d (kiw)
     if (mPx.length >= 2) {
         if (iParam('imgPria')) mPx[0].src = iParam('imgPria');
         if (iParam('imgWanita')) mPx[1].src = iParam('imgWanita');
     }
-<<<<<<< HEAD
-    const arr = typeof GALLERY_IMGS !== 'undefined' ? GALLERY_IMGS : (typeof LB_IMGS !== 'undefined' ? LB_IMGS : null);
-    const tgImg = document.querySelectorAll('.gallery-item img, .galeri-item img, .gallery-img img');
-    for (let i = 1; i <= 6; i++) {
-        const u = iParam(`gal${i}`);
-=======
     const arr = typeof GALLERY_IMGS !== 'undefined' ? GALLERY_IMGS : (typeof LB_IMGS !== 'undefined' ? LB_IMGS : (typeof IMGS !== 'undefined' ? IMGS : null));
     const tgImg = document.querySelectorAll('.gallery-item img, .galeri-item img, .gallery-img img, .gal-item img, .gal-it img');
     for (let i = 1; i <= 6; i++) {
         const u = iParam("gal" + i);
->>>>>>> 07d218d (kiw)
         if(u) {
             if(arr && arr[i-1] !== undefined) arr[i-1] = u;
             if(tgImg.length >= i && tgImg[i-1]) tgImg[i-1].src = u;
         }
     }
-<<<<<<< HEAD
-
-    const couple = `${D.groom} & ${D.bride}`;
-=======
->>>>>>> 07d218d (kiw)
 
     const couple = `${D.groom} & ${D.bride}`;
     document.title = `Undangan Pernikahan | ${couple}`;
@@ -206,7 +185,6 @@ function initCover() {
 }
 
 
-// ─── 4. SCROLL PROGRESS BAR ────────────────────────────────
 // ─── 4. PREMIUM PARALLAX & SCROLL EFFECTS ──────────────────
 function initScrollEffects() {
     const bar = $('scrollProgress');
@@ -506,5 +484,3 @@ document.addEventListener('DOMContentLoaded', () => {
     initAudio();
     initBottomNav();
 });
-
-

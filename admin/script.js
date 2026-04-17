@@ -12,10 +12,7 @@ const TEMPLATE_PATHS = {
     jawa:     '../templates/wedding-jawa/index.html',
     bali:     '../templates/wedding-bali/index.html',
     aether:   '../templates/wedding-aether/index.html',
-<<<<<<< HEAD
-=======
     premium:  '../templates/wedding-premium/index.html',
->>>>>>> 07d218d (kiw)
 };
 const TEMPLATE_META = {
     midnight: { icon: '🌙', color: 'rgba(212,175,55,0.15)', label: 'Midnight Gold' },
@@ -24,10 +21,7 @@ const TEMPLATE_META = {
     jawa:     { icon: '🏯', color: 'rgba(92,10,20,0.15)',   label: 'Jawa Kraton'    },
     bali:     { icon: '🌺', color: 'rgba(13,77,77,0.15)',   label: 'Bali Pura'      },
     aether:   { icon: '✨', color: 'rgba(212,175,55,0.15)', label: '3D Aether'      },
-<<<<<<< HEAD
-=======
     premium:  { icon: '💎', color: 'rgba(99,102,241,0.15)', label: 'Premium Luxe'   },
->>>>>>> 07d218d (kiw)
 };
 
 // ─── State
@@ -36,6 +30,7 @@ let currentUrl      = '';
 let debounceTimer   = null;
 let rsvpData        = [];
 let rsvpSheetsUrl   = localStorage.getItem('lumina_sheets_url') || '';
+let isInitialized   = false;
 
 // ─── Utils
 const $ = id => document.getElementById(id);
@@ -53,20 +48,58 @@ function toast(msg, dur = 2800) {
 // ════════════════════════════════════════════════════════════
 // 1. LOGIN / LOGOUT
 // ════════════════════════════════════════════════════════════
+function doLogin() {
+    const pw = val('loginPassword');
+    const loginScreen = $('loginScreen');
+    const dashboard   = $('dashboard');
+    const err = $('loginError');
+    const inp = $('loginPassword');
+    const btn = $('btnLogin');
+
+    if (!pw) { toast('⚠️ Please enter the access key'); return; }
+
+    // Visual feedback
+    btn?.classList.add('loading');
+    if (btn) btn.disabled = true;
+
+    setTimeout(() => {
+        if (pw === ADMIN_PASS) {
+            sessionStorage.setItem('lumina_admin', 'true');
+            loginScreen?.classList.add('hidden');
+            dashboard?.classList.remove('hidden');
+            onDashboardReady();
+            toast('✅ Access Granted. Welcome back!');
+        } else {
+            if (err) err.textContent = '❌ Invalid security key. Access denied.';
+            if (inp) {
+                inp.style.borderColor = 'var(--danger)';
+                inp.parentElement.classList.add('shake');
+                setTimeout(() => {
+                    if (err) err.textContent = '';
+                    inp.style.borderColor = '';
+                    inp.parentElement.classList.remove('shake');
+                }, 2500);
+            }
+            if (btn) btn.disabled = false;
+            btn?.classList.remove('loading');
+        }
+    }, 800);
+}
+
 function initAuth() {
     const loginScreen = $('loginScreen');
     const dashboard   = $('dashboard');
 
     if (sessionStorage.getItem('lumina_admin') === 'true') {
-        loginScreen.classList.add('hidden');
-        dashboard.classList.remove('hidden');
+        loginScreen?.classList.add('hidden');
+        dashboard?.classList.remove('hidden');
         onDashboardReady();
     }
 
     $('btnLogin')?.addEventListener('click', doLogin);
     $('loginPassword')?.addEventListener('keypress', e => { if (e.key === 'Enter') doLogin(); });
 
-    // Interactive Mouse Parallax (Luxe Feature)
+    // Interactive Mouse Parallax
     document.addEventListener('mousemove', e => {
         if (sessionStorage.getItem('lumina_admin') === 'true') return;
         const x = (e.clientX / window.innerWidth) - 0.5;
@@ -85,10 +118,11 @@ function initAuth() {
         }
     });
 
-    // Password Toggle Logic
+    // Password Toggle
     $('togglePw')?.addEventListener('click', () => {
         const inp = $('loginPassword');
         const ico = $('togglePw').querySelector('i');
+        if (!inp || !ico) return;
         if (inp.type === 'password') {
             inp.type = 'text';
             ico.classList.replace('fa-eye', 'fa-eye-slash');
@@ -98,31 +132,9 @@ function initAuth() {
         }
     });
 
-    function doLogin() {
-        const pw = $('loginPassword')?.value;
-        if (pw === ADMIN_PASS) {
-            sessionStorage.setItem('lumina_admin', 'true');
-            loginScreen.classList.add('hidden');
-            dashboard.classList.remove('hidden');
-            onDashboardReady();
-        } else {
-            const err = $('loginError');
-            if (err) err.textContent = '❌ Invalid security key. Access denied.';
-            if ($('loginPassword')) {
-                $('loginPassword').style.borderColor = 'var(--danger)';
-                $('loginPassword').parentElement.classList.add('shake');
-                setTimeout(() => {
-                    if (err) err.textContent = '';
-                    $('loginPassword').style.borderColor = '';
-                    $('loginPassword').parentElement.classList.remove('shake');
-                }, 2500);
-            }
-        }
-    }
-
     $('btnLogout')?.addEventListener('click', () => {
         sessionStorage.removeItem('lumina_admin');
-        window.location.reload(); // Hard reload for clean state
+        window.location.reload();
     });
 }
 
@@ -142,11 +154,7 @@ function initNav() {
     const links    = document.querySelectorAll('.sl[data-page]');
     const pages    = document.querySelectorAll('.admin-page');
     const sidebar  = $('sidebar');
-<<<<<<< HEAD
-    const toggle   = $('topbarToggle');
-=======
     const toggle   = $('sidebarToggle');
->>>>>>> 07d218d (kiw)
     const overlay  = $('sidebarOverlay');
     const closeBtn = $('sidebarClose');
 
@@ -355,8 +363,6 @@ function initEditor() {
     // Save invitation
     $('btnSaveInv')?.addEventListener('click', saveInvitation);
 
-    // Sheets guide modal — handled by initModals()
-
     // Initial preview
     updatePreview();
 }
@@ -388,7 +394,7 @@ function buildParams() {
     };
     Object.entries(fields).forEach(([key, id]) => {
         const v = val(id);
-        params.set(key, v); // Send even if empty to override template defaults
+        params.set(key, v);
     });
 
     // Our Story data
@@ -401,17 +407,11 @@ function buildParams() {
         if (desc) params.set(`s${i}desc`, desc);
     }
 
-    // Gallery Data (Momen Bersama)
-<<<<<<< HEAD
+    // Gallery Data
     document.querySelectorAll('.f-gallery').forEach(input => {
         const idx = input.dataset.idx;
-        const val = input.value.trim();
-        if (val) params.set(`gal${idx}`, val);
-=======
-    document.querySelectorAll('.f-gallery').forEach((input, i) => {
-        const val = input.value.trim();
-        if (val) params.set(`gal${i + 1}`, val);
->>>>>>> 07d218d (kiw)
+        const v = input.value.trim();
+        if (v) params.set(`gal${idx}`, v);
     });
 
     return params;
@@ -502,10 +502,6 @@ function initAppwrite() {
         toast('✅ Config Appwrite & Storage Disimpan!');
     });
 
-    $('btnGuideAw')?.addEventListener('click', () => {
-        $('awModal')?.classList.remove('hidden');
-    });
-
     setupAppwriteClient();
     initUploadHandlers();
     updateAwStatusUI();
@@ -536,24 +532,16 @@ function updateAwStatusUI() {
 }
 
 function setupAppwriteClient() {
-    if (typeof Appwrite === 'undefined') {
-        console.warn('Appwrite SDK belum dimuat.');
-        return;
-    }
-    if (!awConfig.projectId) {
-        console.warn('Appwrite Project ID belum diisi.');
-        return;
-    }
+    if (typeof Appwrite === 'undefined') return;
+    if (!awConfig.projectId) return;
+
     try {
         awClient = new Appwrite.Client();
         awClient.setEndpoint(awConfig.endpoint).setProject(awConfig.projectId);
-        // Storage selalu diinisialisasi jika projectId ada
         awStorage = new Appwrite.Storage(awClient);
-        // Database hanya jika databaseId terkonfigurasi
         if (awConfig.databaseId) {
             awDb = new Appwrite.Databases(awClient);
         }
-        console.log('✅ Appwrite Client berhasil diinisialisasi.');
     } catch(err) {
         console.error('Appwrite Init Error:', err);
     }
@@ -565,23 +553,9 @@ function initUploadHandlers() {
             const file = e.target.files[0];
             if (!file) return;
 
-            // Cek apakah SDK sudah dimuat
-            if (typeof Appwrite === 'undefined') {
-                toast('❌ Appwrite SDK gagal dimuat. Cek koneksi internet.');
-                return;
-            }
-
-            // Cek Project ID
-            if (!awConfig.projectId) {
-                toast('⚠️ Isi Project ID Appwrite di bagian "Undangan Tersimpan" terlebih dahulu!');
-                return;
-            }
-
-            // Re-init storage jika belum ada (misal config baru saja diisi)
             if (!awStorage) setupAppwriteClient();
-
             if (!awStorage) {
-                toast('❌ Appwrite Storage tidak dapat diinisialisasi. Cek Project ID.');
+                toast('⚠️ Konfigurasi Appwrite Project ID diperlukan untuk upload!');
                 return;
             }
 
@@ -591,30 +565,18 @@ function initUploadHandlers() {
 
             label.classList.add('loading');
             try {
-                const response = await awStorage.createFile(
-                    bucketId,
-                    Appwrite.ID.unique(),
-                    file
-                );
-
+                const response = await awStorage.createFile(bucketId, Appwrite.ID.unique(), file);
                 const fileUrl = `${awConfig.endpoint}/storage/buckets/${bucketId}/files/${response.$id}/view?project=${awConfig.projectId}&mode=admin`;
-
                 const targetInput = $(targetId);
                 if (targetInput) {
                     targetInput.value = fileUrl;
                     updateImagePreviews();
                     updatePreview();
-                    toast('✅ Foto berhasil diunggah ke Appwrite!');
+                    toast('✅ Foto berhasil diunggah!');
                 }
             } catch (err) {
                 console.error('Upload Error:', err);
-                if (err.code === 401) {
-                    toast('❌ Akses ditolak. Pastikan izin Bucket diset ke "Any" di Appwrite.');
-                } else if (err.code === 404) {
-                    toast('❌ Bucket tidak ditemukan. Cek Bucket ID.');
-                } else {
-                    toast('❌ Gagal unggah: ' + (err.message || 'Unknown error'));
-                }
+                toast('❌ Gagal unggah: ' + (err.message || 'Error'));
             } finally {
                 label.classList.remove('loading');
             }
@@ -627,8 +589,6 @@ async function fetchSavedList() {
         setSavedLocalFallback();
         return;
     }
-    const list = $('invList');
-    if (list) list.innerHTML = `<div class="empty-state"><i class="fa-solid fa-cloud-arrow-down" style="color:#fd366e"></i><p>Mengambil data dari Appwrite...</p></div>`;
     
     try {
         const response = await awDb.listDocuments(awConfig.databaseId, awConfig.collectionId);
@@ -644,11 +604,9 @@ async function fetchSavedList() {
         }));
         setSavedLocal(MEM_SAVED);
         renderSavedList();
-        toast('☁️ Appwrite Synced!');
     } catch (err) {
         console.error("Appwrite Fetch Error", err);
         setSavedLocalFallback();
-        toast('⚠️ Appwrite Error. Pakai data lokal.');
     }
 }
 
@@ -660,9 +618,7 @@ function setSavedLocal(data) {
     localStorage.setItem('lumina_invitations', JSON.stringify(data));
 }
 
-function getSaved() {
-    return MEM_SAVED;
-}
+function getSaved() { return MEM_SAVED; }
 
 async function saveInvitation() {
     const groom = val('f-groom');
@@ -684,53 +640,33 @@ async function saveInvitation() {
     };
 
     if (awDb && awConfig.databaseId) {
-        const btn = $('btnSaveInv');
-        const oldTxt = btn.innerHTML;
-        btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Menyimpan...`;
-        btn.disabled = true;
         try {
             await awDb.createDocument(awConfig.databaseId, awConfig.collectionId, Appwrite.ID.unique(), invData);
             await fetchSavedList();
-            toast(`💾 Disimpan ke Appwrite Cloud!`);
+            toast(`💾 Tersimpan di Cloud!`);
         } catch(err) {
-            console.error('Appwrite Save Error:', err);
-            toast('❌ Gagal simpan ke Appwrite, mengalihkan ke Local Storage...');
-            
-            // Fallback ke Local Storage jika Appwrite gagal
-            const invLocal = {
-                id: invId,
-                groom, bride,
-                groomFull: rawForm.groomFull, brideFull: rawForm.brideFull,
-                date: rawForm.date,
-                template: currentTemplate,
-                url,
-                savedAt: new Date().toLocaleDateString('id-ID'),
-                formData: rawForm
-            };
-            MEM_SAVED.push(invLocal);
-            setSavedLocal(MEM_SAVED);
-            renderSavedList();
-            setTimeout(() => toast('💾 Disimpan sementara ke Local Storage!'), 3000);
-        } finally {
-            btn.innerHTML = oldTxt;
-            btn.disabled = false;
+            console.error('Save Error:', err);
+            toast('❌ Gagal simpan ke Cloud, menyimpan ke Lokal...');
+            saveLocalOnly(invId, groom, bride, rawForm, url);
         }
     } else {
-        const invLocal = {
-            id: Date.now(),
-            groom, bride,
-            groomFull: rawForm.groomFull, brideFull: rawForm.brideFull,
-            date: rawForm.date,
-            template: currentTemplate,
-            url,
-            savedAt: new Date().toLocaleDateString('id-ID'),
-            formData: rawForm
-        };
-        MEM_SAVED.push(invLocal);
-        setSavedLocal(MEM_SAVED);
-        renderSavedList();
-        toast(`💾 Disimpan ke Local Storage!`);
+        saveLocalOnly(invId, groom, bride, rawForm, url);
     }
+}
+
+function saveLocalOnly(id, groom, bride, formData, url) {
+    const invLocal = {
+        id, groom, bride,
+        date: formData.date || 'TBD',
+        template: currentTemplate,
+        url,
+        savedAt: new Date().toLocaleDateString('id-ID'),
+        formData
+    };
+    MEM_SAVED.push(invLocal);
+    setSavedLocal(MEM_SAVED);
+    renderSavedList();
+    toast(`💾 Tersimpan di Lokal!`);
 }
 
 function renderSavedList() {
@@ -741,7 +677,7 @@ function renderSavedList() {
     set('invTotalStat', `Total: ${saved.length} Undangan`);
 
     if (!saved.length) {
-        list.innerHTML = `<div class="empty-state"><i class="fa-solid fa-box-open"></i><p>Belum ada undangan tersimpan.</p><small>Buat undangan di Live Editor lalu klik "Simpan Undangan".</small></div>`;
+        list.innerHTML = `<div class="empty-state"><i class="fa-solid fa-box-open"></i><p>Belum ada undangan tersimpan.</p></div>`;
         return;
     }
 
@@ -749,58 +685,48 @@ function renderSavedList() {
         const meta = TEMPLATE_META[inv.template] || TEMPLATE_META.midnight;
         return `
         <div class="inv-card">
-            <div class="inv-icon" style="background:${meta.color}; color:#fff">${meta.icon}</div>
+            <div class="inv-icon" style="background:${meta.color}">${meta.icon}</div>
             <div class="inv-info">
                 <div class="inv-names">${inv.groom} & ${inv.bride}</div>
                 <div class="inv-meta">
                     <span><i class="fa-regular fa-calendar"></i> ${inv.date}</span>
-                    <span><i class="fa-solid fa-palette"></i> <em>${meta.label}</em></span>
-                    <span><i class="fa-regular fa-clock"></i> ${inv.savedAt || '-'}</span>
+                    <span><i class="fa-solid fa-palette"></i> ${meta.label}</span>
                 </div>
             </div>
             <div class="inv-actions">
-                <button class="inv-btn-edit" onclick="loadInvToEditor('${inv.id || inv.uid}')"><i class="fa-solid fa-pen"></i> Edit</button>
+                <button class="inv-btn-edit" onclick="loadInvToEditor('${inv.id}')"><i class="fa-solid fa-pen"></i> Edit</button>
                 <a href="${inv.url}" target="_blank" class="inv-btn-p"><i class="fa-solid fa-eye"></i> Preview</a>
-                <button class="inv-btn-d" onclick="deleteInvitation('${inv.id || inv.uid}')"><i class="fa-solid fa-trash"></i></button>
+                <button class="inv-btn-d" onclick="deleteInvitation('${inv.id}')"><i class="fa-solid fa-trash"></i></button>
             </div>
         </div>`;
     }).join('');
 }
 
 window.deleteInvitation = async function(id) {
-    if (awDb && awConfig.databaseId && typeof id === 'string' && id.length > 15) {
-        // Appwrite IDs are usually 20 chars long
+    if (awDb && awConfig.databaseId && id.toString().length > 15) {
         try {
             await awDb.deleteDocument(awConfig.databaseId, awConfig.collectionId, id);
             await fetchSavedList();
-            toast('🗑️ Undangan dihapus dari Cloud.');
-        } catch(err) {
-            console.error(err);
-            toast('❌ Gagal hapus dari Appwrite.');
-        }
+            toast('🗑️ Dihapus dari Cloud.');
+        } catch(err) { toast('❌ Gagal hapus.'); }
     } else {
-        // LocalStorage fallback deletion
-        MEM_SAVED = MEM_SAVED.filter(i => String(i.id) !== String(id));
+        MEM_SAVED = MEM_SAVED.filter(i => i.id.toString() !== id.toString());
         setSavedLocal(MEM_SAVED);
         renderSavedList();
-        toast('🗑️ Undangan dihapus.');
+        toast('🗑️ Dihapus.');
     }
 };
 
 window.loadInvToEditor = function(id) {
-    const inv = getSaved().find(i => String(i.id) === String(id));
+    const inv = getSaved().find(i => i.id.toString() === id.toString());
     if (!inv || !inv.formData) return;
 
-    // Switch to editor page
-    document.querySelectorAll('.sl[data-page]').forEach(l => l.classList.remove('active'));
-    document.querySelector('.sl[data-page="editor"]')?.classList.add('active');
-    document.querySelectorAll('.admin-page').forEach(p => p.classList.remove('active'));
-    $('page-editor')?.classList.add('active');
-    set('topbarTitle', 'Live Editor');
+    // Switch to editor
+    const editorLink = document.querySelector('.sl[data-page="editor"]');
+    if (editorLink) editorLink.click();
 
-    // Fill form fields from saved formData
     const fd = inv.formData;
-    const fieldMap = {
+    const fields = {
         'f-groom': fd.groom, 'f-bride': fd.bride,
         'f-groomFull': fd.groomFull, 'f-brideFull': fd.brideFull,
         'f-groomParent': fd.groomParent, 'f-brideParent': fd.brideParent,
@@ -815,312 +741,192 @@ window.loadInvToEditor = function(id) {
         'f-bankName': fd.bankName, 'f-bankAcc': fd.bankAcc, 'f-bankHolder': fd.bankHolder,
         'f-wa': fd.wa, 'f-guest': fd.guest,
         'f-sheetsUrl': fd.sheetsUrl, 'f-invId': fd.invId,
-        'f-music': fd.music,
+        'f-music': fd.music, 'f-imgHero': fd.hero, 'f-imgPria': fd.imgPria, 'f-imgWanita': fd.imgWanita
     };
-    Object.entries(fieldMap).forEach(([id, v]) => { const el = $(id); if (el && v) el.value = v; });
-
-    // Fill story fields
+    
+    Object.entries(fields).forEach(([id, v]) => { const el = $(id); if (el) el.value = v || ''; });
+    
+    // Stories
     for (let i = 1; i <= 4; i++) {
         const t = document.querySelector(`.s-title[data-idx="${i}"]`);
         const d = document.querySelector(`.s-date[data-idx="${i}"]`);
-        const desc = document.querySelector(`.s-desc[data-idx="${i}"]`);
-        if (t && fd[`s${i}t`]) t.value = fd[`s${i}t`];
-        if (d && fd[`s${i}d`]) d.value = fd[`s${i}d`];
-        if (desc && fd[`s${i}desc`]) desc.value = fd[`s${i}desc`];
+        const de = document.querySelector(`.s-desc[data-idx="${i}"]`);
+        if (t) t.value = fd[`s${i}t`] || '';
+        if (d) d.value = fd[`s${i}d`] || '';
+        if (de) de.value = fd[`s${i}desc`] || '';
     }
 
-    // Set template
-    currentTemplate = inv.template;
-    document.querySelectorAll('.tpl-opt').forEach(o => {
-        o.classList.toggle('selected', o.dataset.tpl === currentTemplate);
+    // Gallery
+    document.querySelectorAll('.f-gallery').forEach(input => {
+        const idx = input.dataset.idx;
+        input.value = fd[`gal${idx}`] || '';
     });
 
+    currentTemplate = inv.template;
+    document.querySelectorAll('.tpl-opt').forEach(o => o.classList.toggle('selected', o.dataset.tpl === currentTemplate));
+    
     updatePreview();
-    toast('✅ Data undangan dimuat ke editor!');
+    toast('✅ Data dimuat ke editor!');
 };
 
 // ════════════════════════════════════════════════════════════
-// 5. DAFTAR TAMU (Guest List Generator)
+// 5. DAFTAR TAMU
 // ════════════════════════════════════════════════════════════
 function initGuestList() {
     $('btnGenTamu')?.addEventListener('click', generateGuestLinks);
-    $('btnCopyAll')?.addEventListener('click', copyAllLinks);
-    $('btnExportTxt')?.addEventListener('click', exportLinks);
+    $('btnCopyAll')?.addEventListener('click', () => {
+        const txt = (window._tamuLinks || []).map(l => `${l.name}: ${l.url}`).join('\n');
+        if (txt) navigator.clipboard.writeText(txt).then(() => toast('📋 Semua disalin!'));
+    });
+    $('btnExportTxt')?.addEventListener('click', () => {
+        const txt = (window._tamuLinks || []).map(l => `${l.name}\n${l.url}`).join('\n\n');
+        if (!txt) return;
+        const blob = new Blob([txt], { type: 'text/plain' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'daftar-tamu.txt';
+        a.click();
+    });
 }
 
 function populateTamuSelect() {
     const sel = $('tamuSelectInv');
     if (!sel) return;
     const saved = getSaved();
-    sel.innerHTML = '<option value="">-- Pilih undangan --</option>';
-    saved.forEach(inv => {
-        const opt = document.createElement('option');
-        opt.value = inv.url;
-        opt.textContent = `${inv.groom} & ${inv.bride} (${inv.date})`;
-        sel.appendChild(opt);
-    });
-    sel.addEventListener('change', () => {
-        if (sel.value) $('tamuBaseUrl').value = sel.value;
-    });
+    sel.innerHTML = '<option value="">-- Pilih undangan --</option>' + saved.map(i => `<option value="${i.url}">${i.groom} & ${i.bride} (${i.date})</option>`).join('');
+    sel.onchange = () => { if (sel.value) $('tamuBaseUrl').value = sel.value; };
 }
 
 function generateGuestLinks() {
-    let baseUrl = val('tamuBaseUrl') || $('tamuSelectInv')?.value;
-    if (!baseUrl) { toast('⚠️ Pilih undangan atau isi Base URL terlebih dahulu!'); return; }
-
-    const namesRaw = $('tamuNames')?.value.trim();
-    if (!namesRaw) { toast('⚠️ Isi daftar nama tamu terlebih dahulu!'); return; }
-
+    const baseUrl = val('tamuBaseUrl');
+    const namesRaw = val('tamuNames');
+    if (!baseUrl || !namesRaw) { toast('⚠️ Isi Base URL dan Nama Tamu!'); return; }
+    
     const names = namesRaw.split('\n').map(n => n.trim()).filter(Boolean);
-    if (!names.length) { toast('⚠️ Tidak ada nama yang valid!'); return; }
-
-    // Build links
     const links = names.map((name, i) => {
-        const url = new URL(baseUrl);
-        url.searchParams.set('guest', name);
-        return { no: i + 1, name, url: url.toString() };
+        const u = new URL(baseUrl);
+        u.searchParams.set('guest', name);
+        return { no: i+1, name, url: u.toString() };
     });
 
-    // Render table
     const tbody = $('tamuTableBody');
     if (tbody) {
-        tbody.innerHTML = links.map(({ no, name, url }) => `
+        tbody.innerHTML = links.map(l => `
             <tr>
-                <td>${no}</td>
-                <td><strong>${name}</strong></td>
-                <td class="tamu-link-cell" title="${url}">${url}</td>
+                <td>${l.no}</td>
+                <td><strong>${l.name}</strong></td>
+                <td class="tamu-link-cell">${l.url}</td>
                 <td class="tamu-btns">
-                    <button class="tbl-btn tbl-btn-copy" onclick="navigator.clipboard.writeText('${url.replace(/'/g,"\\'")}').then(()=>showToast('📋 Disalin!'))"><i class="fa-regular fa-copy"></i> Salin</button>
-                    <button class="tbl-btn tbl-btn-wa" onclick="window.open('https://wa.me/?text='+encodeURIComponent('Kepada Yth: ${name}\\n\\nBerikut link undangan digital Anda:\\n${url.replace(/'/g,"\\'")}'),'_blank')"><i class="fa-brands fa-whatsapp"></i> WA</button>
-                    <button class="tbl-btn tbl-btn-eye" onclick="window.open('${url.replace(/'/g,"\\'")}','_blank')"><i class="fa-solid fa-eye"></i></button>
+                    <button class="tbl-btn" onclick="navigator.clipboard.writeText('${l.url}').then(()=>toast('📋 Disalin!'))"><i class="fa-regular fa-copy"></i></button>
+                    <button class="tbl-btn tbl-btn-wa" onclick="window.open('https://wa.me/?text='+encodeURIComponent('Halo *${l.name}*,\\nBerikut link undangan pernikahan kami:\\n${l.url}'))"><i class="fa-brands fa-whatsapp"></i></button>
                 </td>
             </tr>
         `).join('');
     }
-    set('tamuCount', `${links.length} Link Berhasil Di-Generate`);
-    $('tamuResult')?.classList.remove('hidden');
-
-    // Store for export
     window._tamuLinks = links;
-    toast(`✅ ${links.length} link tamu berhasil di-generate!`);
+    set('tamuCount', `${links.length} Link Berhasil`);
+    $('tamuResult')?.classList.remove('hidden');
 }
-
-function copyAllLinks() {
-    const links = window._tamuLinks || [];
-    if (!links.length) return;
-    const text = links.map(l => `${l.name}: ${l.url}`).join('\n');
-    navigator.clipboard.writeText(text).then(() => toast('📋 Semua link berhasil disalin!'));
-}
-
-function exportLinks() {
-    const links = window._tamuLinks || [];
-    if (!links.length) return;
-    const text = links.map(l => `${l.name}\n${l.url}`).join('\n\n');
-    const blob = new Blob([text], { type: 'text/plain' });
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
-    a.download = 'daftar-link-tamu.txt';
-    a.click();
-    toast('📄 File berhasil di-download!');
-}
-
-window.showToast = (msg) => toast(msg);
 
 // ════════════════════════════════════════════════════════════
 // 6. RSVP DASHBOARD
 // ════════════════════════════════════════════════════════════
 function initRsvpDashboard() {
-    // Pre-fill if URL saved
-    if (rsvpSheetsUrl) {
-        const input = $('rsvpSheetsUrl');
-        if (input) input.value = rsvpSheetsUrl;
-        $('rsvpUrlVal') && set('rsvpUrlVal', rsvpSheetsUrl.substring(0, 50) + '...');
-        fetchRsvpData();
-    }
+    if (rsvpSheetsUrl) fetchRsvpData();
 
     $('btnConnectSheets')?.addEventListener('click', () => {
         const url = val('rsvpSheetsUrl');
-        if (!url || !url.startsWith('https://script.google.com')) {
-            toast('⚠️ Masukkan URL Google Apps Script yang valid!');
-            return;
-        }
+        if (!url || !url.startsWith('https://script.google.com')) { toast('⚠️ URL Script tidak valid!'); return; }
         rsvpSheetsUrl = url;
         localStorage.setItem('lumina_sheets_url', url);
-        $('f-sheetsUrl') && ($('f-sheetsUrl').value = url);
-        set('rsvpUrlVal', url.substring(0, 50) + '...');
         fetchRsvpData();
     });
 
     $('btnRefreshRsvp')?.addEventListener('click', fetchRsvpData);
     $('btnRefreshRsvpTop')?.addEventListener('click', fetchRsvpData);
-
-    $('btnOpenSheets')?.addEventListener('click', () => {
-        if (rsvpSheetsUrl) {
-            window.open(rsvpSheetsUrl, '_blank');
-        } else {
-            toast('⚠️ Belum ada Google Sheets yang terhubung!');
-        }
-    });
-
-    // btnShowGuide handled by initModals()
-
-    // Search & filter
-    $('rsvpSearch')?.addEventListener('input', () => renderRsvpTable());
-    $('rsvpFilter')?.addEventListener('change', () => renderRsvpTable());
-
-    // If already have data
-    if (rsvpData.length) renderRsvpStats();
+    $('rsvpSearch')?.addEventListener('input', renderRsvpTable);
+    $('rsvpFilter')?.addEventListener('change', renderRsvpTable);
 }
 
 function fetchRsvpData() {
-    if (!rsvpSheetsUrl) {
-        toast('⚠️ Belum ada URL Google Sheets yang terhubung!');
-        return;
-    }
-
-    toast('🔄 Memuat data RSVP...');
-
-    const invId = val('f-invId') || localStorage.getItem('last_invId') || '';
-    const fetchUrl = rsvpSheetsUrl + (invId ? `?invId=${encodeURIComponent(invId)}` : '');
-
-    fetch(fetchUrl)
+    if (!rsvpSheetsUrl) return;
+    toast('🔄 Memuat RSVP...');
+    const invId = val('f-invId');
+    fetch(rsvpSheetsUrl + (invId ? `?invId=${invId}` : ''))
         .then(res => res.json())
         .then(data => {
-            if (Array.isArray(data)) {
-                rsvpData = data;
-                renderRsvpStats();
-                renderRsvpTable();
-                toast(`✅ ${data.length} data RSVP berhasil dimuat!`);
-            } else {
-                throw new Error('Format data tidak valid');
-            }
+            rsvpData = Array.isArray(data) ? data : [];
+            renderRsvpStats();
+            renderRsvpTable();
+            toast('✅ RSVP Dimuat!');
         })
-        .catch(err => {
-            console.error('RSVP fetch error:', err);
-            toast('❌ Gagal memuat data. Periksa URL dan CORS settings Apps Script.');
-            // Show sample data for demo
-            rsvpData = getDemoRsvpData();
+        .catch(() => {
+            toast('❌ Gagal ambil data. Gunakan mode demo.');
+            rsvpData = [
+                { timestamp: '17/04/2026', name: 'Contoh Tamu 1', attendance: 'Hadir', message: 'Selamat!' },
+                { timestamp: '17/04/2026', name: 'Contoh Tamu 2', attendance: 'Tidak Hadir', message: 'Maaf ya.' }
+            ];
             renderRsvpStats();
             renderRsvpTable();
         });
 }
 
-function getDemoRsvpData() {
-    return [
-        { timestamp: new Date().toLocaleString('id-ID'), name: 'Bapak Ahmad Fauzi', attendance: 'Hadir', message: 'Selamat menempuh hidup baru, semoga langgeng selalu!' },
-        { timestamp: new Date().toLocaleString('id-ID'), name: 'Ibu Siti Rahayu', attendance: 'Hadir', message: 'Semoga menjadi keluarga yang sakinah mawaddah warahmah.' },
-        { timestamp: new Date().toLocaleString('id-ID'), name: 'Keluarga Wahyono', attendance: 'Tidak Hadir', message: 'Mohon maaf tidak bisa hadir, semoga bahagia selalu.' },
-        { timestamp: new Date().toLocaleString('id-ID'), name: 'Rizky Pratama', attendance: 'Masih Ragu', message: 'Insya Allah hadir, mohon doanya.' },
-        { timestamp: new Date().toLocaleString('id-ID'), name: 'Ibu Dewi Sartika', attendance: 'Hadir', message: 'Barakallahu lakuma wa baraka alaykuma.' },
-    ];
-}
-
 function renderRsvpStats() {
-    const total  = rsvpData.length;
-    const hadir  = rsvpData.filter(d => d.attendance === 'Hadir').length;
-    const tidak  = rsvpData.filter(d => d.attendance === 'Tidak Hadir').length;
-    const ragu   = rsvpData.filter(d => d.attendance === 'Masih Ragu').length;
-
-    set('stat-total', total);
-    set('stat-hadir', hadir);
-    set('stat-tidak', tidak);
-    set('stat-ragu',  ragu);
-
-    const pH = total ? Math.round((hadir / total) * 100) : 0;
-    const pT = total ? Math.round((tidak / total) * 100) : 0;
-    const pR = total ? Math.round((ragu  / total) * 100) : 0;
-
-    const applyBar = (id, pct) => {
-        const el = $(id);
-        if (el) setTimeout(() => el.style.width = pct + '%', 100);
+    const t = rsvpData.length, h = rsvpData.filter(d => d.attendance === 'Hadir').length;
+    const th = rsvpData.filter(d => d.attendance === 'Tidak Hadir').length, r = rsvpData.filter(d => d.attendance === 'Masih Ragu').length;
+    set('stat-total', t); set('stat-hadir', h); set('stat-tidak', th); set('stat-ragu', r);
+    const setBar = (id, pid, v) => {
+        const el = $(id), pel = $(pid);
+        const pct = t ? Math.round((v/t)*100) : 0;
+        if(el) el.style.width = pct + '%';
+        if(pel) pel.textContent = pct + '%';
     };
-    applyBar('bar-hadir', pH);
-    applyBar('bar-tidak', pT);
-    applyBar('bar-ragu',  pR);
-    set('pct-hadir', pH + '%');
-    set('pct-tidak', pT + '%');
-    set('pct-ragu',  pR + '%');
+    setBar('bar-hadir', 'pct-hadir', h);
+    setBar('bar-tidak', 'pct-tidak', th);
+    setBar('bar-ragu', 'pct-ragu', r);
 }
 
 function renderRsvpTable() {
-    const tbody  = $('rsvpTableBody');
+    const tbody = $('rsvpTableBody'), s = val('rsvpSearch').toLowerCase(), f = val('rsvpFilter');
     if (!tbody) return;
-    const search = ($('rsvpSearch')?.value || '').toLowerCase();
-    const filter = $('rsvpFilter')?.value || '';
-
-    let filtered = rsvpData.filter(d => {
-        const matchSearch = !search || (d.name || '').toLowerCase().includes(search) || (d.message || '').toLowerCase().includes(search);
-        const matchFilter = !filter || d.attendance === filter;
-        return matchSearch && matchFilter;
-    });
-
-    if (!filtered.length) {
-        tbody.innerHTML = `<tr><td colspan="5" style="padding:40px; text-align:center; color:var(--text-tertiary);"><i class="fa-solid fa-magnifying-glass" style="font-size:2rem; opacity:0.3; margin-bottom:12px;"></i><br>Tidak ada data RSVP yang cocok.</td></tr>`;
-        return;
-    }
-
-    tbody.innerHTML = filtered.map((d, i) => {
-        const att = d.attendance || '-';
-        const pillCls = att === 'Hadir' ? 'status-hadir' : att === 'Tidak Hadir' ? 'status-tidak' : 'status-ragu';
-        const dotCls  = att === 'Hadir' ? 'fa-circle-check' : att === 'Tidak Hadir' ? 'fa-circle-xmark' : 'fa-circle-question';
-        
-        return `
+    const filtered = rsvpData.filter(d => (!s || d.name.toLowerCase().includes(s)) && (!f || d.attendance === f));
+    tbody.innerHTML = filtered.length ? filtered.map((d, i) => `
         <tr>
-            <td style="font-weight:700; color:var(--text-tertiary)">${i + 1}</td>
-            <td style="white-space:nowrap; font-size:0.8rem; color:var(--text-tertiary)">${d.timestamp || '-'}</td>
-            <td style="font-weight:700;">${d.name || '-'}</td>
-            <td><span class="status-pill ${pillCls}"><i class="fa-solid ${dotCls}"></i> ${att}</span></td>
-            <td style="max-width:300px; color:var(--text-secondary); font-size:0.85rem; line-height:1.5;">${d.message || '-'}</td>
-        </tr>`;
-    }).join('');
+            <td>${i+1}</td>
+            <td style="font-size:0.7rem">${d.timestamp}</td>
+            <td><strong>${d.name}</strong></td>
+            <td><span class="status-pill status-${d.attendance === 'Hadir' ? 'hadir' : d.attendance === 'Tidak Hadir' ? 'tidak' : 'ragu'}">${d.attendance}</span></td>
+            <td style="font-size:0.8rem">${d.message}</td>
+        </tr>
+    `).join('') : '<tr><td colspan="5" style="text-align:center;padding:40px">Tidak ada data</td></tr>';
 }
 
 // ════════════════════════════════════════════════════════════
-// 7. TEMPLATE GALLERY
-// ════════════════════════════════════════════════════════════
-window.selectTemplate = function(tpl) {
-    currentTemplate = tpl;
-    // Switch to editor
-    document.querySelectorAll('.sl[data-page]').forEach(l => l.classList.remove('active'));
-    document.querySelector('.sl[data-page="editor"]')?.classList.add('active');
-    document.querySelectorAll('.admin-page').forEach(p => p.classList.remove('active'));
-    $('page-editor')?.classList.add('active');
-    set('topbarTitle', 'Live Editor');
-    // Update picker UI
-    document.querySelectorAll('.tpl-opt').forEach(o => o.classList.toggle('selected', o.dataset.tpl === tpl));
-    updatePreview();
-    toast(`✅ Template "${TEMPLATE_META[tpl]?.label}" dipilih!`);
-};
-
-// ════════════════════════════════════════════════════════════
-// 8. SHEETS MODAL
+// 7. MODALS & NAV
 // ════════════════════════════════════════════════════════════
 function initModals() {
-    // Appwrite Modal
-    $('btnGuideAw')?.addEventListener('click', () => $('awModal').classList.remove('hidden'));
+    const closeAll = () => document.querySelectorAll('.modal').forEach(m => m.classList.add('hidden'));
     
-    // Sheets Modal
-    const showSheetsModal = () => $('sheetsModal').classList.remove('hidden');
-    $('btnShowGuide')?.addEventListener('click', showSheetsModal);
-    $('linkSheetsGuide')?.addEventListener('click', e => { e.preventDefault(); showSheetsModal(); });
+    const btnGuide = $('btnShowGuide');
+    if (btnGuide) btnGuide.onclick = () => $('sheetsModal')?.classList.remove('hidden');
 
-    // Close modal on backdrop click
-    document.querySelectorAll('.modal').forEach(modal => {
-        modal.addEventListener('click', e => {
-            if (e.target === modal) modal.classList.add('hidden');
-        });
+    const linkGuide = $('linkSheetsGuide');
+    if (linkGuide) linkGuide.onclick = (e) => { e.preventDefault(); $('sheetsModal')?.classList.remove('hidden'); };
+
+    document.querySelectorAll('.modal').forEach(m => {
+        m.onclick = (e) => { if (e.target === m) closeAll(); };
     });
-    document.addEventListener('keydown', e => {
-        if (e.key === 'Escape') {
-            document.querySelectorAll('.modal').forEach(m => m.classList.add('hidden'));
-        }
-    });
+    document.onkeydown = (e) => { if (e.key === 'Escape') closeAll(); };
 }
 
+
 // ════════════════════════════════════════════════════════════
-// 9. BOOTSTRAP
+// BOOTSTRAP
 // ════════════════════════════════════════════════════════════
 function onDashboardReady() {
+    if (isInitialized) return;
+    isInitialized = true;
+
     initNav();
     initEditor();
     initGuestList();

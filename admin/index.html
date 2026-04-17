@@ -6,33 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Panel — Lumina Invites</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="../favicon.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<<<<<<< HEAD
     <!-- ═══ LOGIN SCREEN ═══ -->
-    <div id="loginScreen" class="login-screen">
-        <div class="login-box">
-            <div class="login-logo">Lumina<span>Admin</span></div>
-            <p class="login-sub">Panel Manajemen Undangan Digital</p>
-            <div class="fg-admin mb20">
-                <label><i class="fa-solid fa-lock"></i> Password Admin</label>
-                <input type="password" id="loginPassword" placeholder="Masukkan password..." autofocus>
-                <p id="loginError" class="login-error"></p>
-            </div>
-            <button id="btnLogin" class="btn-p w100"><i class="fa-solid fa-right-to-bracket"></i> Masuk ke
-                Dashboard</button>
-
-        </div>
-<<<<<<< HEAD
-=======
-        <button id="btnLogin" class="btn-p w100"><i class="fa-solid fa-right-to-bracket"></i> Masuk ke Dashboard</button>
-      
->>>>>>> b4b7732174d5cafb84c89686ef0287d8d79ce98e
-=======
     <div id="loginScreen" class="login-screen">
         <div class="login-bg-decor">
             <div class="orb o1"></div>
@@ -68,7 +49,6 @@
             </button>
             <p class="login-footer">© 2026 Lumina Studio • v3.5</p>
         </div>
->>>>>>> 07d218d (kiw)
     </div>
 
     <!-- ═══ DASHBOARD ═══ -->
@@ -112,11 +92,7 @@
 
             <!-- ─── PAGE: LIVE EDITOR ─── -->
             <div id="page-editor" class="admin-page editor-page active">
-<<<<<<< HEAD
-                <div class="editor-form" id="editorForm">
-=======
                 <form class="editor-form" id="editorForm" onsubmit="return false">
->>>>>>> 07d218d (kiw)
 
                     <!-- Template Picker -->
                     <div class="form-section">
@@ -152,12 +128,6 @@
                                 <p>Bali Pura</p>
                             </div>
                             <div class="tpl-opt" data-tpl="aether">
-<<<<<<< HEAD
-                                <div class="tpl-prev" style="background:linear-gradient(135deg,#0f172a,#1e293b);box-shadow:inset 0 0 15px rgba(212,175,55,0.4)"><span
-                                        style="color:#fde08b;font-style:italic;font-size:.85rem;text-shadow:0 0 5px #d4af37">Aether</span></div>
-                                <p>Aether 3D</p>
-                            </div>
-=======
                                 <div class="tpl-prev"
                                     style="background:linear-gradient(135deg,#0f172a,#1e293b);box-shadow:inset 0 0 15px rgba(212,175,55,0.4)">
                                     <span
@@ -173,7 +143,6 @@
                                 </div>
                                 <p>Premium Luxe</p>
                             </div>
->>>>>>> 07d218d (kiw)
                         </div>
                     </div>
 
@@ -182,29 +151,25 @@
                         <h3 class="fst"><span class="num">2</span> Mempelai</h3>
                         <div class="fg2">
                             <div class="fg"><label>Nama Panggilan Pria</label><input type="text" id="f-groom"
-                                    value="Romeo" placeholder="Budi"></div>
+                                    placeholder="Budi"></div>
                             <div class="fg"><label>Nama Panggilan Wanita</label><input type="text" id="f-bride"
-                                    value="Juliet" placeholder="Siti"></div>
+                                    placeholder="Siti"></div>
                         </div>
                         <div class="fg2">
-                            <div class="fg"><label>Nama Lengkap Pria</label><input type="text" id="f-groomFull"
-                                    value="Romeo Montague, S.T."></div>
-                            <div class="fg"><label>Nama Lengkap Wanita</label><input type="text" id="f-brideFull"
-                                    value="Juliet Capulet, S.H."></div>
+                            <div class="fg"><label>Nama Lengkap Pria</label><input type="text" id="f-groomFull"></div>
+                            <div class="fg"><label>Nama Lengkap Wanita</label><input type="text" id="f-brideFull"></div>
                         </div>
                         <div class="fg2">
-                            <div class="fg"><label>Orang Tua Pria</label><input type="text" id="f-groomParent"
-                                    value="Putra dari Bpk. Montague & Ibu Montague"></div>
-                            <div class="fg"><label>Orang Tua Wanita</label><input type="text" id="f-brideParent"
-                                    value="Putri dari Bpk. Capulet & Ibu Capulet"></div>
+                            <div class="fg"><label>Orang Tua Pria</label><input type="text" id="f-groomParent"></div>
+                            <div class="fg"><label>Orang Tua Wanita</label><input type="text" id="f-brideParent"></div>
                         </div>
                         <div class="fg2">
                             <div class="fg"><label><i class="fa-brands fa-instagram" style="color:#e1306c"></i>
-                                    IG Mempelai Pria</label><input type="text" id="f-groomIg" value="@romeo_m"
-                                    placeholder="@username"></div>
+                                    IG Mempelai Pria</label><input type="text" id="f-groomIg" placeholder="@username">
+                            </div>
                             <div class="fg"><label><i class="fa-brands fa-instagram" style="color:#e1306c"></i>
-                                    IG Mempelai Wanita</label><input type="text" id="f-brideIg" value="@juliet_c"
-                                    placeholder="@username"></div>
+                                    IG Mempelai Wanita</label><input type="text" id="f-brideIg" placeholder="@username">
+                            </div>
                         </div>
                     </div>
 
@@ -212,45 +177,35 @@
                     <div class="form-section">
                         <h3 class="fst"><span class="num">3</span> Detail Acara</h3>
                         <div class="fg2">
-                            <div class="fg"><label>Tanggal (Display)</label><input type="text" id="f-date"
-                                    value="25 Desember 2026"></div>
-                            <div class="fg"><label>Tanggal Lengkap</label><input type="text" id="f-dateFull"
-                                    value="Jumat, 25 Desember 2026"></div>
+                            <div class="fg"><label>Tanggal (Display)</label><input type="text" id="f-date"></div>
+                            <div class="fg"><label>Tanggal Lengkap</label><input type="text" id="f-dateFull"></div>
                         </div>
                         <p class="section-sub-label">Akad Nikah</p>
                         <div class="fg2">
-                            <div class="fg"><label>Tanggal (Teks)</label><input type="text" id="f-akadDate"
-                                    value="Jumat, 25 Desember 2026"></div>
-                            <div class="fg"><label>Jam</label><input type="text" id="f-akadTime"
-                                    value="08.00 – 10.00 WIB"></div>
+                            <div class="fg"><label>Tanggal (Teks)</label><input type="text" id="f-akadDate"></div>
+                            <div class="fg"><label>Jam</label><input type="text" id="f-akadTime"></div>
                         </div>
                         <div class="fg2">
-                            <div class="fg"><label>Nama Tempat</label><input type="text" id="f-akadPlace"
-                                    value="Masjid Agung Verona"></div>
+                            <div class="fg"><label>Nama Tempat</label><input type="text" id="f-akadPlace"></div>
                             <div class="fg"><label>Tanggal ISO (countdown)</label><input type="datetime-local"
-                                    id="f-akadISO" value="2026-12-25T08:00"></div>
+                                    id="f-akadISO"></div>
                         </div>
-                        <div class="fg"><label>Alamat Akad</label><input type="text" id="f-akadAddress"
-                                value="Jl. Cinta Damai No.1, Italia"></div>
+                        <div class="fg"><label>Alamat Akad</label><input type="text" id="f-akadAddress"></div>
                         <div class="fg"><label>Query Maps (untuk embed)</label><input type="text" id="f-akadMaps"
-                                value="Masjid+Agung+Jakarta" placeholder="Nama+Tempat+Kota"></div>
+                                placeholder="Nama+Tempat+Kota"></div>
                         <p class="section-sub-label">Resepsi</p>
                         <div class="fg2">
-                            <div class="fg"><label>Tanggal (Teks)</label><input type="text" id="f-resepsiDate"
-                                    value="Jumat, 25 Desember 2026"></div>
-                            <div class="fg"><label>Jam</label><input type="text" id="f-resepsiTime"
-                                    value="11.00 – Selesai WIB"></div>
+                            <div class="fg"><label>Tanggal (Teks)</label><input type="text" id="f-resepsiDate"></div>
+                            <div class="fg"><label>Jam</label><input type="text" id="f-resepsiTime"></div>
                         </div>
                         <div class="fg2">
-                            <div class="fg"><label>Nama Tempat</label><input type="text" id="f-resepsiPlace"
-                                    value="Grand Verona Ballroom"></div>
+                            <div class="fg"><label>Nama Tempat</label><input type="text" id="f-resepsiPlace"></div>
                             <div class="fg"><label>Tanggal ISO (countdown)</label><input type="datetime-local"
-                                    id="f-resepsiISO" value="2026-12-25T11:00"></div>
+                                    id="f-resepsiISO"></div>
                         </div>
-                        <div class="fg"><label>Alamat Resepsi</label><input type="text" id="f-resepsiAddress"
-                                value="Jl. Cinta Damai No.10, Italia"></div>
+                        <div class="fg"><label>Alamat Resepsi</label><input type="text" id="f-resepsiAddress"></div>
                         <div class="fg"><label>Query Maps (untuk embed)</label><input type="text" id="f-resepsiMaps"
-                                value="Ritz+Carlton+Jakarta" placeholder="Nama+Tempat+Kota"></div>
+                                placeholder="Nama+Tempat+Kota"></div>
                     </div>
 
                     <!-- Our Story (Fitur Baru) -->
@@ -264,47 +219,44 @@
                                 <div class="story-header"><span class="story-num">Momen 1</span></div>
                                 <div class="fg2">
                                     <div class="fg"><label>Judul</label><input type="text" class="s-title" data-idx="1"
-                                            value="Pertama Bertemu" placeholder="Judul momen..."></div>
+                                            placeholder="Judul momen..."></div>
                                     <div class="fg"><label>Tanggal</label><input type="text" class="s-date" data-idx="1"
-                                            value="2020" placeholder="2020"></div>
+                                            placeholder="2020"></div>
                                 </div>
                                 <div class="fg"><label>Deskripsi</label><input type="text" class="s-desc" data-idx="1"
-                                        value="Kami dipertemukan dalam sebuah acara bersama teman yang sama."
                                         placeholder="Cerita singkat..."></div>
                             </div>
                             <div class="story-item">
                                 <div class="story-header"><span class="story-num">Momen 2</span></div>
                                 <div class="fg2">
-                                    <div class="fg"><label>Judul</label><input type="text" class="s-title" data-idx="2"
-                                            value="Mulai Berpacaran"></div>
-                                    <div class="fg"><label>Tanggal</label><input type="text" class="s-date" data-idx="2"
-                                            value="2021"></div>
+                                    <div class="fg"><label>Judul</label><input type="text" class="s-title" data-idx="2">
+                                    </div>
+                                    <div class="fg"><label>Tanggal</label><input type="text" class="s-date"
+                                            data-idx="2"></div>
                                 </div>
-                                <div class="fg"><label>Deskripsi</label><input type="text" class="s-desc" data-idx="2"
-                                        value="Setelah setahun berteman, kami memutuskan untuk bersama."></div>
+                                <div class="fg"><label>Deskripsi</label><input type="text" class="s-desc" data-idx="2">
+                                </div>
                             </div>
                             <div class="story-item">
                                 <div class="story-header"><span class="story-num">Momen 3</span></div>
                                 <div class="fg2">
-                                    <div class="fg"><label>Judul</label><input type="text" class="s-title" data-idx="3"
-                                            value="Lamaran"></div>
-                                    <div class="fg"><label>Tanggal</label><input type="text" class="s-date" data-idx="3"
-                                            value="2024"></div>
+                                    <div class="fg"><label>Judul</label><input type="text" class="s-title" data-idx="3">
+                                    </div>
+                                    <div class="fg"><label>Tanggal</label><input type="text" class="s-date"
+                                            data-idx="3"></div>
                                 </div>
-                                <div class="fg"><label>Deskripsi</label><input type="text" class="s-desc" data-idx="3"
-                                        value="Dengan penuh keberanian, ia melamar di tempat yang penuh kenangan.">
+                                <div class="fg"><label>Deskripsi</label><input type="text" class="s-desc" data-idx="3">
                                 </div>
                             </div>
                             <div class="story-item">
                                 <div class="story-header"><span class="story-num">Momen 4</span></div>
                                 <div class="fg2">
-                                    <div class="fg"><label>Judul</label><input type="text" class="s-title" data-idx="4"
-                                            value="Hari Pernikahan"></div>
-                                    <div class="fg"><label>Tanggal</label><input type="text" class="s-date" data-idx="4"
-                                            value="2026"></div>
+                                    <div class="fg"><label>Judul</label><input type="text" class="s-title" data-idx="4">
+                                    </div>
+                                    <div class="fg"><label>Tanggal</label><input type="text" class="s-date"
+                                            data-idx="4"></div>
                                 </div>
-                                <div class="fg"><label>Deskripsi</label><input type="text" class="s-desc" data-idx="4"
-                                        value="Dan hari ini, kami resmi menjadi satu dalam ikatan suci pernikahan.">
+                                <div class="fg"><label>Deskripsi</label><input type="text" class="s-desc" data-idx="4">
                                 </div>
                             </div>
                         </div>
@@ -314,15 +266,13 @@
                     <div class="form-section">
                         <h3 class="fst"><span class="num">5</span> Amplop & Kontak</h3>
                         <div class="fg3">
-                            <div class="fg"><label>Bank</label><input type="text" id="f-bankName" value="Bank BCA">
+                            <div class="fg"><label>Bank</label><input type="text" id="f-bankName">
                             </div>
-                            <div class="fg"><label>No. Rekening</label><input type="text" id="f-bankAcc"
-                                    value="1234567890"></div>
-                            <div class="fg"><label>Atas Nama</label><input type="text" id="f-bankHolder"
-                                    value="Romeo Montague"></div>
+                            <div class="fg"><label>No. Rekening</label><input type="text" id="f-bankAcc"></div>
+                            <div class="fg"><label>Atas Nama</label><input type="text" id="f-bankHolder"></div>
                         </div>
                         <div class="fg"><label><i class="fa-brands fa-whatsapp" style="color:#25d366"></i> No. WA RSVP
-                                (format: 628xxx)</label><input type="text" id="f-wa" value="6281234567890"></div>
+                                (format: 628xxx)</label><input type="text" id="f-wa"></div>
                     </div>
 
                     <!-- Foto & Galeri -->
@@ -382,8 +332,7 @@
                         <p class="fg-hint">Ganti lagu default dengan menyisipkan link lagu (MP3/WAV/Direct Link).</p>
                         <div class="fg">
                             <label><i class="fa-solid fa-music"></i> Link Lagu Utama</label>
-                            <input type="url" id="f-music" value="https://files.catbox.moe/jndoqq.mp3"
-                                placeholder="https://contoh.com/lagu-kita.mp3">
+                            <input type="url" id="f-music" placeholder="https://contoh.com/lagu-kita.mp3">
                         </div>
                         <div class="m-presets">
                             <span class="m-p-label">Mood & Genre Preset:</span>
@@ -509,7 +458,7 @@
                         <div class="fg"><label>URL Google Apps Script (opsional)</label><input type="url"
                                 id="f-sheetsUrl" placeholder="https://script.google.com/macros/s/.../exec"></div>
                         <div class="fg"><label>ID Undangan (untuk filter di sheets)</label><input type="text"
-                                id="f-invId" value="romeo-juliet-2026" placeholder="nama-mempelai-tahun"></div>
+                                id="f-invId" placeholder="nama-mempelai-tahun"></div>
                     </div>
 
                     <!-- Nama Tamu -->
@@ -530,8 +479,6 @@
                     <div class="generated-url" id="generatedUrl">
                         <p class="url-ph"><i class="fa-solid fa-arrow-up"></i> Klik "Generate Link" untuk membuat tautan
                         </p>
-<<<<<<< HEAD
-=======
                     </div>
                 </form>
 
@@ -552,35 +499,10 @@
                     <div class="preview-frame-wrap" id="previewFrameWrap">
                         <iframe id="previewIframe" class="preview-iframe" src="../templates/wedding-midnight/index.html"
                             allowfullscreen></iframe>
->>>>>>> 07d218d (kiw)
                     </div>
                 </div>
             </div>
 
-<<<<<<< HEAD
-                <!-- PREVIEW PANEL -->
-                <div class="editor-preview">
-                    <div class="preview-topbar">
-                        <div class="preview-device-switch">
-                            <button class="pdev-btn active" data-w="100%" data-mode="desktop"><i
-                                    class="fa-solid fa-desktop"></i></button>
-                            <button class="pdev-btn" data-w="430px" data-mode="mobile"><i
-                                    class="fa-solid fa-mobile-screen"></i></button>
-                        </div>
-                        <div class="preview-status" id="previewStatus"><span class="pulse-dot"></span> Live Preview
-                        </div>
-                        <button id="btnOpenNewTab" class="btn-s btn-sm"><i
-                                class="fa-solid fa-arrow-up-right-from-square"></i> Buka Tab Baru</button>
-                    </div>
-                    <div class="preview-frame-wrap" id="previewFrameWrap">
-                        <iframe id="previewIframe" class="preview-iframe" src="../templates/wedding-midnight/index.html"
-                            allowfullscreen></iframe>
-                    </div>
-                </div>
-            </div>
-
-=======
->>>>>>> 07d218d (kiw)
             <!-- ─── PAGE: DAFTAR TAMU ─── -->
             <div id="page-tamu" class="admin-page">
                 <div class="page-desc"><i class="fa-solid fa-circle-info"></i> Generate link unik untuk setiap tamu
@@ -708,9 +630,9 @@
                                 <div class="chart-bar-item">
                                     <span class="cb-label">Masih Ragu</span>
                                     <div class="cb-track">
-                                        <div class="cb-fill ragu-fill" id="bar-ragu" style="width:0%"></div>
+                                        <div class="cb-fill ragu-fill" id="bar-hadir" style="width:0%"></div>
                                     </div>
-                                    <span class="cb-pct" id="pct-ragu">0%</span>
+                                    <span class="cb-pct" id="pct-hadir">0%</span>
                                 </div>
                             </div>
                         </div>
@@ -767,8 +689,6 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- Setup Guide Modal (dipindah ke luar dashboard, lihat bawah) -->
             </div>
 
             <!-- ─── PAGE: UNDANGAN TERSIMPAN ─── -->
@@ -792,20 +712,6 @@
                     <div class="fg-grid mt-16">
                         <div class="fg"><label>API Endpoint</label><input type="text" id="awEndpoint"
                                 placeholder="https://cloud.appwrite.io/v1"></div>
-<<<<<<< HEAD
-                        <div class="fg"><label>Project ID <span style="color:#ef4444">*wajib untuk upload foto</span></label><input type="text" id="awProject"
-                                placeholder="Contoh: 65abc123..."></div>
-                        <div class="fg"><label>Database ID <small style="color:var(--text-tertiary)">(opsional, untuk simpan ke cloud)</small></label><input type="text" id="awDb" placeholder="invites_db">
-                        </div>
-                        <div class="fg"><label>Collection ID <small style="color:var(--text-tertiary)">(opsional)</small></label><input type="text" id="awCol"
-                                placeholder="saved_invs"></div>
-                        <div class="fg"><label><i class="fa-solid fa-bucket" style="color:#f59e0b"></i> Bucket ID (Storage)</label><input type="text" id="awBucket"
-                                value="69e1ebb1000fefd0d33a" placeholder="69e1ebb1000fefd0d33a"></div>
-                    </div>
-                    <div class="page-desc" style="background:rgba(245,158,11,0.08);border-color:#f59e0b;margin-top:16px;margin-bottom:0">
-                        <i class="fa-solid fa-triangle-exclamation" style="color:#f59e0b"></i>
-                        <p>Pastikan <strong>localhost</strong> sudah ditambahkan ke daftar <em>Web Platforms</em> di Settings project Appwrite Anda, agar upload dari local bisa berjalan.</p>
-=======
                         <div class="fg"><label>Project ID <span style="color:#ef4444">*wajib untuk upload
                                     foto</span></label><input type="text" id="awProject"
                                 placeholder="Contoh: 65abc123..."></div>
@@ -825,19 +731,14 @@
                         <i class="fa-solid fa-triangle-exclamation" style="color:#f59e0b"></i>
                         <p>Pastikan <strong>localhost</strong> sudah ditambahkan ke daftar <em>Web Platforms</em> di
                             Settings project Appwrite Anda, agar upload dari local bisa berjalan.</p>
->>>>>>> 07d218d (kiw)
                     </div>
 
                     <div class="aw-actions">
                         <button id="btnConnectAw" class="btn-p"><i class="fa-solid fa-plug"></i> Simpan & Hubungkan
                             Database</button>
                         <p id="awStatus" class="aw-status-text"><i class="fa-solid fa-circle-dot"></i> Status:
-<<<<<<< HEAD
-                            <span>Belum terhubung</span></p>
-=======
                             <span>Belum terhubung</span>
                         </p>
->>>>>>> 07d218d (kiw)
                     </div>
                 </div>
 
@@ -956,22 +857,25 @@
                             <i class="fa-solid fa-pen"></i> Mulai Edit
                         </button>
                     </div>
-<<<<<<< HEAD
-=======
 
                     <!-- AETHER 3D TEMPLATE -->
                     <div class="tpl-card">
-                        <div class="tpl-card-prev" style="background:linear-gradient(135deg,#0f172a,#1e293b); box-shadow:inset 0 0 15px rgba(212,175,55,0.4)">
-                            <p style="font-family:serif;font-style:italic;font-size:1.8rem;color:#fde08b; text-shadow:0 0 5px #d4af37">Aether 3D Art</p>
+                        <div class="tpl-card-prev"
+                            style="background:linear-gradient(135deg,#0f172a,#1e293b); box-shadow:inset 0 0 15px rgba(212,175,55,0.4)">
+                            <p
+                                style="font-family:serif;font-style:italic;font-size:1.8rem;color:#fde08b; text-shadow:0 0 5px #d4af37">
+                                Aether 3D Art</p>
                             <div class="tpl-overlay">
-                                <a href="../templates/wedding-aether/index.html" target="_blank" class="btn-preview-overlay">
+                                <a href="../templates/wedding-aether/index.html" target="_blank"
+                                    class="btn-preview-overlay">
                                     <i class="fa-solid fa-eye"></i> Preview
                                 </a>
                             </div>
                         </div>
                         <div class="tpl-card-info">
                             <h3>Aether 3D Art</h3>
-                            <p>Karya seni 3 Dimensi berlayer dengan efek paralaks yang memukau. Dilengkapi animasi interaktif.</p>
+                            <p>Karya seni 3 Dimensi berlayer dengan efek paralaks yang memukau. Dilengkapi animasi
+                                interaktif.</p>
                         </div>
                         <button class="btn-edit-full" onclick="selectTemplate('aether')">
                             <i class="fa-solid fa-pen"></i> Mulai Edit
@@ -980,23 +884,27 @@
 
                     <!-- PREMIUM LUXE TEMPLATE -->
                     <div class="tpl-card">
-                        <div class="tpl-card-prev" style="background:linear-gradient(135deg,#1e1b4b,#312e81); box-shadow:inset 0 0 20px rgba(99,102,241,0.3)">
-                            <p style="font-family:serif;font-style:italic;font-size:1.8rem;color:#a5b4fc; text-shadow:0 0 8px #6366f1">Premium Luxe</p>
+                        <div class="tpl-card-prev"
+                            style="background:linear-gradient(135deg,#1e1b4b,#312e81); box-shadow:inset 0 0 20px rgba(99,102,241,0.3)">
+                            <p
+                                style="font-family:serif;font-style:italic;font-size:1.8rem;color:#a5b4fc; text-shadow:0 0 8px #6366f1">
+                                Premium Luxe</p>
                             <div class="tpl-overlay">
-                                <a href="../templates/wedding-premium/index.html" target="_blank" class="btn-preview-overlay">
+                                <a href="../templates/wedding-premium/index.html" target="_blank"
+                                    class="btn-preview-overlay">
                                     <i class="fa-solid fa-eye"></i> Preview
                                 </a>
                             </div>
                         </div>
                         <div class="tpl-card-info">
                             <h3>Premium Luxe</h3>
-                            <p>Desain eksklusif dengan tema gelap elegan dan tipografi cantik. Menawarkan interaksi mewah untuk tamu Anda.</p>
+                            <p>Desain eksklusif dengan tema gelap elegan dan tipografi cantik. Menawarkan interaksi
+                                mewah untuk tamu Anda.</p>
                         </div>
                         <button class="btn-edit-full" onclick="selectTemplate('premium')">
                             <i class="fa-solid fa-pen"></i> Mulai Edit
                         </button>
                     </div>
->>>>>>> 07d218d (kiw)
                 </div>
             </div>
 

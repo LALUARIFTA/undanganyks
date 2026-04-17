@@ -85,17 +85,6 @@ img { display:block; max-width:100%; }
 /* ─── Reveal Animation (UI Enhancements) ─── */
 .reveal {
     opacity:0;
-<<<<<<< HEAD
-    transition: all 1s var(--ease);
-}
-.reveal-up    { transform:translateY(40px); }
-.reveal-down  { transform:translateY(-40px); }
-.reveal-left  { transform:translateX(40px); }
-.reveal-right { transform:translateX(-40px); }
-.reveal-zoom  { transform:scale(0.9); }
-
-.reveal.visible { opacity:1; transform:translate(0) scale(1); }
-=======
     filter: blur(10px);
     transition: opacity 1.2s var(--ease), transform 1.2s var(--ease), filter 1s var(--ease);
     will-change: opacity, transform, filter;
@@ -111,7 +100,6 @@ img { display:block; max-width:100%; }
     filter: blur(0);
     transform: translate(0, 0) scale(1) rotate(0); 
 }
->>>>>>> 07d218d (kiw)
 
 
 /* ══════════════════════════════════════
@@ -326,10 +314,6 @@ img { display:block; max-width:100%; }
 }
 .event-card:hover { border-color:var(--gold); transform:translateY(-8px) scale(1.02); box-shadow: 0 10px 40px rgba(201,164,68,0.15); }
 .event-card:hover::before { opacity:1;}
-<<<<<<< HEAD
-.event-card-icon { font-size:2rem; color:var(--gold); margin-bottom:12px; transition: 0.3s; }
-.event-card:hover .event-card-icon { transform: scale(1.2); text-shadow: 0 0 15px var(--gold); }
-=======
 .event-card-icon { 
     font-size: 2.22rem; 
     color: var(--gold); 
@@ -350,7 +334,6 @@ img { display:block; max-width:100%; }
     color: var(--gold-light);
     filter: drop-shadow(0 0 12px var(--gold));
 }
->>>>>>> 07d218d (kiw)
 .event-tag { font-size:0.7rem; letter-spacing:3px; text-transform:uppercase; color:var(--gold); margin-bottom:8px; }
 .event-name { font-family:var(--serif); font-style:italic; font-size:1.5rem; color:var(--text); margin-bottom:24px; }
 .event-detail-list { display:flex; flex-direction:column; gap:12px; margin-bottom:28px; }

@@ -193,21 +193,18 @@
             to { transform: scale(1); } 
         }
 
+        /* Countdown Premium */
+        .countdown-wrap { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 25px; }
+        .ct-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(212,175,55,0.15); border-radius: 12px; padding: 12px 5px; transition: 0.3s; }
+        .ct-card span { display: block; font-family: var(--serif); font-size: 1.8rem; color: var(--gold-light); line-height: 1; }
+        .ct-card small { font-size: 0.6rem; color: var(--gold); text-transform: uppercase; letter-spacing: 1px; margin-top: 5px; display: block; }
+
         @media (max-width: 768px) {
             .couple-grid { grid-template-columns: 1fr; }
             .c-and { margin: 20px 0; }
             .gal-grid { grid-template-columns: 1fr 1fr; }
             .gal-item:nth-child(1), .gal-item:nth-child(4) { grid-column: span 2; }
         }
-<<<<<<< HEAD
-=======
-
-        /* Countdown Premium */
-        .countdown-wrap { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 25px; }
-        .ct-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(212,175,55,0.15); border-radius: 12px; padding: 12px 5px; transition: 0.3s; }
-        .ct-card span { display: block; font-family: var(--serif); font-size: 1.8rem; color: var(--gold-light); line-height: 1; }
-        .ct-card small { font-size: 0.6rem; color: var(--gold); text-transform: uppercase; letter-spacing: 1px; margin-top: 5px; display: block; }
->>>>>>> 07d218d (kiw)
     </style>
 </head>
 <body>
@@ -259,22 +256,14 @@
                 <div class="couple-grid">
                     <div class="c-card rv">
                         <div class="c-photo mempelai-photo"><img id="img-groom" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=500&auto=format&fit=crop" alt="Groom"></div>
-<<<<<<< HEAD
-                        <h3 class="c-name" id="bride-fn">Romeo Montague</h3>
-=======
                         <h3 class="c-name" id="groom-fn">Romeo Montague</h3>
->>>>>>> 07d218d (kiw)
                         <p class="c-parents" id="groom-p">Putra dari Bpk. Montague<br>& Ibu Montague</p>
                         <a href="#" class="c-ig" id="groom-ig"><i class="fa-brands fa-instagram"></i> @romeo_m</a>
                     </div>
                     <div class="c-and rv">&</div>
                     <div class="c-card rv">
                         <div class="c-photo mempelai-photo"><img id="img-bride" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=500&auto=format&fit=crop" alt="Bride"></div>
-<<<<<<< HEAD
-                        <h3 class="c-name" id="groom-fn">Juliet Capulet</h3>
-=======
                         <h3 class="c-name" id="bride-fn">Juliet Capulet</h3>
->>>>>>> 07d218d (kiw)
                         <p class="c-parents" id="bride-p">Putri dari Bpk. Capulet<br>& Ibu Capulet</p>
                         <a href="#" class="c-ig" id="bride-ig"><i class="fa-brands fa-instagram"></i> @juliet_c</a>
                     </div>
@@ -296,8 +285,6 @@
                             <p><i class="fa-regular fa-clock"></i> <span id="akad-time">08.00 WIB - Selesai</span></p>
                             <p><i class="fa-solid fa-location-dot"></i> <strong id="akad-loc">Masjid Agung</strong><br><small id="akad-address">Jl. Cinta Damai No. 1</small></p>
                         </div>
-<<<<<<< HEAD
-=======
                         <!-- Countdown Akad -->
                         <div class="countdown-wrap">
                             <div class="ct-card"><span id="ak-d">00</span><small>Hari</small></div>
@@ -305,7 +292,6 @@
                             <div class="ct-card"><span id="ak-m">00</span><small>Menit</small></div>
                             <div class="ct-card"><span id="ak-s">00</span><small>Detik</small></div>
                         </div>
->>>>>>> 07d218d (kiw)
                         <a href="#" class="btn-gold maps-btn" data-q="Masjid+Agung"><i class="fa-solid fa-map-location-dot"></i> Lihat Peta</a>
                     </div>
                     <div class="ev-card rv">
@@ -315,8 +301,6 @@
                             <p><i class="fa-regular fa-clock"></i> <span id="resepsi-time">11.00 WIB - Selesai</span></p>
                             <p><i class="fa-solid fa-location-dot"></i> <strong id="resepsi-loc">Grand Ballroom</strong><br><small id="resepsi-address">Jl. Bahagia No. 10</small></p>
                         </div>
-<<<<<<< HEAD
-=======
                         <!-- Countdown Resepsi -->
                         <div class="countdown-wrap">
                             <div class="ct-card"><span id="rs-d">00</span><small>Hari</small></div>
@@ -324,7 +308,6 @@
                             <div class="ct-card"><span id="rs-m">00</span><small>Menit</small></div>
                             <div class="ct-card"><span id="rs-s">00</span><small>Detik</small></div>
                         </div>
->>>>>>> 07d218d (kiw)
                         <a href="#" class="btn-gold maps-btn" data-q="Grand+Ballroom"><i class="fa-solid fa-map-location-dot"></i> Lihat Peta</a>
                     </div>
                 </div>
@@ -350,8 +333,7 @@
                     <div class="gal-item gallery-item" onclick="openLb(5)"><img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?q=80&w=800&auto=format&fit=crop" alt=""></div>
                 </div>
             </section>
-<<<<<<< HEAD
-=======
+            
             <!-- OUR STORY -->
             <section class="section">
                 <div class="sec-head rv">
@@ -395,7 +377,6 @@
                     </div>
                 </div>
             </section>
->>>>>>> 07d218d (kiw)
 
             <!-- RSVP -->
             <section class="section">
@@ -421,15 +402,11 @@
                         <label>Ucapan & Doa</label>
                         <textarea id="rsvp-m" rows="4" placeholder="Berikan doa terbaik Anda..."></textarea>
                     </div>
-<<<<<<< HEAD
-                    <button class="btn-gold" style="width:100%; justify-content:center;" onclick="sendRsvp()"><i class="fa-brands fa-whatsapp"></i> Kirim RSVP</button>
-=======
                     <div style="display:flex; flex-direction:column; gap:10px;">
                         <button class="btn-gold" style="width:100%; justify-content:center; display:flex; align-items:center; gap:8px;" onclick="sendRsvp()"><i class="fa-brands fa-whatsapp"></i> Kirim WhatsApp</button>
                         <button class="btn-gold" id="btn-submit-sheets" style="width:100%; justify-content:center; display:none; align-items:center; gap:8px; background: #059669; border-color: #059669;" onclick="sendRsvpSheets()"><i class="fa-brands fa-google"></i> Simpan ke Sheets</button>
                     </div>
                     <p id="rsvp-ok" style="display:none; color:#10b981; margin-top:10px; font-size:0.9rem; text-align:center;"><i class="fa-solid fa-circle-check"></i> RSVP berhasil dikirim!</p>
->>>>>>> 07d218d (kiw)
                 </div>
             </section>
             
@@ -444,12 +421,9 @@
     <div class="audio-btn" id="btnAudio"><i class="fa-solid fa-compact-disc"></i></div>
     <audio id="bgMusic" loop><source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3"></audio>
 
-<<<<<<< HEAD
-=======
     <!-- Toast Notification -->
     <div id="toast" style="position:fixed; bottom:80px; left:50%; transform:translateX(-50%); background:rgba(0,0,0,0.8); color:#fff; padding:10px 20px; border-radius:30px; font-size:0.9rem; z-index:9999; display:none;"></div>
 
->>>>>>> 07d218d (kiw)
     <!-- Lightbox -->
     <div class="lb" id="lb">
         <button class="lb-close" onclick="$('lb').classList.remove('vis')"><i class="fa-solid fa-x"></i></button>
@@ -458,18 +432,12 @@
 
     <script>
         // Parameters Handler
-<<<<<<< HEAD
-        const param = (k) => new URLSearchParams(window.location.search).get(k);
-        const $ = id => document.getElementById(id);
-        const setTxt = (id, val) => { const el = $(id); if(el && val) el.textContent = val; };
-=======
         const param = (k) => {
             const val = new URLSearchParams(window.location.search).get(k);
             return (val === null) ? null : val;
         };
         const $ = id => document.getElementById(id);
         const setTxt = (id, val) => { const el = $(id); if(el) el.textContent = val !== null ? val : ""; };
->>>>>>> 07d218d (kiw)
         
         let GALLERY_IMGS = [
             'https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=800',
@@ -480,17 +448,6 @@
             'https://images.unsplash.com/photo-1519225421980-715cb0215aed?q=80&w=800'
         ];
 
-<<<<<<< HEAD
-        function initData() {
-            // === SCRIPT INJECT COMPATIBILITY ===
-            const couple = `${param('groom')||'Romeo'} & ${param('bride')||'Juliet'}`;
-            
-            // --- Image Params ---
-            const iParam = (k) => { const v = param(k); return v ? decodeURIComponent(v) : null; };
-            if (iParam('hero')) {
-                document.querySelectorAll('.hero-bg, .hero-batik-bg, .hero-bg-img, .hero-img').forEach(e => {
-                    if(e.tagName === 'IMG') e.src = iParam('hero'); else e.style.backgroundImage = `url("${iParam('hero')}")`;
-=======
         const D = {
             groom: param('groom') || 'Romeo',
             bride: param('bride') || 'Juliet',
@@ -509,7 +466,6 @@
             if (heroUrl) {
                 document.querySelectorAll('.hero-bg, .hero-batik-bg, .hero-bg-img, .hero-img').forEach(e => {
                     if(e.tagName === 'IMG') e.src = heroUrl; else e.style.backgroundImage = `url("${heroUrl}")`;
->>>>>>> 07d218d (kiw)
                 });
             }
             const mPx = document.querySelectorAll('.mempelai-photo img, .profile-photo img, .profile-img img, .p-photo img');
@@ -517,22 +473,6 @@
                 if (iParam('imgPria')) mPx[0].src = iParam('imgPria');
                 if (iParam('imgWanita')) mPx[1].src = iParam('imgWanita');
             }
-<<<<<<< HEAD
-            const arr = typeof GALLERY_IMGS !== 'undefined' ? GALLERY_IMGS : null;
-            const tgImg = document.querySelectorAll('.gallery-item img, .galeri-item img, .gallery-img img, .gal-item img');
-            for (let i = 1; i <= 6; i++) {
-                const u = iParam("gal" + i);
-                if(u) {
-                    if(arr && arr[i-1] !== undefined) arr[i-1] = u;
-                    if(tgImg.length >= i && tgImg[i-1]) tgImg[i-1].src = u;
-                }
-            }
-            // ===================================
-
-            document.title = `Undangan | ${couple}`;
-            setTxt('c-names', couple); setTxt('h-names', couple); setTxt('cl-names', couple);
-            setTxt('c-to', `Kepada: ${param('guest')||'Bapak/Ibu/Saudara/i'}`);
-=======
             
             for (let i = 1; i <= 6; i++) {
                 const u = iParam("gal" + i);
@@ -548,18 +488,10 @@
             
             setTxt('c-names', couple); setTxt('h-names', couple); setTxt('cl-names', couple);
             setTxt('c-to', `Kepada: ${D.guest}`);
->>>>>>> 07d218d (kiw)
             setTxt('h-date', param('date')||'25 Desember 2026');
             
             setTxt('groom-fn', param('groomFull')||'Romeo Montague');
             setTxt('bride-fn', param('brideFull')||'Juliet Capulet');
-<<<<<<< HEAD
-            setTxt('groom-p', param('groomParent')||'Putra dari Bpk. Montague');
-            setTxt('bride-p', param('brideParent')||'Putri dari Bpk. Capulet');
-
-            setTxt('akad-date', param('akadDate')||'Jumat, 25 Des 2026');
-            setTxt('akad-time', param('akadTime')||'08.00 - Selesai');
-=======
             setTxt('groom-p', param('groomParent')||'Putra dari Bpk. & Ibu Montague');
             setTxt('bride-p', param('brideParent')||'Putri dari Bpk. & Ibu Capulet');
 
@@ -569,25 +501,10 @@
 
             setTxt('akad-date', param('akadDate')||'Jumat, 25 Des 2026');
             setTxt('akad-time', param('akadTime')||'08.00 WIB - Selesai');
->>>>>>> 07d218d (kiw)
             setTxt('akad-loc', param('akadPlace')||'Masjid Agung');
             setTxt('akad-address', param('akadAddress')||'Jl. Cinta Damai');
 
             setTxt('resepsi-date', param('resepsiDate')||'Jumat, 25 Des 2026');
-<<<<<<< HEAD
-            setTxt('resepsi-time', param('resepsiTime')||'11.00 - Selesai');
-            setTxt('resepsi-loc', param('resepsiPlace')||'Grand Ballroom');
-            setTxt('resepsi-address', param('resepsiAddress')||'Jl. Bahagia');
-
-            const m = param('music'); if(m) $('bgMusic').src = m;
-            const mQ = param('resepsiMaps'); 
-            if(mQ) $('iframe-map').src = `https://maps.google.com/maps?q=${encodeURIComponent(mQ)}&output=embed&hl=id&z=15`;
-        }
-
-        // Particle generator
-        function createParticles() {
-            const container = $('particles');
-=======
             setTxt('resepsi-time', param('resepsiTime')||'11.00 WIB - Selesai');
             setTxt('resepsi-loc', param('resepsiPlace')||'Grand Ballroom');
             setTxt('resepsi-address', param('resepsiAddress')||'Jl. Bahagia');
@@ -615,7 +532,6 @@
         function createParticles() {
             const container = $('particles');
             if(!container) return;
->>>>>>> 07d218d (kiw)
             for(let i=0; i<30; i++) {
                 const p = document.createElement('div');
                 p.className = 'particle';
@@ -626,10 +542,6 @@
             }
         }
 
-<<<<<<< HEAD
-        // Reveal Animations
-=======
->>>>>>> 07d218d (kiw)
         function initReveal() {
             const obs = new IntersectionObserver((entries) => {
                 entries.forEach(e => {
@@ -642,36 +554,23 @@
             document.querySelectorAll('.rv').forEach(el => obs.observe(el));
         }
 
-<<<<<<< HEAD
-        // Run
-=======
->>>>>>> 07d218d (kiw)
         document.addEventListener('DOMContentLoaded', () => {
             initData();
             createParticles();
             
-<<<<<<< HEAD
-            $('btnOpen').addEventListener('click', () => {
-=======
             $('btnOpen')?.addEventListener('click', () => {
->>>>>>> 07d218d (kiw)
                 $('cover').classList.add('open');
                 $('bgMusic').play().catch(()=>{});
                 $('btnAudio').classList.add('spin');
                 setTimeout(initReveal, 800);
             });
 
-<<<<<<< HEAD
-            $('btnAudio').addEventListener('click', () => {
-                const a = $('bgMusic');
-=======
             initCountdown(param('akadISO') || '2026-12-25T08:00', ['ak-d','ak-h','ak-m','ak-s']);
             initCountdown(param('resepsiISO') || '2026-12-25T11:00', ['rs-d','rs-h','rs-m','rs-s']);
 
             $('btnAudio')?.addEventListener('click', () => {
                 const a = $('bgMusic');
                 if(!a) return;
->>>>>>> 07d218d (kiw)
                 if(a.paused) { a.play(); $('btnAudio').classList.add('spin'); }
                 else { a.pause(); $('btnAudio').classList.remove('spin'); }
             });
@@ -684,11 +583,6 @@
             });
         });
 
-<<<<<<< HEAD
-        function openLb(i) {
-            $('lb-img').src = GALLERY_IMGS[i] || '';
-            $('lb').classList.add('vis');
-=======
         function initCountdown(iso, ids) {
             function tick() {
                 const diff = new Date(iso) - new Date();
@@ -720,19 +614,12 @@
             el.textContent = msg;
             el.style.display = 'block';
             setTimeout(() => { el.style.display = 'none'; }, 3000);
->>>>>>> 07d218d (kiw)
         }
 
         function sendRsvp() {
             const n = $('rsvp-n')?.value.trim();
             const a = $('rsvp-a')?.value;
             const m = $('rsvp-m')?.value.trim();
-<<<<<<< HEAD
-            if(!n) { alert("Isi nama dulu!"); return; }
-            const txt = `RSVP Pernikahan ${param('groom')||'Romeo'} & ${param('bride')||'Juliet'}%0A%0A*Nama:* ${n}%0A*Kehadiran:* ${a}%0A*Pesan:* ${m}`;
-            const wa = param('wa') || '6281234567890';
-            window.open(`https://wa.me/${wa}?text=${txt}`, '_blank');
-=======
             if(!n) { toast("⚠️ Isi nama dulu!"); return; }
             const txt = `✉️ *RSVP Undangan Pernikahan*\n📌 ${D.groom} & ${D.bride}\n\n👤 *Nama:* ${n}\n📅 *Kehadiran:* ${a}\n💬 *Ucapan:* ${m || '-'}`;
             window.open(`https://wa.me/${D.wa}?text=${encodeURIComponent(txt)}`, '_blank');
@@ -765,7 +652,6 @@
                 $('rsvp-n').value = '';
                 $('rsvp-m').value = '';
             }).catch(() => toast('✅ RSVP Terkirim!'));
->>>>>>> 07d218d (kiw)
         }
     </script>
 </body>

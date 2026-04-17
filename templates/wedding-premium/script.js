@@ -75,8 +75,16 @@ document.addEventListener('DOMContentLoaded', () => {
         const brideImg = iParam('imgWanita');
         const heroImg = iParam('hero');
         const mPhotos = document.querySelectorAll('.mempelai-photo-wrap img');
-        if(groomImg && mPhotos[0]) mPhotos[0].src = groomImg;
-        if(brideImg && mPhotos[1]) mPhotos[1].src = brideImg;
+        
+        // Also check IDs if class selectors fail
+        if(groomImg) {
+            if(mPhotos[0]) mPhotos[0].src = groomImg;
+            if($('img-groom')) $('img-groom').src = groomImg;
+        }
+        if(brideImg) {
+            if(mPhotos[1]) mPhotos[1].src = brideImg;
+            if($('img-bride')) $('img-bride').src = brideImg;
+        }
         if(heroImg && document.querySelector('.hero-bg')) document.querySelector('.hero-bg').style.backgroundImage = `url("${heroImg}")`;
 
         // Events
@@ -204,80 +212,6 @@ document.addEventListener('DOMContentLoaded', () => {
         window.open(`https://wa.me/${D.wa}?text=${encodeURIComponent(text)}`, '_blank');
     });
 
-<<<<<<< HEAD
-    // === 6. INTEGRASI DATA DARI URL (DYNAMIS) ===
-    function initDataFromUrl() {
-        const params = new URLSearchParams(window.location.search);
-        
-        const setTxt = (id, key, fallback) => {
-            const el = document.getElementById(id);
-            if (el) el.textContent = params.get(key) || fallback;
-        };
-
-        // Mempelai & Dasar
-        setTxt('cover-names', 'groom', 'Romeo');
-        const groom = params.get('groom') || 'Romeo';
-        const bride = params.get('bride') || 'Juliet';
-        document.getElementById('cover-names').textContent = `${groom} & ${bride}`;
-        document.getElementById('hero-names').textContent = `${groom} & ${bride}`;
-        
-        setTxt('hero-date', 'date', '25 Desember 2026');
-        setTxt('groom-fullname', 'groomFull', groom + ' Montague');
-        setTxt('bride-fullname', 'brideFull', bride + ' Capulet');
-        setTxt('groom-parents', 'groomParent', 'Putra dari Bpk. Montague & Ibu Montague');
-        setTxt('bride-parents', 'brideParent', 'Putri dari Bpk. Capulet & Ibu Capulet');
-
-        // IG Links
-        if(params.get('groomIg')) document.getElementById('groom-ig').innerHTML = `<i class="fa-brands fa-instagram"></i> @${params.get('groomIg')}`;
-        if(params.get('brideIg')) document.getElementById('bride-ig').innerHTML = `<i class="fa-brands fa-instagram"></i> @${params.get('brideIg')}`;
-
-        // Acara
-        setTxt('akad-date', 'akadDate', 'Jumat, 25 Desember 2026');
-        setTxt('akad-location', 'akadPlace', 'Masjid Agung Verona');
-        setTxt('resepsi-date', 'resepsiDate', 'Jumat, 25 Desember 2026');
-        setTxt('resepsi-location', 'resepsiPlace', 'Grand Verona Castle Ballroom');
-
-        // Foto Utama & Mempelai
-        const heroImg = params.get('hero');
-        if (heroImg) {
-            document.querySelector('.hero-wedding').style.backgroundImage = `url('${heroImg}')`;
-        }
-        const pImg = params.get('imgPria');
-        if (pImg) document.getElementById('img-groom').src = pImg;
-        const wImg = params.get('imgWanita');
-        if (wImg) document.getElementById('img-bride').src = wImg;
-
-        // Galeri (Momen Bersama)
-        const galleryContainer = document.getElementById('gallery-container');
-        if (galleryContainer) {
-            let galleryHtml = '';
-            for (let i = 1; i <= 6; i++) {
-                const imgUrl = params.get(`gal${i}`);
-                if (imgUrl) {
-                    galleryHtml += `
-                        <div class="gallery-item">
-                            <img src="${imgUrl}" alt="Momen ${i}">
-                        </div>`;
-                }
-            }
-            if (galleryHtml) {
-                galleryContainer.innerHTML = galleryHtml;
-            } else {
-                // Sembunyikan section galeri jika tidak ada foto
-                document.getElementById('galeri').style.display = 'none';
-            }
-        }
-
-        // Musik
-        const musicUrl = params.get('music');
-        if (musicUrl) {
-            bgMusic.querySelector('source').src = musicUrl;
-            bgMusic.load();
-        }
-    }
-
-    initDataFromUrl();
-=======
     btnSheets?.addEventListener('click', () => {
         const name = $('rsvp-name').value.trim();
         const att = $('rsvp-att').value;
@@ -316,7 +250,4 @@ document.addEventListener('DOMContentLoaded', () => {
     populateData();
     startCD(D.akadISO, 'ak');
     startCD(D.resepsiISO, 'rs');
->>>>>>> 07d218d (kiw)
 });
-
-

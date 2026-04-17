@@ -43,41 +43,32 @@ const s  = (id, v) => { const e=$(id); if(e) e.textContent = v; };
 
 // ─── 2. POPULATE DATA ────────────────────────────────────────
 function pop() {
-<<<<<<< HEAD
-    if(param('music')) { const a = document.getElementById('bgAudio'); if(a) a.src = param('music'); }
-=======
     if(param('music')) { const a = document.getElementById('bgm')||document.getElementById('bgAudio')||document.getElementById('bgMusic'); if(a) a.src = param('music'); }
->>>>>>> 07d218d (kiw)
     
     // --- Image Params ---
     const iParam = (k) => { const v = param(k); return v ? decodeURIComponent(v) : null; };
-    if (iParam('hero')) {
-        document.querySelectorAll('.hero-bg, .hero-batik-bg, .hero-bg-img, .hero-img').forEach(e => {
-            if(e.tagName === 'IMG') e.src = iParam('hero'); else e.style.backgroundImage = `url("${iParam('hero')}")`;
+    
+    // Hero & Covers
+    const hero = iParam('hero');
+    if (hero) {
+        document.querySelectorAll('.hero-img, .cover-photo, .closing-img-bali').forEach(e => {
+            e.style.backgroundImage = `url("${hero}")`;
         });
     }
-<<<<<<< HEAD
-    const mPx = document.querySelectorAll('.mempelai-photo img, .profile-photo img, .profile-img img');
-=======
-    const mPx = document.querySelectorAll('.mempelai-photo img, .profile-photo img, .profile-img img, .p-photo img');
->>>>>>> 07d218d (kiw)
+
+    // Mempelai
+    const mPx = document.querySelectorAll('.foto-inner img');
     if (mPx.length >= 2) {
         if (iParam('imgPria')) mPx[0].src = iParam('imgPria');
         if (iParam('imgWanita')) mPx[1].src = iParam('imgWanita');
     }
-<<<<<<< HEAD
-    const arr = typeof GALLERY_IMGS !== 'undefined' ? GALLERY_IMGS : (typeof LB_IMGS !== 'undefined' ? LB_IMGS : null);
-    const tgImg = document.querySelectorAll('.gallery-item img, .galeri-item img, .gallery-img img');
-    for (let i = 1; i <= 6; i++) {
-        const u = iParam(`gal${i}`);
-=======
-    const arr = typeof GALLERY_IMGS !== 'undefined' ? GALLERY_IMGS : (typeof LB_IMGS !== 'undefined' ? LB_IMGS : (typeof IMGS !== 'undefined' ? IMGS : null));
-    const tgImg = document.querySelectorAll('.gallery-item img, .galeri-item img, .gallery-img img, .gal-item img');
+
+    // Gallery & Lightbox
+    const tgImg = document.querySelectorAll('.gm-item img');
     for (let i = 1; i <= 6; i++) {
         const u = iParam("gal" + i);
->>>>>>> 07d218d (kiw)
         if(u) {
-            if(arr && arr[i-1] !== undefined) arr[i-1] = u;
+            if(LB && LB[i-1] !== undefined) LB[i-1] = u;
             if(tgImg.length >= i && tgImg[i-1]) tgImg[i-1].src = u;
         }
     }
@@ -216,5 +207,3 @@ document.addEventListener('DOMContentLoaded', ()=>{
     });
     au?.addEventListener('timeupdate',()=>{ if(au.duration) fill.style.width=(au.currentTime/au.duration*100)+'%'; });
 });
-
-

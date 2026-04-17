@@ -44,43 +44,29 @@ const s  = (id, v) => { const e=$(id); if(e) e.textContent = v; };
 const h  = (id, v) => { const e=$(id); if(e) e.innerHTML  = v; };
 
 // ─── 3. POPULATE DATA ────────────────────────────────────────
-<<<<<<< HEAD
-function populateData(){ if(param("music")){const a=document.getElementById("bgm")||document.getElementById("bgAudio")||document.getElementById("bgMusic");if(a){a.src=param("music");let m=param("music").split("/").pop().split(".")[0].replace(/%20/g, " ");let t=document.querySelector(".a-title, .audio-title");if(t)t.textContent=decodeURI(m);}}
-    if(param('music')) { const a = document.getElementById('bgAudio'); if(a) a.src = param('music'); }
-=======
 function populateData(){ 
-    if(param("music")){const a=document.getElementById("bgm")||document.getElementById("bgAudio")||document.getElementById("bgMusic");if(a){a.src=param("music");}}
->>>>>>> 07d218d (kiw)
+    if(param("music")){const a=document.getElementById("bgm")||document.getElementById("bgAudio")||document.getElementById("bgMusic");if(a){a.src=param("music");let m=param("music").split("/").pop().split(".")[0].replace(/%20/g, " ");let t=document.querySelector(".a-title, .audio-title");if(t)t.textContent=decodeURI(m);}}
     
     // --- Image Params ---
     const iParam = (k) => { const v = param(k); return v ? decodeURIComponent(v) : null; };
-    if (iParam('hero')) {
-        document.querySelectorAll('.hero-bg, .hero-batik-bg, .hero-bg-img, .hero-img').forEach(e => {
-            if(e.tagName === 'IMG') e.src = iParam('hero'); else e.style.backgroundImage = `url("${iParam('hero')}")`;
+    const hero = iParam('hero');
+    if (hero) {
+        document.querySelectorAll('.hero-bg, .hero-batik-bg, .hero-img, .hero-bg-img').forEach(e => {
+            if(e.tagName === 'IMG') e.src = hero; else e.style.backgroundImage = `url("${hero}")`;
         });
     }
-<<<<<<< HEAD
-    const mPx = document.querySelectorAll('.mempelai-photo img, .profile-photo img, .profile-img img');
-=======
-    const mPx = document.querySelectorAll('.mempelai-photo img, .profile-photo img, .profile-img img, .p-photo img');
->>>>>>> 07d218d (kiw)
+    const mPx = document.querySelectorAll('.m-photo img, .mempelai-photo img');
     if (mPx.length >= 2) {
         if (iParam('imgPria')) mPx[0].src = iParam('imgPria');
         if (iParam('imgWanita')) mPx[1].src = iParam('imgWanita');
     }
-<<<<<<< HEAD
-    const arr = typeof GALLERY_IMGS !== 'undefined' ? GALLERY_IMGS : (typeof LB_IMGS !== 'undefined' ? LB_IMGS : null);
-    const tgImg = document.querySelectorAll('.gallery-item img, .galeri-item img, .gallery-img img');
-    for (let i = 1; i <= 6; i++) {
-        const u = iParam(`gal${i}`);
-=======
-    const arr = typeof GALLERY_IMGS !== 'undefined' ? GALLERY_IMGS : (typeof LB_IMGS !== 'undefined' ? LB_IMGS : (typeof IMGS !== 'undefined' ? IMGS : null));
-    const tgImg = document.querySelectorAll('.gallery-item img, .galeri-item img, .gallery-img img, .gal-item img');
+    
+    // Gallery & Lightbox
+    const tgImg = document.querySelectorAll('.g-item img, .gallery-item img');
     for (let i = 1; i <= 6; i++) {
         const u = iParam("gal" + i);
->>>>>>> 07d218d (kiw)
         if(u) {
-            if(arr && arr[i-1] !== undefined) arr[i-1] = u;
+            if(typeof LB !== 'undefined' && LB[i-1] !== undefined) LB[i-1] = u;
             if(tgImg.length >= i && tgImg[i-1]) tgImg[i-1].src = u;
         }
     }
@@ -341,13 +327,13 @@ function toast(msg, dur=2800) {
 // ─── 15. TOUCH PARALLAX (mobile) ─────────────────────────────
 function initTouchParallax() {
     if(window.innerWidth > 768) return;
-    document.querySelectorAll('.hero-names, .hero-eyebrow').forEach(el => {
-        window.addEventListener('deviceorientation', e => {
-            const x = (e.gamma||0)/30;
-            const y = (e.beta||0)/30 - 1;
-            el.style.transform = `translate(${x*3}px, ${y*2}px)`;
-        }, {passive:true});
-    });
+    const els = document.querySelectorAll('.hero-names, .hero-eyebrow');
+    if(!els.length) return;
+    window.addEventListener('deviceorientation', e => {
+        const x = (e.gamma||0)/30;
+        const y = (e.beta||0)/30 - 1;
+        els.forEach(el => el.style.transform = `translate(${x*3}px, ${y*2}px)`);
+    }, {passive:true});
 }
 
 // ─── 16. INIT ────────────────────────────────────────────────
@@ -373,5 +359,3 @@ document.addEventListener('DOMContentLoaded', () => {
         if(e.key==='Escape')     closeLb();
     });
 });
-
-
