@@ -1,4 +1,2 @@
 # undanganyk
-# undanganyk
-# undanganyk
-# undanganyks
+#
