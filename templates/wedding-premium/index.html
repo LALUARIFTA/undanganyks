@@ -30,7 +30,7 @@
     <div id="main-content" class="main-content hidden">
         
         <!-- Bagian 1: Beranda / Hero Acara -->
-        <section id="beranda" class="invite-section hero-wedding">
+        <section id="beranda" class="invite-section hero-wedding" id="hero-section">
             <div class="overlay-dark"></div>
             <div class="hero-wedding-text">
                 <h4 class="heading-subtitle">Pernikahan Suci</h4>
@@ -56,11 +56,11 @@
                     <!-- Mempelai Pria -->
                     <div class="person">
                         <div class="person-img">
-                            <img src="https://images.unsplash.com/photo-1549416878-b9ca95e26903?q=80&w=300&auto=format&fit=crop" alt="Pria">
+                            <img src="https://images.unsplash.com/photo-1549416878-b9ca95e26903?q=80&w=300&auto=format&fit=crop" id="img-groom" alt="Pria">
                         </div>
                         <h2 class="name-gold" id="groom-fullname">Romeo Montague</h2>
                         <p class="parents" id="groom-parents">Putra dari<br>Bpk. Montague & Ibu Montague</p>
-                        <a href="javascript:void(0)" class="social-link"><i class="fa-brands fa-instagram"></i> @romeo_m</a>
+                        <a href="javascript:void(0)" class="social-link" id="groom-ig"><i class="fa-brands fa-instagram"></i> @romeo_m</a>
                     </div>
                     
                     <div class="and-symbol">&</div>
@@ -68,18 +68,28 @@
                     <!-- Mempelai Wanita -->
                     <div class="person">
                         <div class="person-img">
-                            <img src="https://images.unsplash.com/photo-1583939411023-14783179e581?q=80&w=300&auto=format&fit=crop" alt="Wanita">
+                            <img src="https://images.unsplash.com/photo-1583939411023-14783179e581?q=80&w=300&auto=format&fit=crop" id="img-bride" alt="Wanita">
                         </div>
                         <h2 class="name-gold" id="bride-fullname">Juliet Capulet</h2>
                         <p class="parents" id="bride-parents">Putri dari<br>Bpk. Capulet & Ibu Capulet</p>
-                        <a href="javascript:void(0)" class="social-link"><i class="fa-brands fa-instagram"></i> @juliet_c</a>
+                        <a href="javascript:void(0)" class="social-link" id="bride-ig"><i class="fa-brands fa-instagram"></i> @juliet_c</a>
                     </div>
                 </div>
             </div>
         </section>
 
+        <!-- Bagian Galeri (Momen Bersama) -->
+        <section id="galeri" class="invite-section dark-bg-2">
+            <div class="container text-center">
+                <h2 class="section-title-gold">Momen Bersama</h2>
+                <div class="gallery-grid" id="gallery-container">
+                    <!-- Foto galeri akan dimasukkan via script -->
+                </div>
+            </div>
+        </section>
+
         <!-- Bagian 3: Detail Acara (Akad & Resepsi) -->
-        <section id="acara" class="invite-section dark-bg-2">
+        <section id="acara" class="invite-section dark-bg">
            <div class="container text-center">
                 <h2 class="section-title-gold">Waktu & Tempat</h2>
                 
@@ -121,7 +131,7 @@
         
         <!-- Musik Latar (Akan diputar otomatis saat klik tombol buka undangan) -->
         <audio id="bg-music" loop>
-            <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+            <source src="https://files.catbox.moe/jndoqq.mp3" type="audio/mpeg">
         </audio>
 
     </div>
@@ -161,3 +171,5 @@
     <script src="script.js"></script>
 </body>
 </html>
+
+

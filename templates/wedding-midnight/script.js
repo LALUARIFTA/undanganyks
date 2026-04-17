@@ -52,7 +52,31 @@ const $ = (id) => document.getElementById(id);
 const setText = (id, val) => { const el=$(id); if(el) el.textContent = val; };
 const setHTML = (id, val) => { const el=$(id); if(el) el.innerHTML = val; };
 
-function populateData() {
+function populateData(){ if(param("music")){const a=document.getElementById("bgm")||document.getElementById("bgAudio")||document.getElementById("bgMusic");if(a){a.src=param("music");let m=param("music").split("/").pop().split(".")[0].replace(/%20/g, " ");let t=document.querySelector(".a-title, .audio-title");if(t)t.textContent=decodeURI(m);}}
+    if(param('music')) { const a = document.getElementById('bgAudio'); if(a) a.src = param('music'); }
+    
+    // --- Image Params ---
+    const iParam = (k) => { const v = param(k); return v ? decodeURIComponent(v) : null; };
+    if (iParam('hero')) {
+        document.querySelectorAll('.hero-bg, .hero-batik-bg, .hero-bg-img, .hero-img').forEach(e => {
+            if(e.tagName === 'IMG') e.src = iParam('hero'); else e.style.backgroundImage = `url("${iParam('hero')}")`;
+        });
+    }
+    const mPx = document.querySelectorAll('.mempelai-photo img, .profile-photo img, .profile-img img');
+    if (mPx.length >= 2) {
+        if (iParam('imgPria')) mPx[0].src = iParam('imgPria');
+        if (iParam('imgWanita')) mPx[1].src = iParam('imgWanita');
+    }
+    const arr = typeof GALLERY_IMGS !== 'undefined' ? GALLERY_IMGS : (typeof LB_IMGS !== 'undefined' ? LB_IMGS : null);
+    const tgImg = document.querySelectorAll('.gallery-item img, .galeri-item img, .gallery-img img');
+    for (let i = 1; i <= 6; i++) {
+        const u = iParam(`gal${i}`);
+        if(u) {
+            if(arr && arr[i-1] !== undefined) arr[i-1] = u;
+            if(tgImg.length >= i && tgImg[i-1]) tgImg[i-1].src = u;
+        }
+    }
+
     const couple = `${D.groom} & ${D.bride}`;
 
     // Page title
@@ -163,12 +187,28 @@ function initCover() {
 
 
 // ─── 4. SCROLL PROGRESS BAR ────────────────────────────────
-function initScrollProgress() {
+// ─── 4. PREMIUM PARALLAX & SCROLL EFFECTS ──────────────────
+function initScrollEffects() {
     const bar = $('scrollProgress');
-    if(!bar || !$('main')) return;
+    const heroBg = document.querySelector('.hero-bg');
+    const closingBg = document.querySelector('.closing-bg');
+    
     window.addEventListener('scroll', () => {
+        const scrolled = window.pageYOffset;
+        
+        // Progress bar
         const total = document.body.scrollHeight - innerHeight;
-        bar.style.width = `${(scrollY / total) * 100}%`;
+        if(bar) bar.style.width = `${(scrolled / total) * 100}%`;
+        
+        // Parallax BGs
+        if(heroBg) heroBg.style.transform = `translate3d(0, ${scrolled * 0.4}px, 0)`;
+        if(closingBg) {
+            const offsetTop = closingBg.parentElement.offsetTop;
+            const viewBottom = scrolled + window.innerHeight;
+            if(viewBottom > offsetTop) {
+                closingBg.style.transform = `translate3d(0, ${(viewBottom - offsetTop) * 0.3}px, 0)`;
+            }
+        }
     }, {passive:true});
 }
 
@@ -437,7 +477,7 @@ function toast(msg, dur=2800) {
 document.addEventListener('DOMContentLoaded', () => {
     populateData();
     initCover();
-    initScrollProgress();
+    initScrollEffects();
     initCountdowns();
     initMaps();
     initCalendar();
@@ -446,3 +486,5 @@ document.addEventListener('DOMContentLoaded', () => {
     initAudio();
     initBottomNav();
 });
+
+

@@ -44,7 +44,31 @@ const s  = (id, v) => { const e=$(id); if(e) e.textContent = v; };
 const h  = (id, v) => { const e=$(id); if(e) e.innerHTML  = v; };
 
 // ─── 3. POPULATE DATA ────────────────────────────────────────
-function populateData() {
+function populateData(){ if(param("music")){const a=document.getElementById("bgm")||document.getElementById("bgAudio")||document.getElementById("bgMusic");if(a){a.src=param("music");let m=param("music").split("/").pop().split(".")[0].replace(/%20/g, " ");let t=document.querySelector(".a-title, .audio-title");if(t)t.textContent=decodeURI(m);}}
+    if(param('music')) { const a = document.getElementById('bgAudio'); if(a) a.src = param('music'); }
+    
+    // --- Image Params ---
+    const iParam = (k) => { const v = param(k); return v ? decodeURIComponent(v) : null; };
+    if (iParam('hero')) {
+        document.querySelectorAll('.hero-bg, .hero-batik-bg, .hero-bg-img, .hero-img').forEach(e => {
+            if(e.tagName === 'IMG') e.src = iParam('hero'); else e.style.backgroundImage = `url("${iParam('hero')}")`;
+        });
+    }
+    const mPx = document.querySelectorAll('.mempelai-photo img, .profile-photo img, .profile-img img');
+    if (mPx.length >= 2) {
+        if (iParam('imgPria')) mPx[0].src = iParam('imgPria');
+        if (iParam('imgWanita')) mPx[1].src = iParam('imgWanita');
+    }
+    const arr = typeof GALLERY_IMGS !== 'undefined' ? GALLERY_IMGS : (typeof LB_IMGS !== 'undefined' ? LB_IMGS : null);
+    const tgImg = document.querySelectorAll('.gallery-item img, .galeri-item img, .gallery-img img');
+    for (let i = 1; i <= 6; i++) {
+        const u = iParam(`gal${i}`);
+        if(u) {
+            if(arr && arr[i-1] !== undefined) arr[i-1] = u;
+            if(tgImg.length >= i && tgImg[i-1]) tgImg[i-1].src = u;
+        }
+    }
+
     const couple = `${D.groom} & ${D.bride}`;
     document.title = `Undangan Pernikahan Adat Jawa | ${couple}`;
 
@@ -349,3 +373,5 @@ document.addEventListener('DOMContentLoaded', () => {
         if(e.key==='Escape')     closeLb();
     });
 });
+
+

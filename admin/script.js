@@ -11,6 +11,7 @@ const TEMPLATE_PATHS = {
     rustic:   '../templates/wedding-rustic/index.html',
     jawa:     '../templates/wedding-jawa/index.html',
     bali:     '../templates/wedding-bali/index.html',
+    aether:   '../templates/wedding-aether/index.html',
 };
 const TEMPLATE_META = {
     midnight: { icon: '🌙', color: 'rgba(212,175,55,0.15)', label: 'Midnight Gold' },
@@ -18,6 +19,7 @@ const TEMPLATE_META = {
     rustic:   { icon: '🌿', color: 'rgba(160,82,45,0.15)',  label: 'Rustic Garden'  },
     jawa:     { icon: '🏯', color: 'rgba(92,10,20,0.15)',   label: 'Jawa Kraton'    },
     bali:     { icon: '🌺', color: 'rgba(13,77,77,0.15)',   label: 'Bali Pura'      },
+    aether:   { icon: '✨', color: 'rgba(212,175,55,0.15)', label: '3D Aether'      },
 };
 
 // ─── State
@@ -95,33 +97,48 @@ const PAGE_TITLES = {
 };
 
 function initNav() {
-    const links   = document.querySelectorAll('.sl[data-page]');
-    const pages   = document.querySelectorAll('.admin-page');
-    const sidebar = $('sidebar');
+    const links    = document.querySelectorAll('.sl[data-page]');
+    const pages    = document.querySelectorAll('.admin-page');
+    const sidebar  = $('sidebar');
+    const toggle   = $('topbarToggle');
+    const overlay  = $('sidebarOverlay');
+    const closeBtn = $('sidebarClose');
+
+    const openSidebar = () => {
+        sidebar.classList.add('open');
+        overlay?.classList.add('active');
+    };
+    const closeSidebar = () => {
+        sidebar.classList.remove('open');
+        overlay?.classList.remove('active');
+    };
+
+    toggle?.addEventListener('click', openSidebar);
+    overlay?.addEventListener('click', closeSidebar);
+    closeBtn?.addEventListener('click', closeSidebar);
 
     links.forEach(link => {
-        link.addEventListener('click', e => {
+        link.addEventListener('click', (e) => {
             e.preventDefault();
-            const pg = link.dataset.page;
+            const pg = link.dataset.page; // Correctly define pg
 
             links.forEach(l => l.classList.remove('active'));
             link.classList.add('active');
-            pages.forEach(p => p.classList.remove('active'));
-            $(`page-${pg}`)?.classList.add('active');
-            set('topbarTitle', PAGE_TITLES[pg] || '');
 
-            if (window.innerWidth <= 768) sidebar.classList.remove('open');
+            pages.forEach(p => p.classList.remove('active'));
+            const target = $('page-' + pg);
+            if (target) {
+                target.classList.add('active');
+                set('topbarTitle', PAGE_TITLES[pg] || 'Admin Panel');
+            }
+
+            if (window.innerWidth <= 1100) closeSidebar();
 
             // Page-specific init
             if (pg === 'daftar')   renderSavedList();
             if (pg === 'tamu')     populateTamuSelect();
             if (pg === 'rsvp')     initRsvpDashboard();
         });
-    });
-
-    $('sidebarToggle')?.addEventListener('click', () => {
-        sidebar.classList.toggle('open');
-        sidebar.classList.toggle('closed');
     });
 }
 
@@ -140,9 +157,119 @@ function initEditor() {
     });
 
     // Listen to ALL inputs in editor form
-    $('editorForm')?.addEventListener('input', () => {
+    $('editorForm')?.addEventListener('input', (e) => {
         clearTimeout(debounceTimer);
         debounceTimer = setTimeout(updatePreview, 600);
+        
+        // Handle manual music URL input
+        if(e.target && e.target.id === 'f-music') {
+            const url = e.target.value;
+            let songName = 'Custom Audio';
+            try {
+                songName = decodeURI(url.split('/').pop().split('.')[0].replace(/%20/g, ' '));
+                if (!songName) songName = 'Custom Audio';
+            } catch(e) {}
+            
+            const adminAudio = $('adminAudio');
+            if(adminAudio) {
+                adminAudio.pause();
+                let audioSrc = url;
+                if (audioSrc.startsWith('../../')) audioSrc = audioSrc.replace('../../', '../');
+                adminAudio.src = audioSrc;
+                updatePlayerUI(false, songName);
+            }
+        }
+    });
+
+    // Music Presets
+    document.querySelectorAll('.m-p-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            // UI Active State
+            document.querySelectorAll('.m-p-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            const linkInput = $('f-music');
+            const adminAudio = $('adminAudio');
+            const adminPlayerWrap = $('adminMusicPlayer');
+
+            if (linkInput) {
+                linkInput.value = btn.dataset.url;
+                updatePreview();
+                
+                // Local Admin Playback
+                if (adminAudio) {
+                    let audioSrc = btn.dataset.url;
+                    if (audioSrc.startsWith('../../')) {
+                        audioSrc = audioSrc.replace('../../', '../');
+                    }
+                    adminAudio.src = audioSrc;
+                    adminAudio.play().then(() => {
+                        updatePlayerUI(true, btn.textContent.trim());
+                    }).catch(() => {
+                        console.log("Autoplay blocked, but UI updated.");
+                        updatePlayerUI(false, btn.textContent.trim());
+                    });
+                }
+
+                toast('🎵 Lagu dipilih: ' + btn.textContent.trim());
+            }
+        });
+    });
+
+    const adminAudio = $('adminAudio');
+    const adminPlayerWrap = $('adminMusicPlayer');
+    const btnToggleAdminMusic = $('btnToggleAdminMusic');
+    const btnStopAdminMusic = $('btnStopAdminMusic');
+    const adminMusicControls = $('adminMusicControls');
+    const adminMusicLabel = $('adminMusicLabel');
+    const adminMusicIcon = $('adminMusicIcon')?.querySelector('i');
+
+    function updatePlayerUI(isPlaying, songName) {
+        if (!adminPlayerWrap) return;
+        
+        if (songName) {
+            adminMusicLabel.textContent = 'Memutar: ' + songName;
+            adminMusicControls.style.display = 'flex';
+            btnToggleAdminMusic.disabled = false;
+        }
+
+        if (isPlaying) {
+            adminPlayerWrap.classList.add('playing');
+            btnToggleAdminMusic.innerHTML = '<i class="fa-solid fa-pause"></i> Pause';
+            if (adminMusicIcon) adminMusicIcon.className = 'fa-solid fa-compact-disc';
+            btnStopAdminMusic.style.display = 'flex';
+        } else {
+            adminPlayerWrap.classList.remove('playing');
+            btnToggleAdminMusic.innerHTML = '<i class="fa-solid fa-play"></i> Play';
+            if (adminMusicIcon) adminMusicIcon.className = 'fa-solid fa-music';
+        }
+    }
+
+    btnToggleAdminMusic?.addEventListener('click', () => {
+        if (!adminAudio.src) return;
+        if (adminAudio.paused) {
+            adminAudio.play();
+            updatePlayerUI(true);
+        } else {
+            adminAudio.pause();
+            updatePlayerUI(false);
+        }
+    });
+
+    btnStopAdminMusic?.addEventListener('click', () => {
+        if (adminAudio) {
+            adminAudio.pause();
+            adminAudio.currentTime = 0;
+            adminAudio.removeAttribute('src'); // clear src
+            
+            adminPlayerWrap?.classList.remove('playing');
+            if (adminMusicLabel) adminMusicLabel.textContent = 'Pilih lagu untuk tes suara';
+            if (adminMusicIcon) adminMusicIcon.className = 'fa-solid fa-music';
+            if (adminMusicControls) adminMusicControls.style.display = 'none';
+            btnStopAdminMusic.style.display = 'none';
+
+            document.querySelectorAll('.m-p-btn').forEach(b => b.classList.remove('active'));
+        }
     });
 
     // Device switcher
@@ -182,11 +309,7 @@ function initEditor() {
     // Save invitation
     $('btnSaveInv')?.addEventListener('click', saveInvitation);
 
-    // Sheets guide modal
-    $('linkSheetsGuide')?.addEventListener('click', e => {
-        e.preventDefault();
-        $('sheetsModal')?.classList.remove('hidden');
-    });
+    // Sheets guide modal — handled by initModals()
 
     // Initial preview
     updatePreview();
@@ -214,6 +337,8 @@ function buildParams() {
         bankName: 'f-bankName', bankAcc: 'f-bankAcc', bankHolder: 'f-bankHolder',
         wa: 'f-wa', guest: 'f-guest',
         sheetsUrl: 'f-sheetsUrl', invId: 'f-invId',
+        music: 'f-music',
+        hero: 'f-imgHero', imgPria: 'f-imgPria', imgWanita: 'f-imgWanita'
     };
     Object.entries(fields).forEach(([key, id]) => {
         const v = val(id);
@@ -230,6 +355,13 @@ function buildParams() {
         if (desc) params.set(`s${i}desc`, desc);
     }
 
+    // Gallery Data (Momen Bersama)
+    document.querySelectorAll('.f-gallery').forEach(input => {
+        const idx = input.dataset.idx;
+        const val = input.value.trim();
+        if (val) params.set(`gal${idx}`, val);
+    });
+
     return params;
 }
 
@@ -238,11 +370,35 @@ function buildUrl() {
     return `${base}?${buildParams().toString()}`;
 }
 
+function updateImagePreviews() {
+    const pairs = [
+        ['f-imgHero', 'p-imgHero'],
+        ['f-imgPria', 'p-imgPria'],
+        ['f-imgWanita', 'p-imgWanita']
+    ];
+    pairs.forEach(([inputId, previewId]) => {
+        const url = val(inputId);
+        const box = $(previewId);
+        if (box) box.style.backgroundImage = url ? `url("${url}")` : 'none';
+    });
+
+    // Gallery Previews
+    document.querySelectorAll('.f-gallery').forEach(input => {
+        const idx = input.dataset.idx;
+        const url = input.value.trim();
+        const box = $(`p-gallery-${idx}`);
+        if (box) box.style.backgroundImage = url ? `url("${url}")` : 'none';
+    });
+}
+
 function updatePreview() {
     const iframe = $('previewIframe');
     if (!iframe) return;
     const url = buildUrl();
     iframe.src = url;
+
+    updateImagePreviews();
+
     const status = $('previewStatus');
     if (status) {
         status.innerHTML = `<span class="pulse-dot"></span> Memperbarui...`;
@@ -258,11 +414,14 @@ function updatePreview() {
 let MEM_SAVED = [];
 let awClient = null;
 let awDb = null;
+let awStorage = null;
+
 const awConfig = {
     endpoint:    localStorage.getItem('lumina_aw_endpoint') || 'https://cloud.appwrite.io/v1',
     projectId:   localStorage.getItem('lumina_aw_project') || '',
     databaseId:  localStorage.getItem('lumina_aw_db') || '',
-    collectionId:localStorage.getItem('lumina_aw_col') || ''
+    collectionId:localStorage.getItem('lumina_aw_col') || '',
+    bucketId:    localStorage.getItem('lumina_aw_bucket') || '69e1ebb1000fefd0d33a'
 };
 
 function initAppwrite() {
@@ -270,21 +429,25 @@ function initAppwrite() {
     if ($('awProject')) $('awProject').value = awConfig.projectId;
     if ($('awDb')) $('awDb').value = awConfig.databaseId;
     if ($('awCol')) $('awCol').value = awConfig.collectionId;
+    if ($('awBucket')) $('awBucket').value = awConfig.bucketId;
 
     $('btnConnectAw')?.addEventListener('click', () => {
         awConfig.endpoint = val('awEndpoint') || 'https://cloud.appwrite.io/v1';
         awConfig.projectId = val('awProject');
         awConfig.databaseId = val('awDb');
         awConfig.collectionId = val('awCol');
+        awConfig.bucketId = val('awBucket');
         
         localStorage.setItem('lumina_aw_endpoint', awConfig.endpoint);
         localStorage.setItem('lumina_aw_project', awConfig.projectId);
         localStorage.setItem('lumina_aw_db', awConfig.databaseId);
         localStorage.setItem('lumina_aw_col', awConfig.collectionId);
+        localStorage.setItem('lumina_aw_bucket', awConfig.bucketId);
         
         setupAppwriteClient();
         fetchSavedList();
-        toast('✅ Config Appwrite Disimpan!');
+        updateAwStatusUI();
+        toast('✅ Config Appwrite & Storage Disimpan!');
     });
 
     $('btnGuideAw')?.addEventListener('click', () => {
@@ -292,6 +455,9 @@ function initAppwrite() {
     });
 
     setupAppwriteClient();
+    initUploadHandlers();
+    updateAwStatusUI();
+
     if(awConfig.projectId && awConfig.databaseId && awConfig.collectionId) {
         fetchSavedList();
     } else {
@@ -299,15 +465,109 @@ function initAppwrite() {
     }
 }
 
+function updateAwStatusUI() {
+    const statusBox = $('awStatus');
+    if (!statusBox) return;
+    const span = statusBox.querySelector('span');
+    
+    if (awClient && awConfig.projectId) {
+        statusBox.classList.add('connected');
+        statusBox.classList.remove('disconnected');
+        span.innerHTML = 'Terhubung ke Appwrite';
+        statusBox.style.color = '#10b981';
+    } else {
+        statusBox.classList.remove('connected');
+        statusBox.classList.add('disconnected');
+        span.innerHTML = 'Belum terhubung';
+        statusBox.style.color = '#94a3b8';
+    }
+}
+
 function setupAppwriteClient() {
-    if (!awConfig.projectId || typeof Appwrite === 'undefined') return;
+    if (typeof Appwrite === 'undefined') {
+        console.warn('Appwrite SDK belum dimuat.');
+        return;
+    }
+    if (!awConfig.projectId) {
+        console.warn('Appwrite Project ID belum diisi.');
+        return;
+    }
     try {
         awClient = new Appwrite.Client();
         awClient.setEndpoint(awConfig.endpoint).setProject(awConfig.projectId);
-        awDb = new Appwrite.Databases(awClient);
+        // Storage selalu diinisialisasi jika projectId ada
+        awStorage = new Appwrite.Storage(awClient);
+        // Database hanya jika databaseId terkonfigurasi
+        if (awConfig.databaseId) {
+            awDb = new Appwrite.Databases(awClient);
+        }
+        console.log('✅ Appwrite Client berhasil diinisialisasi.');
     } catch(err) {
-        console.error("Appwrite Init Error", err);
+        console.error('Appwrite Init Error:', err);
     }
+}
+
+function initUploadHandlers() {
+    document.querySelectorAll('.f-upload').forEach(input => {
+        input.addEventListener('change', async (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            // Cek apakah SDK sudah dimuat
+            if (typeof Appwrite === 'undefined') {
+                toast('❌ Appwrite SDK gagal dimuat. Cek koneksi internet.');
+                return;
+            }
+
+            // Cek Project ID
+            if (!awConfig.projectId) {
+                toast('⚠️ Isi Project ID Appwrite di bagian "Undangan Tersimpan" terlebih dahulu!');
+                return;
+            }
+
+            // Re-init storage jika belum ada (misal config baru saja diisi)
+            if (!awStorage) setupAppwriteClient();
+
+            if (!awStorage) {
+                toast('❌ Appwrite Storage tidak dapat diinisialisasi. Cek Project ID.');
+                return;
+            }
+
+            const bucketId = awConfig.bucketId || '69e1ebb1000fefd0d33a';
+            const targetId = input.dataset.target;
+            const label = input.closest('.btn-upload');
+
+            label.classList.add('loading');
+            try {
+                const response = await awStorage.createFile(
+                    bucketId,
+                    Appwrite.ID.unique(),
+                    file
+                );
+
+                const fileUrl = `${awConfig.endpoint}/storage/buckets/${bucketId}/files/${response.$id}/view?project=${awConfig.projectId}&mode=admin`;
+
+                const targetInput = $(targetId);
+                if (targetInput) {
+                    targetInput.value = fileUrl;
+                    updateImagePreviews();
+                    updatePreview();
+                    toast('✅ Foto berhasil diunggah ke Appwrite!');
+                }
+            } catch (err) {
+                console.error('Upload Error:', err);
+                if (err.code === 401) {
+                    toast('❌ Akses ditolak. Pastikan izin Bucket diset ke "Any" di Appwrite.');
+                } else if (err.code === 404) {
+                    toast('❌ Bucket tidak ditemukan. Cek Bucket ID.');
+                } else {
+                    toast('❌ Gagal unggah: ' + (err.message || 'Unknown error'));
+                }
+            } finally {
+                label.classList.remove('loading');
+            }
+        });
+    });
 }
 
 async function fetchSavedList() {
@@ -381,8 +641,24 @@ async function saveInvitation() {
             await fetchSavedList();
             toast(`💾 Disimpan ke Appwrite Cloud!`);
         } catch(err) {
-            console.error(err);
-            toast('❌ Gagal simpan ke Appwrite. Cek console.');
+            console.error('Appwrite Save Error:', err);
+            toast('❌ Gagal simpan ke Appwrite, mengalihkan ke Local Storage...');
+            
+            // Fallback ke Local Storage jika Appwrite gagal
+            const invLocal = {
+                id: invId,
+                groom, bride,
+                groomFull: rawForm.groomFull, brideFull: rawForm.brideFull,
+                date: rawForm.date,
+                template: currentTemplate,
+                url,
+                savedAt: new Date().toLocaleDateString('id-ID'),
+                formData: rawForm
+            };
+            MEM_SAVED.push(invLocal);
+            setSavedLocal(MEM_SAVED);
+            renderSavedList();
+            setTimeout(() => toast('💾 Disimpan sementara ke Local Storage!'), 3000);
         } finally {
             btn.innerHTML = oldTxt;
             btn.disabled = false;
@@ -410,6 +686,8 @@ function renderSavedList() {
     if (!list) return;
     const saved = getSaved();
 
+    set('invTotalStat', `Total: ${saved.length} Undangan`);
+
     if (!saved.length) {
         list.innerHTML = `<div class="empty-state"><i class="fa-solid fa-box-open"></i><p>Belum ada undangan tersimpan.</p><small>Buat undangan di Live Editor lalu klik "Simpan Undangan".</small></div>`;
         return;
@@ -417,18 +695,21 @@ function renderSavedList() {
 
     list.innerHTML = saved.map(inv => {
         const meta = TEMPLATE_META[inv.template] || TEMPLATE_META.midnight;
-        // inv.id is the Appwrite doc.$id (string) or LocalStorage Date.now() (number)
         return `
         <div class="inv-card">
-            <div class="inv-icon" style="background:${meta.color}">${meta.icon}</div>
+            <div class="inv-icon" style="background:${meta.color}; color:#fff">${meta.icon}</div>
             <div class="inv-info">
                 <div class="inv-names">${inv.groom} & ${inv.bride}</div>
-                <div class="inv-meta"><i class="fa-regular fa-calendar"></i> ${inv.date} &nbsp;·&nbsp; Template: <em>${meta.label}</em> &nbsp;·&nbsp; Disimpan: ${inv.savedAt || '-'}</div>
+                <div class="inv-meta">
+                    <span><i class="fa-regular fa-calendar"></i> ${inv.date}</span>
+                    <span><i class="fa-solid fa-palette"></i> <em>${meta.label}</em></span>
+                    <span><i class="fa-regular fa-clock"></i> ${inv.savedAt || '-'}</span>
+                </div>
             </div>
             <div class="inv-actions">
-                <button class="inv-btn-edit" onclick="loadInvToEditor('${inv.id}')"><i class="fa-solid fa-pen"></i> Edit</button>
-                <button class="inv-btn-p" onclick="window.open('${inv.url.replace(/'/g,"\\'")}','_blank')"><i class="fa-solid fa-eye"></i> Preview</button>
-                <button class="inv-btn-d" onclick="deleteInvitation('${inv.id}')"><i class="fa-solid fa-trash"></i></button>
+                <button class="inv-btn-edit" onclick="loadInvToEditor('${inv.id || inv.uid}')"><i class="fa-solid fa-pen"></i> Edit</button>
+                <a href="${inv.url}" target="_blank" class="inv-btn-p"><i class="fa-solid fa-eye"></i> Preview</a>
+                <button class="inv-btn-d" onclick="deleteInvitation('${inv.id || inv.uid}')"><i class="fa-solid fa-trash"></i></button>
             </div>
         </div>`;
     }).join('');
@@ -482,6 +763,7 @@ window.loadInvToEditor = function(id) {
         'f-bankName': fd.bankName, 'f-bankAcc': fd.bankAcc, 'f-bankHolder': fd.bankHolder,
         'f-wa': fd.wa, 'f-guest': fd.guest,
         'f-sheetsUrl': fd.sheetsUrl, 'f-invId': fd.invId,
+        'f-music': fd.music,
     };
     Object.entries(fieldMap).forEach(([id, v]) => { const el = $(id); if (el && v) el.value = v; });
 
@@ -618,6 +900,7 @@ function initRsvpDashboard() {
     });
 
     $('btnRefreshRsvp')?.addEventListener('click', fetchRsvpData);
+    $('btnRefreshRsvpTop')?.addEventListener('click', fetchRsvpData);
 
     $('btnOpenSheets')?.addEventListener('click', () => {
         if (rsvpSheetsUrl) {
@@ -627,9 +910,7 @@ function initRsvpDashboard() {
         }
     });
 
-    $('btnShowGuide')?.addEventListener('click', () => {
-        $('sheetsModal')?.classList.remove('hidden');
-    });
+    // btnShowGuide handled by initModals()
 
     // Search & filter
     $('rsvpSearch')?.addEventListener('input', () => renderRsvpTable());
@@ -722,20 +1003,22 @@ function renderRsvpTable() {
     });
 
     if (!filtered.length) {
-        tbody.innerHTML = `<tr><td colspan="5" class="empty-row"><i class="fa-solid fa-magnifying-glass"></i><br>Tidak ada data yang cocok.</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="5" style="padding:40px; text-align:center; color:var(--text-tertiary);"><i class="fa-solid fa-magnifying-glass" style="font-size:2rem; opacity:0.3; margin-bottom:12px;"></i><br>Tidak ada data RSVP yang cocok.</td></tr>`;
         return;
     }
 
     tbody.innerHTML = filtered.map((d, i) => {
         const att = d.attendance || '-';
-        const cls = att === 'Hadir' ? 'att-hadir' : att === 'Tidak Hadir' ? 'att-tidak' : 'att-ragu';
+        const pillCls = att === 'Hadir' ? 'status-hadir' : att === 'Tidak Hadir' ? 'status-tidak' : 'status-ragu';
+        const dotCls  = att === 'Hadir' ? 'fa-circle-check' : att === 'Tidak Hadir' ? 'fa-circle-xmark' : 'fa-circle-question';
+        
         return `
         <tr>
-            <td>${i + 1}</td>
-            <td style="white-space:nowrap;font-size:.76rem;color:var(--sec)">${d.timestamp || '-'}</td>
-            <td><strong>${d.name || '-'}</strong></td>
-            <td><span class="att-badge ${cls}">${att}</span></td>
-            <td style="max-width:240px;color:var(--sec);font-size:.8rem">${d.message || '-'}</td>
+            <td style="font-weight:700; color:var(--text-tertiary)">${i + 1}</td>
+            <td style="white-space:nowrap; font-size:0.8rem; color:var(--text-tertiary)">${d.timestamp || '-'}</td>
+            <td style="font-weight:700;">${d.name || '-'}</td>
+            <td><span class="status-pill ${pillCls}"><i class="fa-solid ${dotCls}"></i> ${att}</span></td>
+            <td style="max-width:300px; color:var(--text-secondary); font-size:0.85rem; line-height:1.5;">${d.message || '-'}</td>
         </tr>`;
     }).join('');
 }
@@ -761,6 +1044,14 @@ window.selectTemplate = function(tpl) {
 // 8. SHEETS MODAL
 // ════════════════════════════════════════════════════════════
 function initModals() {
+    // Appwrite Modal
+    $('btnGuideAw')?.addEventListener('click', () => $('awModal').classList.remove('hidden'));
+    
+    // Sheets Modal
+    const showSheetsModal = () => $('sheetsModal').classList.remove('hidden');
+    $('btnShowGuide')?.addEventListener('click', showSheetsModal);
+    $('linkSheetsGuide')?.addEventListener('click', e => { e.preventDefault(); showSheetsModal(); });
+
     // Close modal on backdrop click
     document.querySelectorAll('.modal').forEach(modal => {
         modal.addEventListener('click', e => {

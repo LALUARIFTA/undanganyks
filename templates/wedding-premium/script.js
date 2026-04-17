@@ -97,29 +97,78 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Fungsi Render Teks Otomatis dari Input
-    function updateNames() {
-        const groomText = inputGroom.value || 'Groom';
-        const brideText = inputBride.value || 'Bride';
-        const combined = `${groomText} & ${brideText}`; // Misal: "Andi & Sita"
+    // === 6. INTEGRASI DATA DARI URL (DYNAMIS) ===
+    function initDataFromUrl() {
+        const params = new URLSearchParams(window.location.search);
         
-        // Memasukkan Teks ke Elemen Target
-        coverNames.textContent = combined;
-        heroNames.textContent = combined;
+        const setTxt = (id, key, fallback) => {
+            const el = document.getElementById(id);
+            if (el) el.textContent = params.get(key) || fallback;
+        };
+
+        // Mempelai & Dasar
+        setTxt('cover-names', 'groom', 'Romeo');
+        const groom = params.get('groom') || 'Romeo';
+        const bride = params.get('bride') || 'Juliet';
+        document.getElementById('cover-names').textContent = `${groom} & ${bride}`;
+        document.getElementById('hero-names').textContent = `${groom} & ${bride}`;
         
-        // Untuk nama lengkap kita berikan default nama belakang sementara
-        groomFullName.textContent = groomText + " Montague";
-        brideFullName.textContent = brideText + " Capulet";
+        setTxt('hero-date', 'date', '25 Desember 2026');
+        setTxt('groom-fullname', 'groomFull', groom + ' Montague');
+        setTxt('bride-fullname', 'brideFull', bride + ' Capulet');
+        setTxt('groom-parents', 'groomParent', 'Putra dari Bpk. Montague & Ibu Montague');
+        setTxt('bride-parents', 'brideParent', 'Putri dari Bpk. Capulet & Ibu Capulet');
+
+        // IG Links
+        if(params.get('groomIg')) document.getElementById('groom-ig').innerHTML = `<i class="fa-brands fa-instagram"></i> @${params.get('groomIg')}`;
+        if(params.get('brideIg')) document.getElementById('bride-ig').innerHTML = `<i class="fa-brands fa-instagram"></i> @${params.get('brideIg')}`;
+
+        // Acara
+        setTxt('akad-date', 'akadDate', 'Jumat, 25 Desember 2026');
+        setTxt('akad-location', 'akadPlace', 'Masjid Agung Verona');
+        setTxt('resepsi-date', 'resepsiDate', 'Jumat, 25 Desember 2026');
+        setTxt('resepsi-location', 'resepsiPlace', 'Grand Verona Castle Ballroom');
+
+        // Foto Utama & Mempelai
+        const heroImg = params.get('hero');
+        if (heroImg) {
+            document.querySelector('.hero-wedding').style.backgroundImage = `url('${heroImg}')`;
+        }
+        const pImg = params.get('imgPria');
+        if (pImg) document.getElementById('img-groom').src = pImg;
+        const wImg = params.get('imgWanita');
+        if (wImg) document.getElementById('img-bride').src = wImg;
+
+        // Galeri (Momen Bersama)
+        const galleryContainer = document.getElementById('gallery-container');
+        if (galleryContainer) {
+            let galleryHtml = '';
+            for (let i = 1; i <= 6; i++) {
+                const imgUrl = params.get(`gal${i}`);
+                if (imgUrl) {
+                    galleryHtml += `
+                        <div class="gallery-item">
+                            <img src="${imgUrl}" alt="Momen ${i}">
+                        </div>`;
+                }
+            }
+            if (galleryHtml) {
+                galleryContainer.innerHTML = galleryHtml;
+            } else {
+                // Sembunyikan section galeri jika tidak ada foto
+                document.getElementById('galeri').style.display = 'none';
+            }
+        }
+
+        // Musik
+        const musicUrl = params.get('music');
+        if (musicUrl) {
+            bgMusic.querySelector('source').src = musicUrl;
+            bgMusic.load();
+        }
     }
 
-    function updateDate() {
-        const dateStr = inputDate.value || '-';
-        heroDate.textContent = dateStr;
-    }
-
-    // Event Listener `input` akan mendeteksi ketikan huruf per huruf!
-    inputGroom.addEventListener('input', updateNames);
-    inputBride.addEventListener('input', updateNames);
-    inputDate.addEventListener('input', updateDate);
-
+    initDataFromUrl();
 });
+
+

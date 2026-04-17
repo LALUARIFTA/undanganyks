@@ -176,14 +176,14 @@
     <!-- ── 5. ACARA + COUNTDOWN ── -->
     <section id="s-acara" class="inv-section event-section">
         <div class="container">
-            <div class="section-header reveal">
+            <div class="section-header reveal reveal-up">
                 <p class="section-eyebrow">Acara</p>
                 <h2 class="section-title">Waktu & Tempat</h2>
             </div>
             <div class="event-cards-grid">
 
                 <!-- Akad -->
-                <div class="event-card reveal">
+                <div class="event-card reveal reveal-left">
                     <div class="event-card-icon"><i class="fa-solid fa-mosque"></i></div>
                     <div class="event-tag">Akad Nikah</div>
                     <h3 class="event-name" id="akad-date">Jumat, 25 Desember 2026</h3>
@@ -214,7 +214,7 @@
                 </div>
 
                 <!-- Resepsi -->
-                <div class="event-card reveal">
+                <div class="event-card reveal reveal-right">
                     <div class="event-card-icon" style="color:var(--gold)"><i class="fa-solid fa-champagne-glasses"></i></div>
                     <div class="event-tag">Resepsi Pernikahan</div>
                     <h3 class="event-name" id="resepsi-date">Jumat, 25 Desember 2026</h3>
@@ -250,15 +250,15 @@
     <!-- ── 5. LOKASI (MAP EMBED) ── -->
     <section id="s-lokasi" class="inv-section location-section">
         <div class="container">
-            <div class="section-header reveal">
+            <div class="section-header reveal reveal-up">
                 <p class="section-eyebrow">Lokasi</p>
                 <h2 class="section-title">Temukan Kami Di Sini</h2>
             </div>
-            <div class="location-tabs reveal">
+            <div class="location-tabs reveal reveal-up">
                 <button class="loc-tab active" data-tab="akad">Lokasi Akad</button>
                 <button class="loc-tab" data-tab="resepsi">Lokasi Resepsi</button>
             </div>
-            <div class="map-wrapper reveal">
+            <div class="map-wrapper reveal reveal-zoom">
                 <!-- TAB AKAD -->
                 <div class="map-tab-content active" id="map-tab-akad">
                     <div class="map-info-bar">
@@ -292,11 +292,11 @@
     <!-- ── 6. GALERI FOTO ── -->
     <section id="s-galeri" class="inv-section gallery-section">
         <div class="container">
-            <div class="section-header reveal">
+            <div class="section-header reveal reveal-up">
                 <p class="section-eyebrow">Galeri</p>
                 <h2 class="section-title">Momen Bersama</h2>
             </div>
-            <div class="gallery-grid reveal">
+            <div class="gallery-grid reveal reveal-zoom">
                 <div class="gallery-item large" onclick="openLightbox(0)"><img src="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=800&auto=format&fit=crop" alt="Foto 1"><div class="gallery-item-overlay"><i class="fa-solid fa-expand"></i></div></div>
                 <div class="gallery-item" onclick="openLightbox(1)"><img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=400&auto=format&fit=crop" alt="Foto 2"><div class="gallery-item-overlay"><i class="fa-solid fa-expand"></i></div></div>
                 <div class="gallery-item" onclick="openLightbox(2)"><img src="https://images.unsplash.com/photo-1520854221256-17451cc331bf?q=80&w=400&auto=format&fit=crop" alt="Foto 3"><div class="gallery-item-overlay"><i class="fa-solid fa-expand"></i></div></div>
@@ -428,7 +428,7 @@
         </div>
         <button class="audio-toggle" id="audioToggle"><i class="fa-solid fa-pause" id="audioIcon"></i></button>
     </div>
-    <audio id="bgMusic" loop><source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3" type="audio/mpeg"></audio>
+    <audio id="bgMusic" loop><source src="https://files.catbox.moe/jndoqq.mp3" type="audio/mpeg"></audio>
 
     <!-- ── BOTTOM NAVIGATION ── -->
     <nav class="bottom-nav" id="bottomNav">
@@ -448,3 +448,5 @@
 <script src="script.js"></script>
 </body>
 </html>
+
+
