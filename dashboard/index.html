@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel — Lumina Invites</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="styles/dashboard.css">
+</head>
+<body>
+
+    <!-- ═══ LOGIN SCREEN (HIDDEN) ═══ -->
+    <div id="loginScreen" class="relative flex min-h-screen items-center justify-center bg-[#09090b] px-6" style="display: none;">
+        <!-- Subtle Background Glow -->
+        <div class="absolute top-0 left-1/2 h-[500px] w-[800px] -translate-x-1/2 -translate-y-1/2 bg-brand-violet/10 blur-[120px]"></div>
+
+        <div id="loginBox" class="relative z-10 w-full max-w-[420px] transition-all duration-500">
+            <div class="rounded-3xl border border-white/[0.08] bg-[#121214] p-8 shadow-2xl md:p-12">
+                <div class="mb-10">
+                    <h1 class="font-outfit text-2xl font-bold tracking-tight text-white">Lumina<span class="text-brand-gold">Invites</span></h1>
+                    <p id="authTitle" class="mt-2 text-sm text-slate-400">Welcome back, please enter your details.</p>
+                </div>
+
+                <div class="space-y-5">
+                    <div class="space-y-2">
+                        <label class="text-xs font-medium text-slate-300">Email Address</label>
+                        <input type="email" id="loginEmail" class="w-full rounded-xl border border-white/10 bg-white/[0.03] py-3.5 px-4 text-white transition-all focus:border-brand-gold/50 focus:bg-white/[0.06] focus:outline-none" placeholder="name@email.com">
+                    </div>
+
+                    <div class="space-y-2">
+                        <div class="flex items-center justify-between">
+                            <label class="text-xs font-medium text-slate-300">Password</label>
+                        </div>
+                        <input type="password" id="loginPassword" class="w-full rounded-xl border border-white/10 bg-white/[0.03] py-3.5 px-4 text-white transition-all focus:border-brand-gold/50 focus:bg-white/[0.06] focus:outline-none" placeholder="••••••••">
+                        <p id="loginError" class="min-h-[1.25rem] text-[11px] font-medium text-rose-500"></p>
+                    </div>
+
+                    <button id="btnLogin" class="w-full rounded-xl bg-white py-3.5 text-sm font-bold text-black transition-all hover:bg-slate-200 active:scale-[0.98]">
+                        <span id="btnText">Sign In</span>
+                    </button>
+                </div>
+
+                <div class="mt-10 text-center border-t border-white/[0.05] pt-6">
+                    <p class="text-[10px] font-medium text-slate-600">Lumina Invites © 2026</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══ DASHBOARD ═══ -->
+    <div id="dashboard" class="dashboard">
+        <!-- MAIN -->
+        <div class="admin-main">
+            <header class="topbar">
+                <div class="topbar-left">
+                    <a href="#" class="sidebar-logo" style="font-size: 1.3rem; margin-right: 20px;">Lumina<span>Panel</span></a>
+                    <div class="topbar-badges">
+                        <span class="tbadge green"><i class="fa-solid fa-circle"></i> Server Aktif</span>
+                    </div>
+                </div>
+                
+                <h1 class="topbar-title" id="topbarTitle" style="position: absolute; left: 50%; transform: translateX(-50%); margin: 0;">Live Editor</h1>
+                
+                <div class="topbar-right" style="display: flex; align-items: center; gap: 12px;">
+                    <button id="btnResetEditor" class="btn-s btn-sm"><i class="fa-solid fa-plus"></i> Undangan Baru</button>
+                    <button id="btnSaveGlobal" class="btn-p btn-sm hidden"><i class="fa-solid fa-floppy-disk"></i> Simpan</button>
+                    <div class="topbar-divider" style="width: 1px; height: 24px; background: rgba(255,255,255,0.1); margin: 0 5px;"></div>
+                    <a href="../index.html" class="btn-s btn-sm" title="Website Utama"><i class="fa-solid fa-house"></i></a>
+                    <button id="btnLogout" class="btn-s btn-sm sl-danger" style="color: #f43f5e; border-color: rgba(244, 63, 94, 0.3);" title="Keluar"><i class="fa-solid fa-right-from-bracket"></i></button>
+                </div>
+            </header>
+
+            <!-- ─── PAGE: LIVE EDITOR ─── -->
+            <div id="page-editor" class="admin-page editor-page active">
+                <form class="editor-form" id="editorForm" onsubmit="return false">
+
+                    <!-- Template Picker -->
+                    <div class="form-section">
+                        <h3 class="fst"><span class="num">1</span> Template</h3>
+                        <div class="tpl-picker" id="tplPicker">
+                            <div class="tpl-opt selected" data-tpl="midnight">
+                                <div class="tpl-prev" style="background:linear-gradient(135deg,#07080a,#1a1a2e)"><span
+                                        style="color:#d4af37;font-style:italic;font-size:.85rem">Midnight Gold</span>
+                                </div>
+                                <p>Midnight Gold</p>
+                            </div>
+                            <div class="tpl-opt" data-tpl="blossom">
+                                <div class="tpl-prev" style="background:linear-gradient(135deg,#fff0f3,#fce7f3)"><span
+                                        style="color:#be185d;font-style:italic;font-size:.85rem">Blossom Blush</span>
+                                </div>
+                                <p>Blossom Blush</p>
+                            </div>
+                            <div class="tpl-opt" data-tpl="rustic">
+                                <div class="tpl-prev" style="background:linear-gradient(135deg,#4a2c17,#2d1810)"><span
+                                        style="color:#d4956a;font-style:italic;font-size:.85rem">Rustic Garden</span>
+                                </div>
+                                <p>Rustic Garden</p>
+                            </div>
+                            <div class="tpl-opt" data-tpl="jawa">
+                                <div class="tpl-prev" style="background:linear-gradient(135deg,#5c0a14,#3d0609)"><span
+                                        style="color:#c8a45a;font-style:italic;font-size:.85rem">Jawa Kraton</span>
+                                </div>
+                                <p>Jawa Kraton</p>
+                            </div>
+                            <div class="tpl-opt" data-tpl="bali">
+                                <div class="tpl-prev" style="background:linear-gradient(135deg,#0d4d4d,#062020)"><span
+                                        style="color:#e8b86d;font-style:italic;font-size:.85rem">Bali Pura</span></div>
+                                <p>Bali Pura</p>
+                            </div>
+                            <div class="tpl-opt" data-tpl="aether">
+                                <div class="tpl-prev"
+                                    style="background:linear-gradient(135deg,#0f172a,#1e293b);box-shadow:inset 0 0 15px rgba(212,175,55,0.4)">
+                                    <span
+                                        style="color:#fde08b;font-style:italic;font-size:.85rem;text-shadow:0 0 5px #d4af37">Aether</span>
+                                </div>
+                                <p>Aether 3D</p>
+                            </div>
+                            <div class="tpl-opt" data-tpl="premium">
+                                <div class="tpl-prev"
+                                    style="background:linear-gradient(135deg,#1e1b4b,#312e81);box-shadow:inset 0 0 20px rgba(99,102,241,0.3)">
+                                    <span
+                                        style="color:#a5b4fc;font-style:italic;font-size:.85rem;text-shadow:0 0 8px #6366f1">Premium</span>
+                                </div>
+                                <p>Premium Luxe</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mempelai -->
+                    <div class="form-section">
+                        <h3 class="fst"><span class="num">2</span> Mempelai</h3>
+                        <div class="fg2">
+                            <div class="fg"><label>Nama Panggilan Pria</label><input type="text" id="f-groom"
+                                    placeholder="Budi"></div>
+                            <div class="fg"><label>Nama Panggilan Wanita</label><input type="text" id="f-bride"
+                                    placeholder="Siti"></div>
+                        </div>
+                        <div class="fg2">
+                            <div class="fg"><label>Nama Lengkap Pria</label><input type="text" id="f-groomFull"></div>
+                            <div class="fg"><label>Nama Lengkap Wanita</label><input type="text" id="f-brideFull"></div>
+                        </div>
+                        <div class="fg2">
+                            <div class="fg"><label>Orang Tua Pria</label><input type="text" id="f-groomParent"></div>
+                            <div class="fg"><label>Orang Tua Wanita</label><input type="text" id="f-brideParent"></div>
+                        </div>
+                        <div class="fg2">
+                            <div class="fg"><label><i class="fa-brands fa-instagram" style="color:#e1306c"></i>
+                                    IG Mempelai Pria</label><input type="text" id="f-groomIg" placeholder="@username">
+                            </div>
+                            <div class="fg"><label><i class="fa-brands fa-instagram" style="color:#e1306c"></i>
+                                    IG Mempelai Wanita</label><input type="text" id="f-brideIg" placeholder="@username">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Detail Acara -->
+                    <div class="form-section">
+                        <h3 class="fst"><span class="num">3</span> Detail Acara</h3>
+                        <div class="fg2">
+                            <div class="fg"><label>Tanggal (Display)</label><input type="text" id="f-date"></div>
+                            <div class="fg"><label>Tanggal Lengkap</label><input type="text" id="f-dateFull"></div>
+                        </div>
+                        <p class="section-sub-label">Akad Nikah</p>
+                        <div class="fg2">
+                            <div class="fg"><label>Tanggal (Teks)</label><input type="text" id="f-akadDate"></div>
+                            <div class="fg"><label>Jam</label><input type="text" id="f-akadTime"></div>
+                        </div>
+                        <div class="fg2">
+                            <div class="fg"><label>Nama Tempat</label><input type="text" id="f-akadPlace"></div>
+                            <div class="fg"><label>Tanggal ISO (countdown)</label><input type="datetime-local"
+                                    id="f-akadISO"></div>
+                        </div>
+                        <div class="fg"><label>Alamat Akad</label><input type="text" id="f-akadAddress"></div>
+                        <div class="fg"><label>Query Maps (untuk embed)</label><input type="text" id="f-akadMaps"
+                                placeholder="Nama+Tempat+Kota"></div>
+                        <p class="section-sub-label">Resepsi</p>
+                        <div class="fg2">
+                            <div class="fg"><label>Tanggal (Teks)</label><input type="text" id="f-resepsiDate"></div>
+                            <div class="fg"><label>Jam</label><input type="text" id="f-resepsiTime"></div>
+                        </div>
+                        <div class="fg2">
+                            <div class="fg"><label>Nama Tempat</label><input type="text" id="f-resepsiPlace"></div>
+                            <div class="fg"><label>Tanggal ISO (countdown)</label><input type="datetime-local"
+                                    id="f-resepsiISO"></div>
+                        </div>
+                        <div class="fg"><label>Alamat Resepsi</label><input type="text" id="f-resepsiAddress"></div>
+                        <div class="fg"><label>Query Maps (untuk embed)</label><input type="text" id="f-resepsiMaps"
+                                placeholder="Nama+Tempat+Kota"></div>
+                    </div>
+
+                    <!-- Our Story (Fitur Baru) -->
+                    <div class="form-section">
+                        <h3 class="fst"><span class="num">4</span> Perjalanan Cinta <span class="badge-new">NEW</span>
+                        </h3>
+                        <p class="fg-hint">Ceritakan momen penting perjalanan cinta mempelai (tampil di section "Our
+                            Story").</p>
+                        <div id="storyList">
+                            <div class="story-item">
+                                <div class="story-header"><span class="story-num">Momen 1</span></div>
+                                <div class="fg2">
+                                    <div class="fg"><label>Judul</label><input type="text" class="s-title" data-idx="1"
+                                            placeholder="Judul momen..."></div>
+                                    <div class="fg"><label>Tanggal</label><input type="text" class="s-date" data-idx="1"
+                                            placeholder="2020"></div>
+                                </div>
+                                <div class="fg"><label>Deskripsi</label><input type="text" class="s-desc" data-idx="1"
+                                        placeholder="Cerita singkat..."></div>
+                            </div>
+                            <div class="story-item">
+                                <div class="story-header"><span class="story-num">Momen 2</span></div>
+                                <div class="fg2">
+                                    <div class="fg"><label>Judul</label><input type="text" class="s-title" data-idx="2">
+                                    </div>
+                                    <div class="fg"><label>Tanggal</label><input type="text" class="s-date"
+                                            data-idx="2"></div>
+                                </div>
+                                <div class="fg"><label>Deskripsi</label><input type="text" class="s-desc" data-idx="2">
+                                </div>
+                            </div>
+                            <div class="story-item">
+                                <div class="story-header"><span class="story-num">Momen 3</span></div>
+                                <div class="fg2">
+                                    <div class="fg"><label>Judul</label><input type="text" class="s-title" data-idx="3">
+                                    </div>
+                                    <div class="fg"><label>Tanggal</label><input type="text" class="s-date"
+                                            data-idx="3"></div>
+                                </div>
+                                <div class="fg"><label>Deskripsi</label><input type="text" class="s-desc" data-idx="3">
+                                </div>
+                            </div>
+                            <div class="story-item">
+                                <div class="story-header"><span class="story-num">Momen 4</span></div>
+                                <div class="fg2">
+                                    <div class="fg"><label>Judul</label><input type="text" class="s-title" data-idx="4">
+                                    </div>
+                                    <div class="fg"><label>Tanggal</label><input type="text" class="s-date"
+                                            data-idx="4"></div>
+                                </div>
+                                <div class="fg"><label>Deskripsi</label><input type="text" class="s-desc" data-idx="4">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Amplop & Kontak -->
+                    <div class="form-section">
+                        <h3 class="fst"><span class="num">5</span> Amplop & Kontak</h3>
+                        <div class="fg3">
+                            <div class="fg"><label>Bank</label><input type="text" id="f-bankName">
+                            </div>
+                            <div class="fg"><label>No. Rekening</label><input type="text" id="f-bankAcc"></div>
+                            <div class="fg"><label>Atas Nama</label><input type="text" id="f-bankHolder"></div>
+                        </div>
+                        <div class="fg"><label><i class="fa-brands fa-whatsapp" style="color:#25d366"></i> No. WA RSVP
+                                (format: 628xxx)</label><input type="text" id="f-wa"></div>
+                    </div>
+
+                    <!-- Foto & Galeri -->
+                    <div class="form-section">
+                        <h3 class="fst"><span class="num">6</span> Foto & Galeri <span class="badge-new">NEW</span></h3>
+                        <p class="fg-hint">Unggah foto dari perangkat Anda atau masukkan URL foto secara manual.</p>
+
+                        <div class="fg-stack">
+                            <div class="fg">
+                                <label>Foto Utama (Header/Hero)</label>
+                                <div class="input-with-upload">
+                                    <div class="field-row">
+                                        <input type="text" id="f-imgHero" placeholder="URL Foto..."
+                                            onkeyup="updatePreview()">
+                                        <label class="btn-upload"><i class="fa-solid fa-cloud-arrow-up"></i><input type="file" class="f-upload" data-target="f-imgHero"
+                                                accept="image/*"></label>
+                                    </div>
+                                    <div class="img-preview-box" id="p-imgHero"></div>
+                                </div>
+                            </div>
+
+                            <div class="fg">
+                                <label>Mempelai Pria</label>
+                                <div class="input-with-upload">
+                                    <div class="field-row">
+                                        <input type="text" id="f-imgPria" placeholder="URL Foto..."
+                                            onkeyup="updatePreview()">
+                                        <label class="btn-upload"><i class="fa-solid fa-cloud-arrow-up"></i><input
+                                                type="file" class="f-upload" data-target="f-imgPria"
+                                                accept="image/*"></label>
+                                    </div>
+                                    <div class="img-preview-box sm" id="p-imgPria"></div>
+                                </div>
+                            </div>
+                            <div class="fg">
+                                <label>Mempelai Wanita</label>
+                                <div class="input-with-upload">
+                                    <div class="field-row">
+                                        <input type="text" id="f-imgWanita" placeholder="URL Foto..."
+                                            onkeyup="updatePreview()">
+                                        <label class="btn-upload"><i class="fa-solid fa-cloud-arrow-up"></i><input
+                                                type="file" class="f-upload" data-target="f-imgWanita"
+                                                accept="image/*"></label>
+                                    </div>
+                                    <div class="img-preview-box sm" id="p-imgWanita"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Musik Latar Tambahan -->
+                    <div class="form-section">
+                        <h3 class="fst"><span class="num">7</span> Musik Latar <span class="badge-new">NEW</span></h3>
+                        <p class="fg-hint">Ganti lagu default dengan menyisipkan link lagu (MP3/WAV/Direct Link).</p>
+                        <div class="fg">
+                            <label><i class="fa-solid fa-music"></i> Link Lagu Utama</label>
+                            <input type="url" id="f-music" placeholder="https://contoh.com/lagu-kita.mp3">
+                        </div>
+                        <div class="m-presets">
+                            <span class="m-p-label">Mood & Genre Preset:</span>
+                            <div class="m-p-list">
+                                <button type="button" class="m-p-btn" data-url="/musik/Cinta Terakhir.mp3"><i
+                                        class="fa-solid fa-compact-disc"></i> Cinta Terakhir</button>
+                                <button type="button" class="m-p-btn" data-url="/musik/Lagu Pernikahan Kita.mp3"><i
+                                        class="fa-solid fa-compact-disc"></i> Lagu Kita</button>
+                            </div>
+                            <div class="m-player-mini" id="adminMusicPlayer">
+                                <div class="m-p-info">
+                                    <div class="m-p-icon" id="adminMusicIcon"><i class="fa-solid fa-music"></i></div>
+                                    <span id="adminMusicLabel">Pilih lagu untuk tes suara</span>
+                                </div>
+                                <div class="m-controls" id="adminMusicControls" style="display:none">
+                                    <button type="button" id="btnToggleAdminMusic" class="btn-play-m"><i
+                                            class="fa-solid fa-pause"></i> Pause</button>
+                                    <button type="button" id="btnStopAdminMusic" class="btn-stop-m"><i
+                                            class="fa-solid fa-stop"></i> Stop</button>
+                                </div>
+                                <audio id="adminAudio" preload="none"></audio>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Momen Bersama (Galeri Foto) -->
+                    <div class="form-section">
+                        <h3 class="fst"><span class="num">8</span> Momen Bersama (Galeri) <span
+                                class="badge-new">NEW</span></h3>
+                        <p class="fg-hint">Unggah foto momen Anda ke Appwrite Cloud atau masukkan URL secara manual.</p>
+
+                        <div class="fg-stack">
+                            <div class="fg">
+                                <label>Galeri Foto 1</label>
+                                <div class="input-with-upload">
+                                    <div class="field-row">
+                                        <input type="text" class="f-gallery" id="f-gal1" data-idx="1"
+                                            placeholder="URL Foto..." onkeyup="updatePreview()">
+                                        <label class="btn-upload"><i class="fa-solid fa-cloud-arrow-up"></i><input
+                                                type="file" class="f-upload" data-target="f-gal1"
+                                                accept="image/*"></label>
+                                    </div>
+                                    <div class="img-preview-box sm" id="p-gallery-1"></div>
+                                </div>
+                            </div>
+                            <div class="fg">
+                                <label>Galeri Foto 2</label>
+                                <div class="input-with-upload">
+                                    <div class="field-row">
+                                        <input type="text" class="f-gallery" id="f-gal2" data-idx="2"
+                                            placeholder="URL Foto..." onkeyup="updatePreview()">
+                                        <label class="btn-upload"><i class="fa-solid fa-cloud-arrow-up"></i><input
+                                                type="file" class="f-upload" data-target="f-gal2"
+                                                accept="image/*"></label>
+                                    </div>
+                                    <div class="img-preview-box sm" id="p-gallery-2"></div>
+                                </div>
+                            </div>
+                            <div class="fg">
+                                <label>Galeri Foto 3</label>
+                                <div class="input-with-upload">
+                                    <div class="field-row">
+                                        <input type="text" class="f-gallery" id="f-gal3" data-idx="3"
+                                            placeholder="URL Foto..." onkeyup="updatePreview()">
+                                        <label class="btn-upload"><i class="fa-solid fa-cloud-arrow-up"></i><input
+                                                type="file" class="f-upload" data-target="f-gal3"
+                                                accept="image/*"></label>
+                                    </div>
+                                    <div class="img-preview-box sm" id="p-gallery-3"></div>
+                                </div>
+                            </div>
+                            <div class="fg">
+                                <label>Galeri Foto 4</label>
+                                <div class="input-with-upload">
+                                    <div class="field-row">
+                                        <input type="text" class="f-gallery" id="f-gal4" data-idx="4"
+                                            placeholder="URL Foto..." onkeyup="updatePreview()">
+                                        <label class="btn-upload"><i class="fa-solid fa-cloud-arrow-up"></i><input
+                                                type="file" class="f-upload" data-target="f-gal4"
+                                                accept="image/*"></label>
+                                    </div>
+                                    <div class="img-preview-box sm" id="p-gallery-4"></div>
+                                </div>
+                            </div>
+                            <div class="fg">
+                                <label>Galeri Foto 5</label>
+                                <div class="input-with-upload">
+                                    <div class="field-row">
+                                        <input type="text" class="f-gallery" id="f-gal5" data-idx="5"
+                                            placeholder="URL Foto..." onkeyup="updatePreview()">
+                                        <label class="btn-upload"><i class="fa-solid fa-cloud-arrow-up"></i><input
+                                                type="file" class="f-upload" data-target="f-gal5"
+                                                accept="image/*"></label>
+                                    </div>
+                                    <div class="img-preview-box sm" id="p-gallery-5"></div>
+                                </div>
+                            </div>
+                            <div class="fg">
+                                <label>Galeri Foto 6</label>
+                                <div class="input-with-upload">
+                                    <div class="field-row">
+                                        <input type="text" class="f-gallery" id="f-gal6" data-idx="6"
+                                            placeholder="URL Foto..." onkeyup="updatePreview()">
+                                        <label class="btn-upload"><i class="fa-solid fa-cloud-arrow-up"></i><input
+                                                type="file" class="f-upload" data-target="f-gal6"
+                                                accept="image/*"></label>
+                                    </div>
+                                    <div class="img-preview-box sm" id="p-gallery-6"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Nama Tamu -->
+                    <div class="form-section">
+                        <h3 class="fst"><span class="num">9</span> Nama Tamu</h3>
+                        <div class="fg"><label>Nama Tamu (isi saat membagi link per-tamu)</label><input type="text"
+                                id="f-guest" value="Bapak/Ibu/Saudara/i"></div>
+                    </div>
+
+                    <!-- Editor Actions -->
+                    <div class="editor-actions">
+                        <button id="btnGenLink" class="btn-p" disabled><i class="fa-solid fa-link"></i> Generate Link</button>
+                        <button id="btnCopyLink" class="btn-s" disabled><i class="fa-regular fa-copy"></i> Salin
+                            Link</button>
+                        <button id="btnSaveInv" class="btn-gold"><i class="fa-solid fa-floppy-disk"></i> Simpan
+                            Undangan</button>
+                    </div>
+                    <div class="generated-url" id="generatedUrl">
+                        <p class="url-ph"><i class="fa-solid fa-arrow-up"></i> Klik "Generate Link" untuk membuat tautan
+                        </p>
+                    </div>
+                    <button id="btnShareWa" class="btn-wa-share" disabled>
+                        <i class="fa-brands fa-whatsapp"></i> Bagikan via WhatsApp
+                    </button>
+                </form>
+
+                <!-- PREVIEW PANEL -->
+                <div class="editor-preview">
+                    <div class="preview-topbar">
+                        <div class="preview-device-switch">
+                            <button class="pdev-btn active" data-w="100%" data-mode="desktop" title="Desktop View"><i
+                                    class="fa-solid fa-desktop"></i></button>
+                            <button class="pdev-btn" data-w="430px" data-mode="mobile" title="Mobile View"><i
+                                    class="fa-solid fa-mobile-screen"></i></button>
+                            <span class="pdev-sep"></span>
+                            <button id="btnSwapLayout" class="pdev-btn" title="Swap Form & Preview Position"><i
+                                    class="fa-solid fa-right-left"></i></button>
+                        </div>
+                        <div class="preview-status" id="previewStatus"><span class="pulse-dot"></span> Live Preview
+                        </div>
+                        <button id="btnOpenNewTab" class="btn-s btn-sm"><i
+                                class="fa-solid fa-arrow-up-right-from-square"></i> Buka Tab Baru</button>
+                    </div>
+                    <div class="preview-frame-wrap" id="previewFrameWrap">
+                        <iframe id="previewIframe" class="preview-iframe" src="../templates/wedding-midnight/index.html"
+                            allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+
+
+        </div><!-- /admin-main -->
+    </div><!-- /dashboard -->
+
+    <!-- Appwrite Setup Modal -->
+    <div class="modal hidden" id="awModal">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3><i class="fa-solid fa-cloud" style="color:#fd366e"></i> Cara Setup Appwrite Cloud</h3>
+                <button class="modal-close" onclick="document.getElementById('awModal').classList.add('hidden')"><i
+                        class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="guide-step">
+                    <div class="gs-num">1</div>
+                    <div class="gs-txt"><strong>Buat Akun Appwrite & Project</strong>
+                        <p>Daftar di <a href="https://cloud.appwrite.io" target="_blank"
+                                style="color:#fd366e">cloud.appwrite.io</a>, dan klik <b>Create Project</b>.</p>
+                    </div>
+                </div>
+                <div class="guide-step">
+                    <div class="gs-num">2</div>
+                    <div class="gs-txt"><strong>Dapatkan Project ID</strong>
+                        <p>Setelah masuk dashboard proyek, ke <i>Settings</i> dan salin nilai <b>Project ID</b> ke form
+                            admin.</p>
+                    </div>
+                </div>
+                <div class="guide-step">
+                    <div class="gs-num">3</div>
+                    <div class="gs-txt"><strong>Buat Database</strong>
+                        <p>Masuk ke menu <b>Databases</b> -> <i>Create Database</i> (Contoh nama:
+                            <code>invites_db</code>). Salin nilai <b>Database ID</b>.
+                        </p>
+                    </div>
+                </div>
+                <div class="guide-step">
+                    <div class="gs-num">4</div>
+                    <div class="gs-txt"><strong>Buat Collection</strong>
+                        <p>Di dalam database yang baru dibuat, klik <b>Create Collection</b> (Contoh nama:
+                            <code>saved_invites</code>). Salin <b>Collection ID</b>.
+                        </p>
+                    </div>
+                </div>
+                <div class="guide-step">
+                    <div class="gs-num">5</div>
+                    <div class="gs-txt"><strong>Buat Attributes</strong>
+                        <p>Masuk ke koleksi, ke tab <b>Attributes</b> dan buat field tipe <strong
+                                style="color:red">String</strong> berikut:<br>
+                            - <code>uid</code> (size 50)<br>
+                            - <code>groom</code> (size 100)<br>
+                            - <code>bride</code> (size 100)<br>
+                            - <code>date</code> (size 100)<br>
+                            - <code>template</code> (size 50)<br>
+                            - <code>url</code> (size 2000)<br>
+                            - <code>formData</code> (size 5000)<br>
+                        </p>
+                    </div>
+                </div>
+                <div class="guide-step">
+                    <div class="gs-num">6</div>
+                    <div class="gs-txt"><strong>Update Permissions (PENTING)</strong>
+                        <p>Pergi ke tab <b>Settings</b> dalam Collection. Pada bagian <i>Permissions</i>, centang
+                            <i>Any</i>, lalu pilih akses <b>Read, Create, Update, Delete</b> agar admin panel bisa
+                            menyimpan dan membaca data.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- TOAST -->
+    <div id="toast" class="toast-admin"></div>
+
+    <script type="module" src="dashboard.js"></script>
+</body>
+
+</html>

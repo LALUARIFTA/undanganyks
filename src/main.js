@@ -75,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const phone = contactForm.querySelector('input[type=tel]').value;
             const pkg = contactForm.querySelector('select').value;
             const msg = contactForm.querySelector('textarea').value;
-            const wa = `Halo Lumina Invites! 👋\n\nSaya tertarik memesan undangan digital:\n\n📝 *Nama:* ${name}\n📱 *No. HP:* ${phone}\n📦 *Paket:* ${pkg}\n💬 *Pesan:* ${msg}`;
+            const wa = `Halo Lumina Invites! 👋\n\nSaya ingin membuat undangan digital gratis:\n\n📝 *Nama:* ${name}\n📱 *No. HP:* ${phone}\n🎨 *Tema:* ${pkg}\n💬 *Pesan:* ${msg}`;
             window.open(`https://wa.me/6281234567890?text=${encodeURIComponent(wa)}`, '_blank');
         });
     }

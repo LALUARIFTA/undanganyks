@@ -1,0 +1,47 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400;1,600&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-brand-violet: #7c3aed;
+  --color-brand-rose: #db2777;
+  --color-brand-gold: #c9a444;
+  
+  --color-bg-base: #050507;
+  --color-bg-surface: #121216;
+  
+  --font-plus: "Plus Jakarta Sans", sans-serif;
+  --font-outfit: "Outfit", sans-serif;
+  --font-cinzel: "Cinzel", serif;
+  --font-serif-cormorant: "Cormorant Garamond", serif;
+  
+  --radius-premium: 24px;
+  
+  --animate-float: float 4s ease-in-out infinite;
+  --animate-glow: glow 2s ease-in-out infinite;
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+  @keyframes glow {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+  }
+}
+
+/* Base resets & utilities */
+@layer base {
+  body {
+    @apply bg-bg-base text-white font-outfit antialiased;
+  }
+}
+
+/* Global Glassmorphism Utility */
+@layer utilities {
+  .glass {
+    @apply bg-white/5 backdrop-blur-xl border border-white/10;
+  }
+  .glass-premium {
+    @apply bg-white/5 backdrop-blur-2xl border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)];
+  }
+}

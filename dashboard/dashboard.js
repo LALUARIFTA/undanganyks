@@ -1,36 +1,38 @@
+import { supabase } from '../src/lib/supabase.js';
+
 /* ============================================================
-   LUMINA INVITES — ADMIN PANEL SCRIPT (FULL REBUILD)
-   Features: Live Editor, Guest List, RSVP Dashboard,
-             Our Story, Google Sheets Integration
+   LUMINA INVITES — USER DASHBOARD SCRIPT
+   Authentication: Supabase Auth
    ============================================================ */
 
-const ADMIN_PASS = 'admin123';
+let authMode = 'login'; // 'login' or 'signup'
+
 const TEMPLATE_PATHS = {
-    midnight: '../templates/wedding-midnight/index.html',
-    blossom:  '../templates/wedding-blossom/index.html',
-    rustic:   '../templates/wedding-rustic/index.html',
-    jawa:     '../templates/wedding-jawa/index.html',
-    bali:     '../templates/wedding-bali/index.html',
-    aether:   '../templates/wedding-aether/index.html',
-    premium:  '../templates/wedding-premium/index.html',
+    midnight: '/templates/wedding-midnight/index.html',
+    blossom:  '/templates/wedding-blossom/index.html',
+    rustic:   '/templates/wedding-rustic/index.html',
+    jawa:     '/templates/wedding-jawa/index.html',
+    bali:     '/templates/wedding-bali/index.html',
+    aether:   '/templates/wedding-aether/index.html',
+    premium:  '/templates/wedding-premium/index.html',
 };
 const TEMPLATE_META = {
-    midnight: { icon: '🌙', color: 'rgba(212,175,55,0.15)', label: 'Midnight Gold' },
-    blossom:  { icon: '🌸', color: 'rgba(190,24,93,0.15)',  label: 'Blossom Blush' },
-    rustic:   { icon: '🌿', color: 'rgba(160,82,45,0.15)',  label: 'Rustic Garden'  },
-    jawa:     { icon: '🏯', color: 'rgba(92,10,20,0.15)',   label: 'Jawa Kraton'    },
-    bali:     { icon: '🌺', color: 'rgba(13,77,77,0.15)',   label: 'Bali Pura'      },
-    aether:   { icon: '✨', color: 'rgba(212,175,55,0.15)', label: '3D Aether'      },
-    premium:  { icon: '💎', color: 'rgba(99,102,241,0.15)', label: 'Premium Luxe'   },
+    midnight: { icon: '🌙', color: 'rgba(212,175,55,0.25)', label: 'Midnight Gold' },
+    blossom:  { icon: '🌸', color: 'rgba(244,114,182,0.25)', label: 'Blossom Blush' },
+    rustic:   { icon: '🌿', color: 'rgba(168,162,158,0.25)', label: 'Rustic Garden' },
+    jawa:     { icon: '🏯', color: 'rgba(185,28,28,0.25)',   label: 'Jawa Kraton'   },
+    bali:     { icon: '🌺', color: 'rgba(20,184,166,0.25)',  label: 'Bali Pura'     },
+    aether:   { icon: '✨', color: 'rgba(124,58,237,0.25)',  label: '3D Aether'     },
+    premium:  { icon: '💎', color: 'rgba(79,70,229,0.25)',  label: 'Premium Luxe'  },
 };
 
 // ─── State
 let currentTemplate = 'midnight';
 let currentUrl      = '';
 let debounceTimer   = null;
-let rsvpData        = [];
-let rsvpSheetsUrl   = localStorage.getItem('lumina_sheets_url') || '';
 let isInitialized   = false;
+let editingId       = null;
+let currentUserId   = 'guest';
 
 // ─── Utils
 const $ = id => document.getElementById(id);
@@ -46,155 +48,108 @@ function toast(msg, dur = 2800) {
 }
 
 // ════════════════════════════════════════════════════════════
-// 1. LOGIN / LOGOUT
 // ════════════════════════════════════════════════════════════
-function doLogin() {
-    const pw = val('loginPassword');
-    const loginScreen = $('loginScreen');
-    const dashboard   = $('dashboard');
+// 1. LOGIN / LOGOUT (Supabase Auth - Admin Only)
+// ════════════════════════════════════════════════════════════
+async function handleAuth() {
+    const email = val('loginEmail');
+    const password = val('loginPassword');
     const err = $('loginError');
-    const inp = $('loginPassword');
     const btn = $('btnLogin');
+    const btnText = $('btnText');
 
-    if (!pw) { toast('⚠️ Please enter the access key'); return; }
-
-    // Visual feedback
-    btn?.classList.add('loading');
-    if (btn) btn.disabled = true;
-
-    setTimeout(() => {
-        if (pw === ADMIN_PASS) {
-            sessionStorage.setItem('lumina_admin', 'true');
-            loginScreen?.classList.add('hidden');
-            dashboard?.classList.remove('hidden');
-            onDashboardReady();
-            toast('✅ Access Granted. Welcome back!');
-        } else {
-            if (err) err.textContent = '❌ Invalid security key. Access denied.';
-            if (inp) {
-                inp.style.borderColor = 'var(--danger)';
-                inp.parentElement.classList.add('shake');
-                setTimeout(() => {
-                    if (err) err.textContent = '';
-                    inp.style.borderColor = '';
-                    inp.parentElement.classList.remove('shake');
-                }, 2500);
-            }
-            if (btn) btn.disabled = false;
-            btn?.classList.remove('loading');
-        }
-    }, 800);
-}
-
-function initAuth() {
-    const loginScreen = $('loginScreen');
-    const dashboard   = $('dashboard');
-
-    if (sessionStorage.getItem('lumina_admin') === 'true') {
-        loginScreen?.classList.add('hidden');
-        dashboard?.classList.remove('hidden');
-        onDashboardReady();
+    if (!email || !password) { 
+        toast('⚠️ Mohon isi Email dan Password'); 
+        if (err) err.textContent = 'Mohon isi Email dan Password';
+        return; 
     }
 
-    $('btnLogin')?.addEventListener('click', doLogin);
-    $('loginPassword')?.addEventListener('keypress', e => { if (e.key === 'Enter') doLogin(); });
+    btn.disabled = true;
+    const originalText = btnText.innerHTML;
+    btnText.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Memuat...';
 
-    // Interactive Mouse Parallax
-    document.addEventListener('mousemove', e => {
-        if (sessionStorage.getItem('lumina_admin') === 'true') return;
-        const x = (e.clientX / window.innerWidth) - 0.5;
-        const y = (e.clientY / window.innerHeight) - 0.5;
-        document.documentElement.style.setProperty('--mx', x);
-        document.documentElement.style.setProperty('--my', y);
-    });
-
-    // Caps Lock Detection
-    $('loginPassword')?.addEventListener('keyup', e => {
-        const warn = $('capsWarning');
-        if (e.getModifierState && e.getModifierState('CapsLock')) {
-            warn?.classList.remove('hidden');
-        } else {
-            warn?.classList.add('hidden');
-        }
-    });
-
-    // Password Toggle
-    $('togglePw')?.addEventListener('click', () => {
-        const inp = $('loginPassword');
-        const ico = $('togglePw').querySelector('i');
-        if (!inp || !ico) return;
-        if (inp.type === 'password') {
-            inp.type = 'text';
-            ico.classList.replace('fa-eye', 'fa-eye-slash');
-        } else {
-            inp.type = 'password';
-            ico.classList.replace('fa-eye-slash', 'fa-eye');
-        }
-    });
-
-    $('btnLogout')?.addEventListener('click', () => {
-        sessionStorage.removeItem('lumina_admin');
-        window.location.reload();
-    });
-}
-
-// ════════════════════════════════════════════════════════════
-// 2. SIDEBAR NAVIGATION
-// ════════════════════════════════════════════════════════════
-const PAGE_TITLES = {
-    editor:   'Live Editor',
-    tamu:     'Daftar Tamu',
-    rsvp:     'RSVP Dashboard',
-    daftar:   'Undangan Tersimpan',
-    template: 'Template Gallery',
-    panduan:  'Panduan',
-};
-
-function initNav() {
-    const links    = document.querySelectorAll('.sl[data-page]');
-    const pages    = document.querySelectorAll('.admin-page');
-    const sidebar  = $('sidebar');
-    const toggle   = $('sidebarToggle');
-    const overlay  = $('sidebarOverlay');
-    const closeBtn = $('sidebarClose');
-
-    const openSidebar = () => {
-        sidebar.classList.add('open');
-        overlay?.classList.add('active');
-    };
-    const closeSidebar = () => {
-        sidebar.classList.remove('open');
-        overlay?.classList.remove('active');
-    };
-
-    toggle?.addEventListener('click', openSidebar);
-    overlay?.addEventListener('click', closeSidebar);
-    closeBtn?.addEventListener('click', closeSidebar);
-
-    links.forEach(link => {
-        link.addEventListener('click', (e) => {
-            e.preventDefault();
-            const pg = link.dataset.page; // Correctly define pg
-
-            links.forEach(l => l.classList.remove('active'));
-            link.classList.add('active');
-
-            pages.forEach(p => p.classList.remove('active'));
-            const target = $('page-' + pg);
-            if (target) {
-                target.classList.add('active');
-                set('topbarTitle', PAGE_TITLES[pg] || 'Admin Panel');
-            }
-
-            if (window.innerWidth <= 1100) closeSidebar();
-
-            // Page-specific init
-            if (pg === 'daftar')   renderSavedList();
-            if (pg === 'tamu')     populateTamuSelect();
-            if (pg === 'rsvp')     initRsvpDashboard();
+    try {
+        const { data, error } = await supabase.auth.signInWithPassword({
+            email,
+            password,
         });
+        
+        if (error) throw error;
+        
+        toast('✅ Berhasil Masuk!');
+        setTimeout(() => window.location.reload(), 800);
+    } catch (error) {
+        console.error('Auth Error:', error);
+        let msg = error.message;
+
+        if (msg.includes('Invalid login credentials')) {
+            msg = '❌ Email atau Password salah!';
+        }
+
+        if (err) err.textContent = msg;
+        toast(msg);
+        setTimeout(() => { if (err) err.textContent = ''; }, 5000);
+    } finally {
+        btn.disabled = false;
+        btnText.innerHTML = originalText;
+    }
+}
+
+async function doLogout() {
+    const { error } = await supabase.auth.signOut();
+    if (error) toast(`❌ Logout error: ${error.message}`);
+    else window.location.reload();
+}
+
+async function initAuth() {
+    const loginScreen = $('loginScreen');
+    const dashboard = $('dashboard');
+
+    try {
+        const { data: { session }, error } = await supabase.auth.getSession();
+        
+        if (session && session.user) {
+            // User is logged in
+            currentUserId = session.user.id;
+            if (loginScreen) loginScreen.style.display = 'none';
+            if (dashboard) dashboard.classList.remove('hidden');
+            
+            set('displayUserEmail', session.user.email);
+            onDashboardReady();
+            
+            // Listener for logout button
+            $('btnLogout')?.addEventListener('click', doLogout);
+        } else {
+            // Not logged in
+            if (loginScreen) loginScreen.style.display = 'flex';
+            if (dashboard) dashboard.classList.add('hidden');
+            
+            set('displayUserEmail', 'Belum Login');
+            
+            // Listeners for login UI
+            $('btnLogin')?.addEventListener('click', handleAuth);
+            $('loginPassword')?.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') handleAuth();
+            });
+        }
+    } catch (err) {
+        console.error('Auth Init Error:', err);
+    }
+    
+    supabase.auth.onAuthStateChange((event, session) => {
+        if (event === 'SIGNED_IN' && session?.user) {
+            set('displayUserEmail', session.user.email);
+        } else if (event === 'SIGNED_OUT') {
+            editingId = null;
+            window.location.reload();
+        }
     });
 }
+
+
+// ════════════════════════════════════════════════════════════
+// 2. LIVE EDITOR SETUP
+// ════════════════════════════════════════════════════════════
 
 // ════════════════════════════════════════════════════════════
 // 3. LIVE EDITOR
@@ -213,7 +168,7 @@ function initEditor() {
     // Listen to ALL inputs in editor form
     $('editorForm')?.addEventListener('input', (e) => {
         clearTimeout(debounceTimer);
-        debounceTimer = setTimeout(updatePreview, 600);
+        debounceTimer = setTimeout(() => { updatePreview(); saveDraft(); }, 600);
         
         // Handle manual music URL input
         if(e.target && e.target.id === 'f-music') {
@@ -326,10 +281,10 @@ function initEditor() {
         }
     });
 
-    // Device switcher
-    document.querySelectorAll('.pdev-btn').forEach(btn => {
+    // Device switcher (Hanya untuk mode desktop/mobile)
+    document.querySelectorAll('.pdev-btn[data-mode]').forEach(btn => {
         btn.addEventListener('click', () => {
-            document.querySelectorAll('.pdev-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.pdev-btn[data-mode]').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
             const wrap  = $('previewFrameWrap');
             const frame = $('previewIframe');
@@ -339,12 +294,30 @@ function initEditor() {
         });
     });
 
+    // Layout Swapper (Setel Kiri/Kanan)
+    const editorPage = $('page-editor');
+    const btnSwap = $('btnSwapLayout');
+    const isRtl = localStorage.getItem('lumina_editor_layout') === 'rtl';
+    
+    if (isRtl && editorPage) {
+        editorPage.classList.add('rtl-layout');
+        btnSwap?.classList.add('active');
+    }
+
+    btnSwap?.addEventListener('click', () => {
+        const currentlyRtl = editorPage?.classList.toggle('rtl-layout');
+        btnSwap.classList.toggle('active', currentlyRtl);
+        localStorage.setItem('lumina_editor_layout', currentlyRtl ? 'rtl' : 'ltr');
+        toast(currentlyRtl ? '🔄 Layout: Preview di Kiri' : '🔄 Layout: Preview di Kanan');
+    });
+
     // Generate Link
     $('btnGenLink')?.addEventListener('click', () => {
         currentUrl = buildUrl();
         const el = $('generatedUrl');
         if (el) el.innerHTML = `<a href="${currentUrl}" target="_blank" style="color:#60a5fa;word-break:break-all">${currentUrl}</a>`;
         $('btnCopyLink')?.removeAttribute('disabled');
+        $('btnShareWa')?.removeAttribute('disabled');
         toast('✅ Link berhasil di-generate!');
     });
 
@@ -352,6 +325,15 @@ function initEditor() {
     $('btnCopyLink')?.addEventListener('click', () => {
         if (!currentUrl) return;
         navigator.clipboard.writeText(currentUrl).then(() => toast('📋 Link berhasil disalin!'));
+    });
+
+    // Share WA
+    $('btnShareWa')?.addEventListener('click', () => {
+        if (!currentUrl) return;
+        const groom = val('f-groom') || 'Mempelai Pria';
+        const bride = val('f-bride') || 'Mempelai Wanita';
+        const text = `Kepada Yth.\nBapak/Ibu/Saudara/i\n\nTanpa mengurangi rasa hormat, perkenankan kami mengundang Bapak/Ibu/Saudara/i untuk menghadiri acara pernikahan kami:\n\n*${groom} & ${bride}*\n\nBerikut link undangan kami:\n${currentUrl}\n\nMerupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir dan memberikan doa restu.\n\nTerima kasih.`;
+        window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
     });
 
     // Open in new tab
@@ -362,9 +344,80 @@ function initEditor() {
 
     // Save invitation
     $('btnSaveInv')?.addEventListener('click', saveInvitation);
+    $('btnResetEditor')?.addEventListener('click', resetEditor);
+
+    // Auto-save draft every 30 seconds
+    setInterval(saveDraft, 30000);
+
+    // Restore draft if not editing a saved invitation
+    if (!editingId) restoreDraft();
 
     // Initial preview
     updatePreview();
+}
+
+// ── Auto-Save Draft ──
+function saveDraft() {
+    if (currentUserId === 'guest') return; // Don't save draft for guests
+    const rawForm = Object.fromEntries(buildParams().entries());
+    rawForm._template = currentTemplate;
+    rawForm._editingId = editingId || '';
+    localStorage.setItem(`lumina_draft_${currentUserId}`, JSON.stringify(rawForm));
+}
+
+function restoreDraft() {
+    if (currentUserId === 'guest') return;
+    try {
+        const draft = JSON.parse(localStorage.getItem(`lumina_draft_${currentUserId}`));
+        if (!draft || !draft.groom) return; // No draft or empty draft
+
+        // Don't restore if we are editing a saved invitation
+        if (draft._editingId) return;
+
+        const fields = {
+            'f-groom': draft.groom, 'f-bride': draft.bride,
+            'f-groomFull': draft.groomFull, 'f-brideFull': draft.brideFull,
+            'f-groomParent': draft.groomParent, 'f-brideParent': draft.brideParent,
+            'f-groomIg': draft.groomIg, 'f-brideIg': draft.brideIg,
+            'f-date': draft.date, 'f-dateFull': draft.dateFull,
+            'f-akadDate': draft.akadDate, 'f-akadTime': draft.akadTime,
+            'f-akadPlace': draft.akadPlace, 'f-akadAddress': draft.akadAddress,
+            'f-akadISO': draft.akadISO, 'f-akadMaps': draft.akadMaps,
+            'f-resepsiDate': draft.resepsiDate, 'f-resepsiTime': draft.resepsiTime,
+            'f-resepsiPlace': draft.resepsiPlace, 'f-resepsiAddress': draft.resepsiAddress,
+            'f-resepsiISO': draft.resepsiISO, 'f-resepsiMaps': draft.resepsiMaps,
+            'f-bankName': draft.bankName, 'f-bankAcc': draft.bankAcc, 'f-bankHolder': draft.bankHolder,
+            'f-wa': draft.wa, 'f-guest': draft.guest,
+            'f-music': draft.music, 'f-imgHero': draft.hero, 'f-imgPria': draft.imgPria, 'f-imgWanita': draft.imgWanita
+        };
+        Object.entries(fields).forEach(([id, v]) => { const el = $(id); if (el && v) el.value = v; });
+
+        // Stories
+        for (let i = 1; i <= 4; i++) {
+            const t = document.querySelector(`.s-title[data-idx="${i}"]`);
+            const d = document.querySelector(`.s-date[data-idx="${i}"]`);
+            const de = document.querySelector(`.s-desc[data-idx="${i}"]`);
+            if (t && draft[`s${i}t`]) t.value = draft[`s${i}t`];
+            if (d && draft[`s${i}d`]) d.value = draft[`s${i}d`];
+            if (de && draft[`s${i}desc`]) de.value = draft[`s${i}desc`];
+        }
+
+        // Gallery
+        document.querySelectorAll('.f-gallery').forEach(input => {
+            const idx = input.dataset.idx;
+            if (draft[`gal${idx}`]) input.value = draft[`gal${idx}`];
+        });
+
+        // Template
+        if (draft._template) {
+            currentTemplate = draft._template;
+            document.querySelectorAll('.tpl-opt').forEach(o => o.classList.toggle('selected', o.dataset.tpl === currentTemplate));
+        }
+
+        toast('📄 Draft sebelumnya dipulihkan');
+    } catch (e) {
+        // Silent fail — draft restoration is non-critical
+    }
 }
 
 function schedulePreviewUpdate() {
@@ -388,7 +441,6 @@ function buildParams() {
         resepsiISO: 'f-resepsiISO', resepsiMaps: 'f-resepsiMaps',
         bankName: 'f-bankName', bankAcc: 'f-bankAcc', bankHolder: 'f-bankHolder',
         wa: 'f-wa', guest: 'f-guest',
-        sheetsUrl: 'f-sheetsUrl', invId: 'f-invId',
         music: 'f-music',
         hero: 'f-imgHero', imgPria: 'f-imgPria', imgWanita: 'f-imgWanita'
     };
@@ -461,89 +513,33 @@ function updatePreview() {
 }
 
 // ════════════════════════════════════════════════════════════
-// 4. SAVED INVITATIONS (Appwrite Cloud + Local Fallback)
+// 4. SAVED INVITATIONS (Supabase Database & Storage)
 // ════════════════════════════════════════════════════════════
 let MEM_SAVED = [];
-let awClient = null;
-let awDb = null;
-let awStorage = null;
 
-const awConfig = {
-    endpoint:    localStorage.getItem('lumina_aw_endpoint') || 'https://cloud.appwrite.io/v1',
-    projectId:   localStorage.getItem('lumina_aw_project') || '',
-    databaseId:  localStorage.getItem('lumina_aw_db') || '',
-    collectionId:localStorage.getItem('lumina_aw_col') || '',
-    bucketId:    localStorage.getItem('lumina_aw_bucket') || '69e1ebb1000fefd0d33a'
-};
-
-function initAppwrite() {
-    if ($('awEndpoint')) $('awEndpoint').value = awConfig.endpoint;
-    if ($('awProject')) $('awProject').value = awConfig.projectId;
-    if ($('awDb')) $('awDb').value = awConfig.databaseId;
-    if ($('awCol')) $('awCol').value = awConfig.collectionId;
-    if ($('awBucket')) $('awBucket').value = awConfig.bucketId;
-
-    $('btnConnectAw')?.addEventListener('click', () => {
-        awConfig.endpoint = val('awEndpoint') || 'https://cloud.appwrite.io/v1';
-        awConfig.projectId = val('awProject');
-        awConfig.databaseId = val('awDb');
-        awConfig.collectionId = val('awCol');
-        awConfig.bucketId = val('awBucket');
-        
-        localStorage.setItem('lumina_aw_endpoint', awConfig.endpoint);
-        localStorage.setItem('lumina_aw_project', awConfig.projectId);
-        localStorage.setItem('lumina_aw_db', awConfig.databaseId);
-        localStorage.setItem('lumina_aw_col', awConfig.collectionId);
-        localStorage.setItem('lumina_aw_bucket', awConfig.bucketId);
-        
-        setupAppwriteClient();
-        fetchSavedList();
-        updateAwStatusUI();
-        toast('✅ Config Appwrite & Storage Disimpan!');
-    });
-
-    setupAppwriteClient();
+function initSupabaseFeatures() {
     initUploadHandlers();
-    updateAwStatusUI();
-
-    if(awConfig.projectId && awConfig.databaseId && awConfig.collectionId) {
-        fetchSavedList();
-    } else {
-        setSavedLocalFallback();
-    }
+    updateSupabaseStatusUI();
+    fetchSavedList();
 }
 
-function updateAwStatusUI() {
-    const statusBox = $('awStatus');
+function updateSupabaseStatusUI() {
+    const statusBox = $('awStatus'); // Keeping the ID for compatibility with HTML
     if (!statusBox) return;
     const span = statusBox.querySelector('span');
+    const icon = statusBox.querySelector('i');
     
-    if (awClient && awConfig.projectId) {
+    if (supabase) {
         statusBox.classList.add('connected');
         statusBox.classList.remove('disconnected');
-        span.innerHTML = 'Terhubung ke Appwrite';
+        span.innerHTML = 'Terhubung ke Supabase';
         statusBox.style.color = '#10b981';
+        if (icon) icon.className = 'fa-solid fa-database';
     } else {
         statusBox.classList.remove('connected');
         statusBox.classList.add('disconnected');
-        span.innerHTML = 'Belum terhubung';
+        span.innerHTML = 'Supabase tidak terdeteksi';
         statusBox.style.color = '#94a3b8';
-    }
-}
-
-function setupAppwriteClient() {
-    if (typeof Appwrite === 'undefined') return;
-    if (!awConfig.projectId) return;
-
-    try {
-        awClient = new Appwrite.Client();
-        awClient.setEndpoint(awConfig.endpoint).setProject(awConfig.projectId);
-        awStorage = new Appwrite.Storage(awClient);
-        if (awConfig.databaseId) {
-            awDb = new Appwrite.Databases(awClient);
-        }
-    } catch(err) {
-        console.error('Appwrite Init Error:', err);
     }
 }
 
@@ -553,59 +549,74 @@ function initUploadHandlers() {
             const file = e.target.files[0];
             if (!file) return;
 
-            if (!awStorage) setupAppwriteClient();
-            if (!awStorage) {
-                toast('⚠️ Konfigurasi Appwrite Project ID diperlukan untuk upload!');
-                return;
-            }
-
-            const bucketId = awConfig.bucketId || '69e1ebb1000fefd0d33a';
             const targetId = input.dataset.target;
             const label = input.closest('.btn-upload');
 
             label.classList.add('loading');
+            label.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i>';
+
             try {
-                const response = await awStorage.createFile(bucketId, Appwrite.ID.unique(), file);
-                const fileUrl = `${awConfig.endpoint}/storage/buckets/${bucketId}/files/${response.$id}/view?project=${awConfig.projectId}&mode=admin`;
+                const fileName = `${Date.now()}-${file.name}`;
+                const { data, error } = await supabase.storage
+                    .from('invitations')
+                    .upload(`uploads/${fileName}`, file);
+
+                if (error) throw error;
+
+                const { data: { publicUrl } } = supabase.storage
+                    .from('invitations')
+                    .getPublicUrl(`uploads/${fileName}`);
+
                 const targetInput = $(targetId);
                 if (targetInput) {
-                    targetInput.value = fileUrl;
+                    targetInput.value = publicUrl;
                     updateImagePreviews();
                     updatePreview();
-                    toast('✅ Foto berhasil diunggah!');
+                    toast('✅ Foto berhasil diunggah ke Supabase!');
                 }
             } catch (err) {
                 console.error('Upload Error:', err);
-                toast('❌ Gagal unggah: ' + (err.message || 'Error'));
+                toast('❌ Gagal unggah: ' + (err.message || 'Pastikan bucket "invitations" sudah dibuat di Supabase Storage'));
             } finally {
                 label.classList.remove('loading');
+                label.innerHTML = '<i class="fa-solid fa-cloud-arrow-up"></i>';
             }
         });
     });
 }
 
+
 async function fetchSavedList() {
-    if (!awDb || !awConfig.databaseId) {
-        setSavedLocalFallback();
-        return;
-    }
-    
     try {
-        const response = await awDb.listDocuments(awConfig.databaseId, awConfig.collectionId);
-        MEM_SAVED = response.documents.map(doc => ({
-            id: doc.$id,
+        const { data: { user } } = await supabase.auth.getUser();
+        if (!user) {
+            renderSavedList();
+            return;
+        }
+
+        const { data, error } = await supabase
+            .from('invitations')
+            .select('*')
+            .eq('user_id', user.id)
+            .order('created_at', { ascending: false });
+
+        if (error) throw error;
+
+        MEM_SAVED = data.map(doc => ({
+            id: doc.id,
             groom: doc.groom,
             bride: doc.bride,
             date: doc.date,
             template: doc.template,
             url: doc.url,
-            savedAt: new Date(doc.$createdAt).toLocaleDateString('id-ID'),
-            formData: doc.formData ? JSON.parse(doc.formData) : {}
+            savedAt: new Date(doc.created_at).toLocaleDateString('id-ID'),
+            formData: doc.formData
         }));
+        
         setSavedLocal(MEM_SAVED);
         renderSavedList();
     } catch (err) {
-        console.error("Appwrite Fetch Error", err);
+        console.error("Supabase Fetch Error", err);
         setSavedLocalFallback();
     }
 }
@@ -626,31 +637,64 @@ async function saveInvitation() {
     if (!groom || !bride) { toast('⚠️ Nama mempelai wajib diisi!'); return; }
 
     const url = buildUrl();
-    const invId = `inv_${Date.now()}`;
     const rawForm = Object.fromEntries(buildParams().entries());
-    const fdStr = JSON.stringify(rawForm);
+    const btn = $('btnSaveInv');
 
-    const invData = {
-        uid: invId,
-        groom, bride,
-        date: val('f-date') || "TBD",
-        template: currentTemplate,
-        url,
-        formData: fdStr
-    };
-
-    if (awDb && awConfig.databaseId) {
-        try {
-            await awDb.createDocument(awConfig.databaseId, awConfig.collectionId, Appwrite.ID.unique(), invData);
-            await fetchSavedList();
-            toast(`💾 Tersimpan di Cloud!`);
-        } catch(err) {
-            console.error('Save Error:', err);
-            toast('❌ Gagal simpan ke Cloud, menyimpan ke Lokal...');
-            saveLocalOnly(invId, groom, bride, rawForm, url);
+    try {
+        const { data: { user } } = await supabase.auth.getUser();
+        
+        if (!user) { 
+            toast('⚠️ Anda harus login untuk menyimpan!');
+            return; 
         }
-    } else {
-        saveLocalOnly(invId, groom, bride, rawForm, url);
+
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Menyimpan...';
+
+        const invData = {
+            user_id: user.id,
+            groom,
+            bride,
+            date: val('f-date') || "TBD",
+            template: currentTemplate,
+            url,
+            formdata: rawForm
+        };
+
+        let result;
+        if (editingId) {
+            // UPDATE existing
+            result = await supabase
+                .from('invitations')
+                .update(invData)
+                .eq('id', editingId)
+                .select();
+        } else {
+            // INSERT new — use .select() to get back the new row's ID
+            result = await supabase
+                .from('invitations')
+                .insert([invData])
+                .select();
+        }
+
+        if (result.error) throw result.error;
+
+        // Set editingId to the saved row so subsequent saves UPDATE instead of INSERT
+        if (result.data && result.data.length > 0) {
+            editingId = result.data[0].id;
+        }
+
+        await fetchSavedList();
+        toast(editingId ? '✅ Undangan berhasil disimpan!' : '💾 Berhasil disimpan di Cloud!');
+        
+        // Aktifkan tombol Generate Link setelah berhasil simpan
+        $('btnGenLink')?.removeAttribute('disabled');
+    } catch(err) {
+        console.error('Save Error:', err);
+        toast('❌ Gagal simpan: ' + err.message);
+    } finally {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Simpan Undangan';
     }
 }
 
@@ -661,12 +705,25 @@ function saveLocalOnly(id, groom, bride, formData, url) {
         template: currentTemplate,
         url,
         savedAt: new Date().toLocaleDateString('id-ID'),
-        formData
+        formdata: formData
     };
-    MEM_SAVED.push(invLocal);
+
+    // Check if we are updating an existing local invitation
+    const existingIdx = MEM_SAVED.findIndex(inv => inv.id.toString() === id.toString());
+    if (existingIdx !== -1) {
+        MEM_SAVED[existingIdx] = invLocal;
+    } else {
+        MEM_SAVED.push(invLocal);
+    }
+
+    editingId = id; // Set editingId so subsequent saves UPDATE this entry
     setSavedLocal(MEM_SAVED);
     renderSavedList();
-    toast(`💾 Tersimpan di Lokal!`);
+    
+    // Aktifkan tombol Generate Link setelah berhasil simpan lokal
+    $('btnGenLink')?.removeAttribute('disabled');
+    
+    toast(existingIdx !== -1 ? '✅ Undangan berhasil diperbarui!' : '💾 Tersimpan di Lokal!');
 }
 
 function renderSavedList() {
@@ -703,29 +760,37 @@ function renderSavedList() {
 }
 
 window.deleteInvitation = async function(id) {
-    if (awDb && awConfig.databaseId && id.toString().length > 15) {
-        try {
-            await awDb.deleteDocument(awConfig.databaseId, awConfig.collectionId, id);
-            await fetchSavedList();
-            toast('🗑️ Dihapus dari Cloud.');
-        } catch(err) { toast('❌ Gagal hapus.'); }
-    } else {
-        MEM_SAVED = MEM_SAVED.filter(i => i.id.toString() !== id.toString());
-        setSavedLocal(MEM_SAVED);
-        renderSavedList();
-        toast('🗑️ Dihapus.');
+    if (!confirm('Apakah Anda yakin ingin menghapus undangan ini?')) return;
+    
+    try {
+        const { error } = await supabase
+            .from('invitations')
+            .delete()
+            .eq('id', id);
+
+        if (error) throw error;
+        
+        await fetchSavedList();
+        toast('🗑️ Undangan berhasil dihapus dari Cloud.');
+    } catch(err) { 
+        console.error('Delete Error:', err);
+        toast('❌ Gagal hapus dari Cloud: ' + err.message); 
     }
 };
 
 window.loadInvToEditor = function(id) {
     const inv = getSaved().find(i => i.id.toString() === id.toString());
-    if (!inv || !inv.formData) return;
+    const rawData = inv?.formdata || inv?.formData;
+    if (!inv || !rawData) return;
+
+    editingId = id; // Track that we are editing this specific invitation
+    toast('📂 Memuat data undangan ke editor...');
 
     // Switch to editor
     const editorLink = document.querySelector('.sl[data-page="editor"]');
     if (editorLink) editorLink.click();
 
-    const fd = inv.formData;
+    const fd = rawData;
     const fields = {
         'f-groom': fd.groom, 'f-bride': fd.bride,
         'f-groomFull': fd.groomFull, 'f-brideFull': fd.brideFull,
@@ -740,7 +805,6 @@ window.loadInvToEditor = function(id) {
         'f-resepsiISO': fd.resepsiISO, 'f-resepsiMaps': fd.resepsiMaps,
         'f-bankName': fd.bankName, 'f-bankAcc': fd.bankAcc, 'f-bankHolder': fd.bankHolder,
         'f-wa': fd.wa, 'f-guest': fd.guest,
-        'f-sheetsUrl': fd.sheetsUrl, 'f-invId': fd.invId,
         'f-music': fd.music, 'f-imgHero': fd.hero, 'f-imgPria': fd.imgPria, 'f-imgWanita': fd.imgWanita
     };
     
@@ -765,8 +829,40 @@ window.loadInvToEditor = function(id) {
     currentTemplate = inv.template;
     document.querySelectorAll('.tpl-opt').forEach(o => o.classList.toggle('selected', o.dataset.tpl === currentTemplate));
     
+    // Aktifkan tombol Generate Link karena data sudah ada/pernah disimpan
+    $('btnGenLink')?.removeAttribute('disabled');
+    $('btnCopyLink')?.setAttribute('disabled', 'true'); // Reset salin link sampai generate baru
+    $('btnShareWa')?.setAttribute('disabled', 'true'); // Reset share WA sampai generate baru
+    
     updatePreview();
     toast('✅ Data dimuat ke editor!');
+};
+
+window.resetEditor = function() {
+    if (editingId && !confirm('Mulai membuat undangan baru? (Data yang belum disimpan akan hilang)')) return;
+    
+    editingId = null;
+    $('editorForm')?.reset();
+    currentTemplate = 'midnight';
+    
+    // Reset selection UI
+    document.querySelectorAll('.tpl-opt').forEach(o => o.classList.remove('selected'));
+    document.querySelector('.tpl-opt[data-tpl="midnight"]')?.classList.add('selected');
+    
+    updatePreview();
+    
+    // Disable action buttons
+    $('btnGenLink')?.setAttribute('disabled', 'true');
+    $('btnCopyLink')?.setAttribute('disabled', 'true');
+    $('btnShareWa')?.setAttribute('disabled', 'true');
+    $('generatedUrl') ? $('generatedUrl').innerHTML = `<p class="url-ph"><i class="fa-solid fa-arrow-up"></i> Klik "Generate Link" untuk membuat tautan</p>` : null;
+    
+    // Clear draft
+    if (currentUserId !== 'guest') {
+        localStorage.removeItem(`lumina_draft_${currentUserId}`);
+    }
+    
+    toast('✨ Siap membuat undangan baru!');
 };
 
 // ════════════════════════════════════════════════════════════
@@ -829,90 +925,11 @@ function generateGuestLinks() {
 }
 
 // ════════════════════════════════════════════════════════════
-// 6. RSVP DASHBOARD
-// ════════════════════════════════════════════════════════════
-function initRsvpDashboard() {
-    if (rsvpSheetsUrl) fetchRsvpData();
-
-    $('btnConnectSheets')?.addEventListener('click', () => {
-        const url = val('rsvpSheetsUrl');
-        if (!url || !url.startsWith('https://script.google.com')) { toast('⚠️ URL Script tidak valid!'); return; }
-        rsvpSheetsUrl = url;
-        localStorage.setItem('lumina_sheets_url', url);
-        fetchRsvpData();
-    });
-
-    $('btnRefreshRsvp')?.addEventListener('click', fetchRsvpData);
-    $('btnRefreshRsvpTop')?.addEventListener('click', fetchRsvpData);
-    $('rsvpSearch')?.addEventListener('input', renderRsvpTable);
-    $('rsvpFilter')?.addEventListener('change', renderRsvpTable);
-}
-
-function fetchRsvpData() {
-    if (!rsvpSheetsUrl) return;
-    toast('🔄 Memuat RSVP...');
-    const invId = val('f-invId');
-    fetch(rsvpSheetsUrl + (invId ? `?invId=${invId}` : ''))
-        .then(res => res.json())
-        .then(data => {
-            rsvpData = Array.isArray(data) ? data : [];
-            renderRsvpStats();
-            renderRsvpTable();
-            toast('✅ RSVP Dimuat!');
-        })
-        .catch(() => {
-            toast('❌ Gagal ambil data. Gunakan mode demo.');
-            rsvpData = [
-                { timestamp: '17/04/2026', name: 'Contoh Tamu 1', attendance: 'Hadir', message: 'Selamat!' },
-                { timestamp: '17/04/2026', name: 'Contoh Tamu 2', attendance: 'Tidak Hadir', message: 'Maaf ya.' }
-            ];
-            renderRsvpStats();
-            renderRsvpTable();
-        });
-}
-
-function renderRsvpStats() {
-    const t = rsvpData.length, h = rsvpData.filter(d => d.attendance === 'Hadir').length;
-    const th = rsvpData.filter(d => d.attendance === 'Tidak Hadir').length, r = rsvpData.filter(d => d.attendance === 'Masih Ragu').length;
-    set('stat-total', t); set('stat-hadir', h); set('stat-tidak', th); set('stat-ragu', r);
-    const setBar = (id, pid, v) => {
-        const el = $(id), pel = $(pid);
-        const pct = t ? Math.round((v/t)*100) : 0;
-        if(el) el.style.width = pct + '%';
-        if(pel) pel.textContent = pct + '%';
-    };
-    setBar('bar-hadir', 'pct-hadir', h);
-    setBar('bar-tidak', 'pct-tidak', th);
-    setBar('bar-ragu', 'pct-ragu', r);
-}
-
-function renderRsvpTable() {
-    const tbody = $('rsvpTableBody'), s = val('rsvpSearch').toLowerCase(), f = val('rsvpFilter');
-    if (!tbody) return;
-    const filtered = rsvpData.filter(d => (!s || d.name.toLowerCase().includes(s)) && (!f || d.attendance === f));
-    tbody.innerHTML = filtered.length ? filtered.map((d, i) => `
-        <tr>
-            <td>${i+1}</td>
-            <td style="font-size:0.7rem">${d.timestamp}</td>
-            <td><strong>${d.name}</strong></td>
-            <td><span class="status-pill status-${d.attendance === 'Hadir' ? 'hadir' : d.attendance === 'Tidak Hadir' ? 'tidak' : 'ragu'}">${d.attendance}</span></td>
-            <td style="font-size:0.8rem">${d.message}</td>
-        </tr>
-    `).join('') : '<tr><td colspan="5" style="text-align:center;padding:40px">Tidak ada data</td></tr>';
-}
-
-// ════════════════════════════════════════════════════════════
 // 7. MODALS & NAV
 // ════════════════════════════════════════════════════════════
 function initModals() {
     const closeAll = () => document.querySelectorAll('.modal').forEach(m => m.classList.add('hidden'));
     
-    const btnGuide = $('btnShowGuide');
-    if (btnGuide) btnGuide.onclick = () => $('sheetsModal')?.classList.remove('hidden');
-
-    const linkGuide = $('linkSheetsGuide');
-    if (linkGuide) linkGuide.onclick = (e) => { e.preventDefault(); $('sheetsModal')?.classList.remove('hidden'); };
-
     document.querySelectorAll('.modal').forEach(m => {
         m.onclick = (e) => { if (e.target === m) closeAll(); };
     });
@@ -927,11 +944,10 @@ function onDashboardReady() {
     if (isInitialized) return;
     isInitialized = true;
 
-    initNav();
     initEditor();
     initGuestList();
     initModals();
-    initAppwrite();
+    initSupabaseFeatures();
 }
 
 document.addEventListener('DOMContentLoaded', initAuth);

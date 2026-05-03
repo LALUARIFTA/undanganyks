@@ -1,0 +1,53 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&family=Cinzel:wght@400;700&display=swap');
+@import "tailwindcss";
+@import "./legacy-dashboard.css";
+
+@theme {
+  --color-brand-violet: #7c3aed;
+  --color-brand-rose: #db2777;
+  --color-brand-gold: #c9a444;
+  
+  --color-bg-base: #050507;
+  --color-bg-surface: #121216;
+  
+  --font-plus: "Plus Jakarta Sans", sans-serif;
+  --font-outfit: "Outfit", sans-serif;
+  --font-cinzel: "Cinzel", serif;
+  --font-serif-cormorant: "Cormorant Garamond", serif;
+  
+  --radius-premium: 24px;
+}
+
+/* Base resets */
+@layer base {
+  body {
+    @apply bg-bg-base text-white font-outfit antialiased;
+  }
+}
+
+/* Global Glassmorphism Utility */
+@layer utilities {
+  .glass {
+    @apply bg-white/5 backdrop-blur-xl border border-white/10;
+  }
+  .glass-premium {
+    @apply bg-white/5 backdrop-blur-2xl border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)];
+  }
+}
+
+/* Sidebar Profile Section */
+.sidebar-user {
+  @apply mx-4 mt-2 mb-6 flex items-center gap-3 p-3 rounded-2xl bg-white/5 border border-white/5;
+}
+.user-avatar {
+  @apply w-10 h-10 rounded-xl bg-brand-violet/20 flex items-center justify-center text-brand-violet border border-brand-violet/20;
+}
+.user-info {
+  @apply flex flex-col min-w-0;
+}
+.user-email {
+  @apply text-[13px] font-semibold truncate text-white/90;
+}
+.user-status {
+  @apply text-[10px] text-white/40 uppercase tracking-wider font-bold;
+}
