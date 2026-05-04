@@ -313,14 +313,14 @@ img{display:block;max-width:100%}
                 <div class="p-wrap"><div class="p-ring"></div><div class="p-photo"><img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=500&auto=format&fit=crop" alt="Pria"></div></div>
                 <h3 class="p-name" id="groom-fn">Candra Wijaya, S.T.</h3>
                 <p class="p-sub" id="groom-p">Putra dari<br>Bpk. Wijaya & Ibu Wijaya</p>
-                <a href="#" class="p-ig"><i class="fa-brands fa-instagram"></i> @candra_w</a>
+                <a href="#" class="p-ig" id="groom-ig"><i class="fa-brands fa-instagram"></i> @candra_w</a>
             </div>
             <div class="and-sep rv rv-u"><div class="and-line"></div><div class="and-sym">&</div><div class="and-line"></div></div>
             <div class="p-card rv rv-r">
                 <div class="p-wrap"><div class="p-ring"></div><div class="p-photo"><img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=500&auto=format&fit=crop" alt="Wanita"></div></div>
                 <h3 class="p-name" id="bride-fn">Dewi Santika, S.Pd.</h3>
                 <p class="p-sub" id="bride-p">Putri dari<br>Bpk. Santika & Ibu Santika</p>
-                <a href="#" class="p-ig"><i class="fa-brands fa-instagram"></i> @dewi_s</a>
+                <a href="#" class="p-ig" id="bride-ig"><i class="fa-brands fa-instagram"></i> @dewi_s</a>
             </div>
         </div></div>
     </section>
@@ -485,6 +485,7 @@ const D={
     groomFull:p('groomFull','Candra Wijaya, S.T.'), brideFull:p('brideFull','Dewi Santika, S.Pd.'),
     groomP:p('groomParent','Putra dari Bpk. Wijaya & Ibu Wijaya'),
     brideP:p('brideParent','Putri dari Bpk. Santika & Ibu Santika'),
+    groomIg:p('groomIg','@candra_w'), brideIg:p('brideIg','@dewi_s'),
     date:p('date','20 Juni 2027'), dateFull:p('dateFull','Sabtu, 20 Juni 2027'),
     akadDate:p('akadDate','Sabtu, 20 Juni 2027'), akadTime:p('akadTime','08.00 – 10.00 WIB'),
     akadPlace:p('akadPlace','Gedung Serbaguna Wijaya'), akadAddress:p('akadAddress','Jl. Taman Asri No.12'),
@@ -522,11 +523,22 @@ function populate(){ if(p("music")){const a=document.getElementById("bgm")||docu
         }
     }
 
+    // Story
+    for (let i = 1; i <= 4; i++) {
+        const t = p(`s${i}t`), d = p(`s${i}d`), desc = p(`s${i}desc`);
+        if (t) set(`s${i}-title`, t);
+        if (d) set(`s${i}-year`, d);
+        if (desc) set(`s${i}-desc`, desc);
+    }
+
     document.title=`Undangan | ${c}`;
+
     set('c-guest',D.guest); set('c-names',c); set('c-date',D.date);
     set('h-names',c); set('h-date',D.dateFull);
     set('groom-fn',D.groomFull); set('bride-fn',D.brideFull);
     set('groom-p',D.groomP); set('bride-p',D.brideP);
+    const setIg=(id,h)=>{const e=$(id);if(e&&h){e.innerHTML=`<i class="fa-brands fa-instagram"></i> ${h}`;e.href=`https://instagram.com/${h.replace('@','')}`}};
+    setIg('groom-ig',D.groomIg); setIg('bride-ig',D.brideIg);
     set('akad-date',D.akadDate); set('akad-time',D.akadTime);
     set('akad-place',D.akadPlace); set('akad-address',D.akadAddress);
     set('resepsi-date',D.resepsiDate); set('resepsi-time',D.resepsiTime);

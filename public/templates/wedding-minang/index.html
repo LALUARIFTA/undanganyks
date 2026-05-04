@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="page-title">Undangan Pernikahan Adat Minang</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="icon" type="image/png" href="../../../favicon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ─── Scroll Progress ─── -->
+<div class="scroll-progress" id="scrollBar"></div>
+
+<!-- ══════════════════════ COVER ══════════════════════ -->
+<div id="cover" class="cover">
+    <div class="cover-bg">
+        <div class="songket-overlay"></div>
+        <div class="cover-vignette"></div>
+    </div>
+    
+    <div class="cover-content">
+        <p class="cover-label">Baralek Gadang</p>
+        <div class="cover-guest-wrap">
+            <span class="cover-guest-label">Kapado Bapak/Ibu/Sdr/i:</span>
+            <h2 class="cover-guest" id="c-guest">Nama Tamu Undangan</h2>
+        </div>
+        
+        <div class="cover-main">
+            <h1 class="cover-names" id="c-couple">Sutan &amp; Puti</h1>
+            <div class="cover-divider"></div>
+            <p class="cover-date" id="c-date">10 Oktober 2026</p>
+        </div>
+
+        <button id="btn-open" class="cover-open-btn">
+            <span>Buka Undangan</span>
+            <i class="fa-solid fa-envelope-open"></i>
+        </button>
+    </div>
+</div>
+
+<!-- ══════════════════════ MAIN ══════════════════════ -->
+<div id="main" class="main hidden">
+    <!-- HERO -->
+    <section class="hero-section" id="home">
+        <div class="hero-bg"></div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <p class="hero-eyebrow reveal">WALIMATUL 'URS</p>
+            <h1 class="hero-names reveal" id="hero-names">Sutan &amp; Puti</h1>
+            <div class="hero-date-box reveal">
+                <p class="hero-date" id="hero-date">Sabtu, 10 Oktober 2026</p>
+            </div>
+            
+            <!-- Countdown -->
+            <div class="countdown reveal" id="countdown">
+                <div class="cd-item"><span id="days">00</span><small>Hari</small></div>
+                <div class="cd-sep">/</div>
+                <div class="cd-item"><span id="hours">00</span><small>Jam</small></div>
+                <div class="cd-sep">/</div>
+                <div class="cd-item"><span id="minutes">00</span><small>Minik</small></div>
+                <div class="cd-sep">/</div>
+                <div class="cd-item"><span id="seconds">00</span><small>Detik</small></div>
+            </div>
+        </div>
+        <div class="scroll-hint">
+            <div class="mouse"></div>
+        </div>
+    </section>
+
+    <!-- QUOTE -->
+    <section class="section quote-section">
+        <div class="container narrow">
+            <div class="songket-card reveal">
+                <p class="arabic-text">وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا</p>
+                <p class="arabic-trans">"Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan untukmu isteri-isteri dari jenismu sendiri, supaya kamu cenderung dan merasa tenteram kepadanya..."<br><em>― Ar-Rum: 21</em></p>
+                <div class="divider-songket"></div>
+                <p class="intro-text" id="intro-text">Salam silaturahmi. Beriring salam dan doa, kami bermaksud mengundang Bapak/Ibu/Saudara/i untuk menghadiri acara pernikahan putra-putri kami.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- MEMPELAI -->
+    <section class="section mempelai-section" id="couple">
+        <div class="container">
+            <h2 class="section-title reveal">Anak Daro &amp; Marapulai</h2>
+            <div class="mempelai-grid">
+                <!-- Pria -->
+                <div class="mempelai-card reveal rv-l">
+                    <div class="photo-wrap">
+                        <div class="frame-songket"></div>
+                        <div class="photo-inner">
+                            <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=400" alt="Marapulai" class="p-img">
+                        </div>
+                    </div>
+                    <h3 class="mempelai-name" id="groom-fullname">Sutan Bagindo, S.T.</h3>
+                    <p class="mempelai-parent" id="groom-parent">Putra dari Bpk. Malik & Ibu Ratna</p>
+                    <a href="#" class="mempelai-ig" id="groom-ig"><i class="fa-brands fa-instagram"></i> @sutan_b</a>
+                </div>
+
+                <div class="mempelai-and reveal rv-z">
+                    <div class="and-symbol">dan</div>
+                </div>
+
+                <!-- Wanita -->
+                <div class="mempelai-card reveal rv-r">
+                    <div class="photo-wrap">
+                        <div class="frame-songket"></div>
+                        <div class="photo-inner">
+                            <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?q=80&w=400" alt="Anak Daro" class="p-img">
+                        </div>
+                    </div>
+                    <h3 class="mempelai-name" id="bride-fullname">Puti Bungsu, S.Pd.</h3>
+                    <p class="mempelai-parent" id="bride-parent">Putri dari Bpk. Rizal & Ibu Aminah</p>
+                    <a href="#" class="mempelai-ig" id="bride-ig"><i class="fa-brands fa-instagram"></i> @puti_b</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- STORY -->
+    <section class="section story-section" id="story">
+        <div class="container">
+            <h2 class="section-title reveal">Ranah Cinto</h2>
+            <div class="story-timeline">
+                <div class="story-item reveal rv-l">
+                    <div class="story-card">
+                        <div class="story-year" id="s1-year">2020</div>
+                        <h3 class="story-title" id="s1-title">Patamo Basuo</h3>
+                        <p class="story-desc" id="s1-desc">Patamo kali basuo di Ranah Minang, sajak itu rasonyo ado nan babeda.</p>
+                    </div>
+                </div>
+                <div class="story-item reveal rv-r">
+                    <div class="story-card">
+                        <div class="story-year" id="s2-year">2022</div>
+                        <h3 class="story-title" id="s2-title">Maikek Janji</h3>
+                        <p class="story-desc" id="s2-desc">Sauju mupakaik, kito maikek janji untuak manjalani hubuangan nan labiah serius.</p>
+                    </div>
+                </div>
+                <div class="story-item reveal rv-l">
+                    <div class="story-card">
+                        <div class="story-year" id="s3-year">2024</div>
+                        <h3 class="story-title" id="s3-title">Tunangan</h3>
+                        <p class="story-desc" id="s3-desc">Manuruik adat, kito mangadoan acara tunangan sabagai tando kasariusan.</p>
+                    </div>
+                </div>
+                <div class="story-item reveal rv-r">
+                    <div class="story-card gold-card">
+                        <div class="story-year" id="s4-year">2026</div>
+                        <h3 class="story-title" id="s4-title">Baralek Gadang</h3>
+                        <p class="story-desc" id="s4-desc">Hari ko, kito manjalani hiduik baru dalam ikatan parnikahan nan suci.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ACARA -->
+    <section class="section acara-section" id="event">
+        <div class="container">
+            <div class="acara-grid">
+                <div class="acara-card reveal rv-l">
+                    <div class="card-glow"></div>
+                    <p class="acara-type">Akad Nikah</p>
+                    <h3 class="acara-date" id="akad-date">Sabtu, 10 Okt 2026</h3>
+                    <p class="acara-time" id="akad-time">08.00 - 10.00 WIB</p>
+                    <div class="acara-place">
+                        <i class="fa-solid fa-mosque"></i>
+                        <strong id="akad-place">Masjid Raya Sumatera Barat</strong>
+                        <span id="akad-address">Jl. Khatib Sulaiman, Padang</span>
+                    </div>
+                    <button class="btn-maps" id="btn-akad-maps">Lihat Lokasi <i class="fa-solid fa-map-location-dot"></i></button>
+                </div>
+
+                <div class="acara-card reveal rv-r featured">
+                    <div class="card-glow"></div>
+                    <p class="acara-type">Resepsi</p>
+                    <h3 class="acara-date" id="resepsi-date">Sabtu, 10 Okt 2026</h3>
+                    <p class="acara-time" id="resepsi-time">11.00 - Selesai</p>
+                    <div class="acara-place">
+                        <i class="fa-solid fa-building"></i>
+                        <strong id="resepsi-place">Hotel Pangeran Beach</strong>
+                        <span id="resepsi-address">Jl. Ir. H. Juanda No.79, Padang</span>
+                    </div>
+                    <button class="btn-maps" id="btn-resepsi-maps">Lihat Lokasi <i class="fa-solid fa-map-location-dot"></i></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- GALERI -->
+    <section class="section gallery-section" id="gallery">
+        <div class="container">
+            <h2 class="section-title reveal">Galeri Momen</h2>
+            <div class="gallery-grid reveal rv-z">
+                <div class="g-item" onclick="openLb(0)"><img src="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=600"></div>
+                <div class="g-item" onclick="openLb(1)"><img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=600"></div>
+                <div class="g-item" onclick="openLb(2)"><img src="https://images.unsplash.com/photo-1520854221256-17451cc331bf?q=80&w=600"></div>
+                <div class="g-item" onclick="openLb(3)"><img src="https://images.unsplash.com/photo-1606800052052-a08af7148866?q=80&w=600"></div>
+                <div class="g-item" onclick="openLb(4)"><img src="https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?q=80&w=600"></div>
+                <div class="g-item" onclick="openLb(5)"><img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?q=80&w=600"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- GIFT -->
+    <section class="section gift-section" id="gift">
+        <div class="container narrow">
+            <div class="gift-card reveal">
+                <h2 class="section-title">Kado Digital</h2>
+                <p class="gift-desc">Bagi dunsanak nan nio maagiah hadiah digital, silakan malalui:</p>
+                <div class="bank-item">
+                    <div class="bank-bg"></div>
+                    <h3 id="g-bank-name">Bank BCA</h3>
+                    <p class="bank-acc" id="g-bank-acc">1234567890</p>
+                    <p class="bank-holder" id="g-bank-holder">a.n Sutan Bagindo</p>
+                    <button class="btn-copy" data-copy="1234567890">Salin No. Rekening <i class="fa-solid fa-copy"></i></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- RSVP -->
+    <section class="section rsvp-section" id="rsvp">
+        <div class="container narrow">
+            <div class="rsvp-card reveal">
+                <h2 class="section-title">Konfirmasi Kahadiaran</h2>
+                <div class="fg">
+                    <label>Namo Langkok</label>
+                    <input type="text" id="rsvp-name" placeholder="Isi namo dunsanak...">
+                </div>
+                <div class="fg">
+                    <label>Kahadiaran</label>
+                    <div class="radio-group">
+                        <label class="radio-item">
+                            <input type="radio" name="att" value="Hadir" checked>
+                            <span>Ambo Hadir</span>
+                        </label>
+                        <label class="radio-item">
+                            <input type="radio" name="att" value="Tidak Hadir">
+                            <span>Maaf Indak Bisa</span>
+                        </label>
+                    </div>
+                    <select id="rsvp-att" class="hidden"><option value="Hadir">Hadir</option><option value="Tidak Hadir">Tidak Hadir</option></select>
+                </div>
+                <div class="fg">
+                    <label>Pasan & Doa</label>
+                    <textarea id="rsvp-msg" rows="4" placeholder="Tuliskan pasan & doa dunsanak..."></textarea>
+                </div>
+                <button id="btn-wa" class="btn-primary">Kirim via WhatsApp <i class="fa-brands fa-whatsapp"></i></button>
+            </div>
+        </div>
+    </section>
+
+    <!-- CLOSING -->
+    <section class="section closing-section">
+        <div class="container text-center">
+            <p class="reveal">Tarimo Kasih.</p>
+            <h2 class="closing-names reveal" id="closing-names">Sutan &amp; Puti</h2>
+            <div class="closing-date reveal" id="closing-date">10 Oktober 2026</div>
+            <a href="../../../index.html" class="btn-back reveal">Baliak ka Utamo</a>
+        </div>
+    </section>
+
+    <!-- UI ELEMENTS -->
+    <div class="audio-control" id="audioBtn">
+        <div class="audio-disc">
+            <i class="fa-solid fa-music" id="audioIcon"></i>
+        </div>
+    </div>
+    <audio id="bgAudio" loop><source src="/musik/Cinta Terakhir.mp3" type="audio/mpeg"></audio>
+
+    <div class="lightbox" id="lightbox" onclick="closeLb()">
+        <button class="lb-close"><i class="fa-solid fa-x"></i></button>
+        <img id="lb-img" src="">
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <nav class="bottom-nav">
+        <a href="#home" class="bn-item active"><i class="fa-solid fa-house"></i><span>Home</span></a>
+        <a href="#couple" class="bn-item"><i class="fa-solid fa-heart"></i><span>Profil</span></a>
+        <a href="#story" class="bn-item"><i class="fa-solid fa-book-open"></i><span>Cerita</span></a>
+        <a href="#event" class="bn-item"><i class="fa-solid fa-calendar-check"></i><span>Acara</span></a>
+        <a href="#gallery" class="bn-item"><i class="fa-solid fa-images"></i><span>Galeri</span></a>
+        <a href="#rsvp" class="bn-item"><i class="fa-solid fa-message"></i><span>RSVP</span></a>
+    </nav>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

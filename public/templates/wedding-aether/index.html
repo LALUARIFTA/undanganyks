@@ -205,6 +205,38 @@
             .gal-grid { grid-template-columns: 1fr 1fr; }
             .gal-item:nth-child(1), .gal-item:nth-child(4) { grid-column: span 2; }
         }
+
+        /* ── BOTTOM NAV ── */
+        .bn {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 600;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 10px 8px 16px;
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-top: 1px solid var(--border);
+        }
+        .bni {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.6rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: color 0.3s;
+        }
+        .bni i { font-size: 1.1rem; transition: transform 0.3s; }
+        .bni.active, .bni:hover { color: var(--gold); }
+        .bni.active i { transform: translateY(-3px); }
     </style>
 </head>
 <body>
@@ -221,7 +253,7 @@
 
     <div id="main-parallax">
         <!-- HERO 3D SECTION -->
-        <section class="parallax-section">
+        <section id="s-hero" class="parallax-section">
             <div class="layer layer-bg hero-bg-img"></div>
             <!-- Particles -->
             <div class="particles" id="particles"></div>
@@ -247,7 +279,7 @@
             </section>
 
             <!-- COUPLE -->
-            <section class="section">
+            <section id="s-mempelai" class="section">
                 <div class="sec-head rv">
                     <p class="subtitle">The Bride & Groom</p>
                     <h2>Dua Jiwa, Satu Hati</h2>
@@ -271,7 +303,7 @@
             </section>
 
             <!-- ACARA -->
-            <section class="section">
+            <section id="s-acara" class="section">
                 <div class="sec-head rv">
                     <p class="subtitle">Save The Date</p>
                     <h2>Waktu & Tempat Acara</h2>
@@ -318,7 +350,7 @@
             </section>
 
             <!-- GALERI 3D MASONRY -->
-            <section class="section">
+            <section id="s-galeri" class="section">
                 <div class="sec-head rv">
                     <p class="subtitle">Our Memories</p>
                     <h2>Galeri Cinta</h2>
@@ -335,7 +367,7 @@
             </section>
             
             <!-- OUR STORY -->
-            <section class="section">
+            <section id="s-story" class="section">
                 <div class="sec-head rv">
                     <p class="subtitle">Our Journey</p>
                     <h2>Kisah Cinta Kami</h2>
@@ -361,7 +393,7 @@
             </section>
 
             <!-- WEDDING GIFT -->
-            <section class="section">
+            <section id="s-hadiah" class="section">
                 <div class="sec-head rv">
                     <p class="subtitle">Wedding Gift</p>
                     <h2>Tanda Kasih</h2>
@@ -379,7 +411,7 @@
             </section>
 
             <!-- RSVP -->
-            <section class="section">
+            <section id="s-rsvp" class="section">
                 <div class="sec-head rv">
                     <p class="subtitle">Join Our Joy</p>
                     <h2>RSVP & Kirim Doa</h2>
@@ -410,11 +442,19 @@
                 </div>
             </section>
             
-            <section class="section rv" style="text-align:center;">
                 <h1 class="title" style="font-size:3rem;" id="cl-names">Romeo & Juliet</h1>
                 <p class="subtitle">Terima Kasih</p>
             </section>
         </div>
+
+        <!-- BOTTOM NAV -->
+        <nav class="bn" id="bn">
+            <a href="#s-hero" class="bni active" data-s="s-hero"><i class="fa-solid fa-house"></i><span>Home</span></a>
+            <a href="#s-mempelai" class="bni" data-s="s-mempelai"><i class="fa-solid fa-heart"></i><span>Couple</span></a>
+            <a href="#s-acara" class="bni" data-s="s-acara"><i class="fa-solid fa-calendar-check"></i><span>Event</span></a>
+            <a href="#s-galeri" class="bni" data-s="s-galeri"><i class="fa-solid fa-images"></i><span>Gallery</span></a>
+            <a href="#s-rsvp" class="bni" data-s="s-rsvp"><i class="fa-solid fa-comment-dots"></i><span>RSVP</span></a>
+        </nav>
     </div>
 
     <!-- Audio Player -->
@@ -581,7 +621,42 @@
                     window.open(`https://www.google.com/maps/search/?api=1&query=${b.dataset.q}`, '_blank');
                 });
             });
+
+            initNav();
         });
+
+        function initNav() {
+            const container = $('main-parallax');
+            const items = document.querySelectorAll('.bni');
+            if(!container) return;
+
+            items.forEach(item => {
+                item.addEventListener('click', e => {
+                    e.preventDefault();
+                    const target = $(item.dataset.s);
+                    if(target) {
+                        const targetPos = target.getBoundingClientRect().top - container.getBoundingClientRect().top + container.scrollTop;
+                        container.scrollTo({
+                            top: targetPos,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+
+            container.addEventListener('scroll', () => {
+                let current = '';
+                document.querySelectorAll('section[id]').forEach(sec => {
+                    const targetPos = sec.getBoundingClientRect().top - container.getBoundingClientRect().top + container.scrollTop;
+                    if(container.scrollTop >= targetPos - 120) {
+                        current = sec.id;
+                    }
+                });
+                items.forEach(item => {
+                    item.classList.toggle('active', item.dataset.s === current);
+                });
+            }, { passive: true });
+        }
 
         function initCountdown(iso, ids) {
             function tick() {

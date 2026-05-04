@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="page-title">Undangan Pernikahan Adat Batak</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="icon" type="image/png" href="../../../favicon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ─── Scroll Progress ─── -->
+<div class="scroll-progress" id="scrollBar"></div>
+
+<!-- ══════════════════════ COVER ══════════════════════ -->
+<div id="cover" class="cover">
+    <div class="cover-bg">
+        <div class="gorga-pattern"></div>
+        <div class="cover-vignette"></div>
+    </div>
+    
+    <div class="cover-content">
+        <p class="cover-label">Gokkon dohot Joujou</p>
+        <div class="cover-guest-wrap">
+            <span class="cover-guest-label">Katur dhumateng</span>
+            <h2 class="cover-guest" id="c-guest">Bapak / Ibu / Saudara/i</h2>
+        </div>
+        
+        <div class="cover-main">
+            <h1 class="cover-names" id="c-couple">Togu &amp; Butet</h1>
+            <div class="cover-divider"></div>
+            <p class="cover-date" id="c-date">10 Oktober 2026</p>
+        </div>
+
+        <button id="btn-open" class="cover-open-btn">
+            <span>Buka Undangan</span>
+            <i class="fa-solid fa-envelope-open"></i>
+        </button>
+    </div>
+</div>
+
+<!-- ══════════════════════ MAIN ══════════════════════ -->
+<div id="main" class="main hidden">
+    <!-- HERO -->
+    <section class="hero-section" id="home">
+        <div class="hero-bg"></div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <p class="hero-eyebrow reveal">THE WEDDING OF</p>
+            <h1 class="hero-names reveal" id="hero-names">Togu &amp; Butet</h1>
+            <p class="hero-date reveal" id="hero-date">Sabtu, 10 Oktober 2026</p>
+            
+            <!-- Countdown -->
+            <div class="countdown reveal" id="countdown">
+                <div class="cd-item"><span id="days">00</span><small>Arian</small></div>
+                <div class="cd-sep">:</div>
+                <div class="cd-item"><span id="hours">00</span><small>Sia</small></div>
+                <div class="cd-sep">:</div>
+                <div class="cd-item"><span id="minutes">00</span><small>Minut</small></div>
+                <div class="cd-sep">:</div>
+                <div class="cd-item"><span id="seconds">00</span><small>Detik</small></div>
+            </div>
+        </div>
+        <div class="scroll-hint">
+            <div class="mouse"></div>
+        </div>
+    </section>
+
+    <!-- QUOTE -->
+    <section class="section quote-section">
+        <div class="container narrow">
+            <div class="ulos-frame reveal">
+                <div class="ulos-decor top"></div>
+                <p class="quote-text">"Ai nunga mardomu hita nuaeng, nunga sada hita. Ndang be dua hita, alai sada daging do."<br><em>― Mateus 19:6</em></p>
+                <div class="divider-gorga"></div>
+                <p class="intro-text" id="intro-text">Dihamu angka dongan sahuta, dongan tubu, dongan sabutuha, dohot angka tondong nami. Marhite surat on, ro do hami manjou hamu mangadopi pesta parbogason ni anak/boru nami.</p>
+                <div class="ulos-decor bottom"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MEMPELAI -->
+    <section class="section mempelai-section" id="couple">
+        <div class="container">
+            <h2 class="section-title reveal">Mempelai</h2>
+            <div class="mempelai-grid">
+                <div class="mempelai-card reveal rv-l">
+                    <div class="photo-wrap">
+                        <div class="photo-decor"></div>
+                        <div class="photo-inner">
+                            <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=400" alt="Pria" class="m-img">
+                        </div>
+                    </div>
+                    <h3 class="mempelai-name" id="groom-fullname">Togu Simanjuntak, S.T.</h3>
+                    <p class="mempelai-parent" id="groom-parent">Anak ni Bpk. St. Simanjuntak & Ibu Br. Siahaan</p>
+                    <a href="#" class="mempelai-social" id="groom-ig"><i class="fa-brands fa-instagram"></i> @togu_s</a>
+                </div>
+
+                <div class="mempelai-and reveal rv-z">
+                    <div class="and-symbol">&amp;</div>
+                    <div class="and-line"></div>
+                </div>
+
+                <div class="mempelai-card reveal rv-r">
+                    <div class="photo-wrap">
+                        <div class="photo-decor"></div>
+                        <div class="photo-inner">
+                            <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?q=80&w=400" alt="Wanita" class="m-img">
+                        </div>
+                    </div>
+                    <h3 class="mempelai-name" id="bride-fullname">Butet Br. Panggabean, S.H.</h3>
+                    <p class="mempelai-parent" id="bride-parent">Boru ni Bpk. Panggabean & Ibu Br. Hutauruk</p>
+                    <a href="#" class="mempelai-social" id="bride-ig"><i class="fa-brands fa-instagram"></i> @butet_p</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- STORY -->
+    <section class="section story-section" id="story">
+        <div class="container">
+            <h2 class="section-title reveal">Barita ni Holong</h2>
+            <div class="story-timeline">
+                <div class="story-item reveal rv-l">
+                    <div class="story-card">
+                        <div class="story-year" id="s1-year">2020</div>
+                        <h3 class="story-title" id="s1-title">Pajumpang</h3>
+                        <p class="story-desc" id="s1-desc">Warta harita hami pajumpang di Tarutung, mimitina mah ukur kenalan biasa.</p>
+                    </div>
+                </div>
+                <div class="story-item reveal rv-r">
+                    <div class="story-card">
+                        <div class="story-year" id="s2-year">2022</div>
+                        <h3 class="story-title" id="s2-title">Marsihaholongan</h3>
+                        <p class="story-desc" id="s2-desc">Saatos kenal langkung caket, hami sapuk bade ngajalin hubungan nu langkung serius.</p>
+                    </div>
+                </div>
+                <div class="story-item reveal rv-l">
+                    <div class="story-card">
+                        <div class="story-year" id="s3-year">2024</div>
+                        <h3 class="story-title" id="s3-title">Marhusip</h3>
+                        <p class="story-desc" id="s3-desc">Kalayan restu ti sepuh dua pihak, hami ngayakeun acara marhusip.</p>
+                    </div>
+                </div>
+                <div class="story-item reveal rv-r">
+                    <div class="story-card highlight">
+                        <div class="story-year" id="s4-year">2026</div>
+                        <h3 class="story-title" id="s4-title">Pamasu-masuon</h3>
+                        <p class="story-desc" id="s4-desc">Dinten ieu, hami bade ngamimitian hirup anyar dina beungkeutan pernikahan.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ACARA -->
+    <section class="section acara-section" id="event">
+        <div class="container">
+            <div class="acara-grid">
+                <div class="acara-card reveal rv-l">
+                    <div class="card-decor"></div>
+                    <p class="acara-type">Pamasu-masuon</p>
+                    <h3 class="acara-date" id="akad-date">Sabtu, 10 Okt 2026</h3>
+                    <p class="acara-time" id="akad-time">09.00 - 10.30 WIB</p>
+                    <div class="acara-place">
+                        <i class="fa-solid fa-church"></i>
+                        <strong id="akad-place">HKBP Tarutung Kota</strong>
+                        <span id="akad-address">Jl. Gereja No. 1, Tarutung</span>
+                    </div>
+                    <button class="btn-maps" id="btn-akad-maps">Lihat Lokasi <i class="fa-solid fa-diamond-turn-right"></i></button>
+                </div>
+
+                <div class="acara-card reveal rv-r gold-style">
+                    <div class="card-decor"></div>
+                    <p class="acara-type">Pesta Adat</p>
+                    <h3 class="acara-date" id="resepsi-date">Sabtu, 10 Okt 2026</h3>
+                    <p class="acara-time" id="resepsi-time">11.00 - Selesai</p>
+                    <div class="acara-place">
+                        <i class="fa-solid fa-house-chimney"></i>
+                        <strong id="resepsi-place">Sopo Godang Tarutung</strong>
+                        <span id="resepsi-address">Tarutung, Sumatera Utara</span>
+                    </div>
+                    <button class="btn-maps" id="btn-resepsi-maps">Lihat Lokasi <i class="fa-solid fa-diamond-turn-right"></i></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- GALERI -->
+    <section class="section gallery-section" id="gallery">
+        <div class="container">
+            <h2 class="section-title reveal">Momen Parsadaan</h2>
+            <div class="gallery-grid reveal rv-z">
+                <div class="g-item" onclick="openLb(0)"><img src="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=600"></div>
+                <div class="g-item" onclick="openLb(1)"><img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=600"></div>
+                <div class="g-item" onclick="openLb(2)"><img src="https://images.unsplash.com/photo-1520854221256-17451cc331bf?q=80&w=600"></div>
+                <div class="g-item" onclick="openLb(3)"><img src="https://images.unsplash.com/photo-1606800052052-a08af7148866?q=80&w=600"></div>
+                <div class="g-item" onclick="openLb(4)"><img src="https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?q=80&w=600"></div>
+                <div class="g-item" onclick="openLb(5)"><img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?q=80&w=600"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- GIFT -->
+    <section class="section gift-section" id="gift">
+        <div class="container narrow">
+            <div class="gift-card reveal">
+                <h2 class="section-title">Tanda Holong</h2>
+                <p class="gift-intro">Hamu angka dongan, molo adong roha mu manjalo pasupasu digital, boi dison:</p>
+                <div class="bank-info">
+                    <div class="bank-decor"></div>
+                    <h3 id="g-bank-name">Bank Mandiri</h3>
+                    <p class="bank-acc" id="g-bank-acc">123456789012</p>
+                    <p class="bank-holder" id="g-bank-holder">a.n Togu Simanjuntak</p>
+                    <button class="btn-copy" data-copy="123456789012">Salin Rekening <i class="fa-solid fa-copy"></i></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- RSVP -->
+    <section class="section rsvp-section" id="rsvp">
+        <div class="container narrow">
+            <div class="rsvp-card reveal">
+                <h2 class="section-title">Konfirmasi Kehadiran</h2>
+                <p class="rsvp-desc">Mangga surathon konfirmasi kehadiran hamu.</p>
+                <div class="fg">
+                    <label>Nama Lengkap</label>
+                    <input type="text" id="rsvp-name" placeholder="Isi nama Anda...">
+                </div>
+                <div class="fg">
+                    <label>Kehadiran</label>
+                    <div class="radio-group">
+                        <label class="radio-item">
+                            <input type="radio" name="att" value="Hadir" checked>
+                            <span>Ro do au</span>
+                        </label>
+                        <label class="radio-item">
+                            <input type="radio" name="att" value="Tidak Hadir">
+                            <span>Ndang boi ro</span>
+                        </label>
+                    </div>
+                    <select id="rsvp-att" class="hidden"><option value="Hadir">Hadir</option><option value="Tidak Hadir">Tidak Hadir</option></select>
+                </div>
+                <div class="fg">
+                    <label>Ucapan</label>
+                    <textarea id="rsvp-msg" rows="4" placeholder="Tuliskan ucapan Anda..."></textarea>
+                </div>
+                <button id="btn-wa" class="btn-primary">Kirim via WhatsApp <i class="fa-brands fa-whatsapp"></i></button>
+            </div>
+        </div>
+    </section>
+
+    <!-- CLOSING -->
+    <section class="section closing-section">
+        <div class="container text-center">
+            <p class="reveal">Mauliate Godang.</p>
+            <h2 class="closing-names reveal" id="closing-names">Togu &amp; Butet</h2>
+            <div class="closing-date reveal" id="closing-date">10 Oktober 2026</div>
+            <a href="../../../index.html" class="btn-back reveal"><i class="fa-solid fa-arrow-left"></i> Balik ka Beranda</a>
+        </div>
+    </section>
+
+    <!-- UI ELEMENTS -->
+    <div class="audio-control" id="audioBtn">
+        <div class="audio-disc">
+            <i class="fa-solid fa-music" id="audioIcon"></i>
+        </div>
+    </div>
+    <audio id="bgAudio" loop><source src="/musik/Cinta Terakhir.mp3" type="audio/mpeg"></audio>
+
+    <div class="lightbox" id="lightbox" onclick="closeLb()">
+        <button class="lb-close"><i class="fa-solid fa-xmark"></i></button>
+        <img id="lb-img" src="">
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <nav class="bottom-nav">
+        <a href="#home" class="bn-item active"><i class="fa-solid fa-house"></i><span>Home</span></a>
+        <a href="#couple" class="bn-item"><i class="fa-solid fa-heart"></i><span>Mempelai</span></a>
+        <a href="#story" class="bn-item"><i class="fa-solid fa-book-open"></i><span>Cerita</span></a>
+        <a href="#event" class="bn-item"><i class="fa-solid fa-calendar-check"></i><span>Acara</span></a>
+        <a href="#gallery" class="bn-item"><i class="fa-solid fa-images"></i><span>Galeri</span></a>
+        <a href="#rsvp" class="bn-item"><i class="fa-solid fa-message"></i><span>RSVP</span></a>
+    </nav>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

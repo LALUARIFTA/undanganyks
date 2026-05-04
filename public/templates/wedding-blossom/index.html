@@ -313,14 +313,14 @@ img{display:block;max-width:100%}
                 <div class="p-photo-wrap"><div class="p-ring"></div><div class="p-photo"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=500&auto=format&fit=crop" alt="Pria"></div></div>
                 <h3 class="p-name" id="groom-fn">Aldo Prasetyo, S.E.</h3>
                 <p class="p-sub" id="groom-p">Putra dari<br>Bpk. Prasetyo & Ibu Prasetyo</p>
-                <a href="#" class="p-ig"><i class="fa-brands fa-instagram"></i> @aldo_p</a>
+                <a href="#" class="p-ig" id="groom-ig"><i class="fa-brands fa-instagram"></i> @aldo_p</a>
             </div>
             <div class="and-sep rv rv-u"><div class="and-line"></div><div class="and-sym">&</div><div class="and-line"></div></div>
             <div class="p-card rv">
                 <div class="p-photo-wrap"><div class="p-ring"></div><div class="p-photo"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=500&auto=format&fit=crop" alt="Wanita"></div></div>
                 <h3 class="p-name" id="bride-fn">Bella Ramadhani, S.Psi.</h3>
                 <p class="p-sub" id="bride-p">Putri dari<br>Bpk. Ramadhani & Ibu Ramadhani</p>
-                <a href="#" class="p-ig"><i class="fa-brands fa-instagram"></i> @bella_r</a>
+                <a href="#" class="p-ig" id="bride-ig"><i class="fa-brands fa-instagram"></i> @bella_r</a>
             </div>
         </div></div>
     </section>
@@ -400,13 +400,14 @@ img{display:block;max-width:100%}
             <div class="gal-item" onclick="openLb(2)"><img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=500&auto=format&fit=crop" alt=""><div class="gal-ov"><i class="fa-solid fa-expand"></i></div></div>
             <div class="gal-item" onclick="openLb(3)"><img src="https://images.unsplash.com/photo-1520854221256-17451cc331bf?q=80&w=500&auto=format&fit=crop" alt=""><div class="gal-ov"><i class="fa-solid fa-expand"></i></div></div>
             <div class="gal-item" onclick="openLb(4)"><img src="https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?q=80&w=500&auto=format&fit=crop" alt=""><div class="gal-ov"><i class="fa-solid fa-expand"></i></div></div>
+            <div class="gal-item" onclick="openLb(5)"><img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?q=80&w=500&auto=format&fit=crop" alt=""><div class="gal-ov"><i class="fa-solid fa-expand"></i></div></div>
         </div>
         <div class="lb" id="lb" onclick="closeLb()">
             <button class="lb-x" onclick="closeLb()"><i class="fa-solid fa-xmark"></i></button>
             <button class="lb-p" onclick="event.stopPropagation();lbNav(-1)"><i class="fa-solid fa-chevron-left"></i></button>
             <img id="lb-img" src="" alt="">
             <button class="lb-n" onclick="event.stopPropagation();lbNav(1)"><i class="fa-solid fa-chevron-right"></i></button>
-            <p class="lb-c" id="lb-c">1 / 5</p>
+            <p class="lb-c" id="lb-c">1 / 6</p>
         </div>
         </div>
     </section>
@@ -494,6 +495,7 @@ const D={
     groomFull:p('groomFull','Aldo Prasetyo, S.E.'), brideFull:p('brideFull','Bella Ramadhani, S.Psi.'),
     groomP:p('groomParent','Putra dari Bpk. Prasetyo & Ibu Prasetyo'),
     brideP:p('brideParent','Putri dari Bpk. Ramadhani & Ibu Ramadhani'),
+    groomIg:p('groomIg','@aldo_p'), brideIg:p('brideIg','@bella_r'),
     date:p('date','14 Februari 2027'), dateFull:p('dateFull','Minggu, 14 Februari 2027'),
     akadDate:p('akadDate','Minggu, 14 Feb 2027'), akadTime:p('akadTime','09.00 – 10.30 WIB'),
     akadPlace:p('akadPlace','Masjid Al-Hikmah'), akadAddress:p('akadAddress','Jl. Bunga Mawar No.5'),
@@ -534,13 +536,25 @@ function populate(){
         }
     }
 
+    // Story
+    for (let i = 1; i <= 4; i++) {
+        const t = p(`s${i}t`), d = p(`s${i}d`), desc = p(`s${i}desc`);
+        if (t) set(`s${i}-title`, t);
+        if (d) set(`s${i}-year`, d);
+        if (desc) set(`s${i}-desc`, desc);
+    }
+
     const couple=`${D.groom} & ${D.bride}`;
+
     document.title=`Undangan | ${couple}`;
     
     set('c-guest',D.guest); set('c-names',couple); set('c-date',D.date);
     set('h-names',couple); set('h-date',D.dateFull);
     set('groom-fn',D.groomFull); set('bride-fn',D.brideFull);
     set('groom-p',D.groomP); set('bride-p',D.brideP);
+    
+    const setIg=(id,h)=>{const e=$(id);if(e&&h){e.innerHTML=`<i class="fa-brands fa-instagram"></i> ${h}`;e.href=`https://instagram.com/${h.replace('@','')}`}};
+    setIg('groom-ig',D.groomIg); setIg('bride-ig',D.brideIg);
     
     set('akad-date',D.akadDate); set('akad-time',D.akadTime);
     set('akad-place',D.akadPlace); set('akad-address',D.akadAddress);
@@ -626,7 +640,7 @@ function initPetals(){
 }
 
 /* Lightbox */
-const IMGS=['https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1200','https://images.unsplash.com/photo-1606800052052-a08af7148866?q=80&w=1200','https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=1200','https://images.unsplash.com/photo-1520854221256-17451cc331bf?q=80&w=1200','https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?q=80&w=1200'];
+const IMGS=['https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1200','https://images.unsplash.com/photo-1606800052052-a08af7148866?q=80&w=1200','https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=1200','https://images.unsplash.com/photo-1520854221256-17451cc331bf?q=80&w=1200','https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?q=80&w=1200','https://images.unsplash.com/photo-1519225421980-715cb0215aed?q=80&w=1200'];
 let lbI=0;
 function openLb(i){lbI=i;const lb=$('lb'),img=$('lb-img'),c=$('lb-c');if(!lb||!img)return;img.src=IMGS[i];if(c)c.textContent=`${i+1} / ${IMGS.length}`;lb.classList.add('open');document.body.style.overflow='hidden';}
 function closeLb(){$('lb')?.classList.remove('open');document.body.style.overflow='';}

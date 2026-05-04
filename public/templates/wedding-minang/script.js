@@ -1,5 +1,5 @@
 /* ============================================================
-   TEMPLATE: JAWA KRATON — SCRIPT
+   TEMPLATE: MINANG BARALEK — ULTIMATE SCRIPT
    Data-driven via URL parameters | Reference: Midnight Gold
    ============================================================ */
 
@@ -10,35 +10,35 @@ function param(key, fallback = '') {
 
 const D = {
     // Identitas
-    groom:          param('groom',          'Romeo'),
-    bride:          param('bride',          'Juliet'),
-    groomFull:      param('groomFull',      'Romeo Montague, S.T.'),
-    brideFull:      param('brideFull',      'Juliet Capulet, S.H.'),
-    groomParent:    param('groomParent',    'Putra saking Bpk. Montague & Ibu Montague'),
-    brideParent:    param('brideParent',    'Putri saking Bpk. Capulet & Ibu Capulet'),
-    groomIg:        param('groomIg',        '@romeo_m'),
-    brideIg:        param('brideIg',        '@juliet_c'),
+    groom:          param('groom',          'Sutan'),
+    bride:          param('bride',          'Puti'),
+    groomFull:      param('groomFull',      'Sutan Bagindo, S.T.'),
+    brideFull:      param('brideFull',      'Puti Bungsu, S.Pd.'),
+    groomParent:    param('groomParent',    'Putra dari Bpk. Malik & Ibu Ratna'),
+    brideParent:    param('brideParent',    'Putri dari Bpk. Rizal & Ibu Aminah'),
+    groomIg:        param('groomIg',        '@sutan_b'),
+    brideIg:        param('brideIg',        '@puti_b'),
     // Tanggal & Waktu
-    dateDisplay:    param('date',           '25 Desember 2026'),
-    dateFull:       param('dateFull',       'Jumat, 25 Desember 2026'),
+    dateDisplay:    param('date',           '10 Oktober 2026'),
+    dateFull:       param('dateFull',       'Sabtu, 10 Oktober 2026'),
     // Akad
-    akadDate:       param('akadDate',       'Jumat, 25 Desember 2026'),
+    akadDate:       param('akadDate',       'Sabtu, 10 Okt 2026'),
     akadTime:       param('akadTime',       '08.00 - 10.00 WIB'),
-    akadPlace:      param('akadPlace',      'Masjid Agung Semarang'),
-    akadAddress:    param('akadAddress',    'Jl. Gajah Raya, Semarang'),
-    akadISO:        param('akadISO',        '2026-12-25T08:00:00'),
-    akadMaps:       param('akadMaps',       'Masjid+Agung+Semarang'),
+    akadPlace:      param('akadPlace',      'Masjid Raya Sumatera Barat'),
+    akadAddress:    param('akadAddress',    'Jl. Khatib Sulaiman, Padang'),
+    akadISO:        param('akadISO',        '2026-10-10T08:00:00'),
+    akadMaps:       param('akadMaps',       'Masjid+Raya+Sumatera+Barat'),
     // Resepsi
-    resepsiDate:    param('resepsiDate',    'Jumat, 25 Desember 2026'),
+    resepsiDate:    param('resepsiDate',    'Sabtu, 10 Okt 2026'),
     resepsiTime:    param('resepsiTime',    '11.00 - Selesai'),
-    resepsiPlace:   param('resepsiPlace',   'Gedung Sobokartti'),
-    resepsiAddress: param('resepsiAddress', 'Jl. Dr. Cipto No.31, Semarang'),
-    resepsiISO:     param('resepsiISO',     '2026-12-25T11:00:00'),
-    resepsiMaps:    param('resepsiMaps',    'Gedung+Sobokartti+Semarang'),
+    resepsiPlace:   param('resepsiPlace',   'Hotel Pangeran Beach'),
+    resepsiAddress: param('resepsiAddress', 'Jl. Ir. H. Juanda No.79, Padang'),
+    resepsiISO:     param('resepsiISO',     '2026-10-10T11:00:00'),
+    resepsiMaps:    param('resepsiMaps',    'Hotel+Pangeran+Beach+Padang'),
     // Amplop
     bankName:       param('bankName',       'Bank BCA'),
     bankAcc:        param('bankAcc',        '1234567890'),
-    bankHolder:     param('bankHolder',     'Romeo Montague'),
+    bankHolder:     param('bankHolder',     'Sutan Bagindo'),
     // Lain-lain
     wa:             param('wa',             '6281234567890'),
     guest:          param('guest',          'Bapak / Ibu / Saudara/i'),
@@ -63,7 +63,7 @@ function populateData(){
             e.style.backgroundImage = `url("${hero}")`;
         });
     }
-    const mPx = document.querySelectorAll('.p-img');
+    const mPx = document.querySelectorAll('.mempelai-photo img, .profile-photo img, .p-img, .m-img');
     if (mPx.length >= 2) {
         if (iParam('imgPria')) mPx[0].src = iParam('imgPria');
         if (iParam('imgWanita')) mPx[1].src = iParam('imgWanita');
@@ -118,6 +118,12 @@ function populateData(){
         if (desc) setText(`s${i}-desc`, desc);
     }
 
+    // Gift
+    setText('g-bank-name', D.bankName);
+    setText('g-bank-acc', D.bankAcc.replace(/(.{4})/g,'$1 ').trim());
+    setText('g-bank-holder', `a.n ${D.bankHolder}`);
+    document.querySelectorAll('.btn-copy').forEach(b => b.setAttribute('data-copy', D.bankAcc));
+
     setText('closing-names', couple);
     setText('closing-date',  D.dateDisplay);
 }
@@ -134,6 +140,23 @@ function initReveal() {
     document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 }
 
+function initCountdown() {
+    const target = new Date(D.akadISO).getTime();
+    setInterval(() => {
+        const now = new Date().getTime();
+        const diff = target - now;
+        if (diff < 0) return;
+        const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const s = Math.floor((diff % (1000 * 60)) / 1000);
+        if ($('days')) $('days').innerText = d < 10 ? '0' + d : d;
+        if ($('hours')) $('hours').innerText = h < 10 ? '0' + h : h;
+        if ($('minutes')) $('minutes').innerText = m < 10 ? '0' + m : m;
+        if ($('seconds')) $('seconds').innerText = s < 10 ? '0' + s : s;
+    }, 1000);
+}
+
 function initBottomNav() {
     const sections = document.querySelectorAll('section[id]');
     const navItems = document.querySelectorAll('.bn-item');
@@ -147,6 +170,13 @@ function initBottomNav() {
             item.classList.remove('active');
             if(item.getAttribute('href').substring(1) === current) item.classList.add('active');
         });
+        
+        // Scroll Progress
+        const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+        const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const scrolled = (winScroll / height) * 100;
+        const bar = $('scrollBar');
+        if (bar) bar.style.width = scrolled + "%";
     });
 }
 
@@ -172,6 +202,7 @@ function toast(msg, dur=2800) {
 document.addEventListener('DOMContentLoaded', () => {
     populateData();
     initReveal();
+    initCountdown();
     initBottomNav();
 
     const cover = $('cover'), main = $('main'), btn = $('btn-open'), audio = $('bgAudio');
@@ -183,20 +214,38 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     const icon = $('audioIcon');
+    const disc = document.querySelector('.audio-disc');
     $('audioBtn')?.addEventListener('click', () => {
-        if(audio.paused) { audio.play(); icon.className='fa-solid fa-music'; }
-        else { audio.pause(); icon.className='fa-solid fa-volume-xmark'; }
+        if(audio.paused) { 
+            audio.play(); 
+            icon.className='fa-solid fa-music'; 
+            disc.classList.remove('paused');
+        } else { 
+            audio.pause(); 
+            icon.className='fa-solid fa-volume-xmark'; 
+            disc.classList.add('paused');
+        }
     });
 
     $('btn-akad-maps')?.addEventListener('click', () => window.open(`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(D.akadMaps.replace(/\+/g,' '))}`, '_blank'));
     $('btn-resepsi-maps')?.addEventListener('click', () => window.open(`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(D.resepsiMaps.replace(/\+/g,' '))}`, '_blank'));
     
+    // Copy Rekening
+    document.querySelectorAll('.btn-copy').forEach(b => {
+        b.addEventListener('click', () => {
+            const num = b.getAttribute('data-copy');
+            navigator.clipboard.writeText(num).then(() => toast('✅ Berhasil disalin'));
+        });
+    });
+
+    // RSVP WhatsApp
     const btnWa = $('btn-wa');
     if(btnWa) {
         btnWa.addEventListener('click', () => {
             const name = $('rsvp-name').value.trim();
-            if(!name){ toast('⚠️ Nyuwun pangapunten, eusi asma panjenengan'); return; }
-            const text = `Sugeng! Kulo ${name} ngaturaken konfirmasi: ${$('rsvp-att').value}\n\nPandonga: ${$('rsvp-msg').value}`;
+            if(!name){ toast('⚠️ Mohon isi nama dunsanak'); return; }
+            const att = document.querySelector('input[name="att"]:checked').value;
+            const text = `Assalamu'alaikum! Ambo ${name} mangonfirmasi kahadiaran: ${att}\n\nPasan: ${$('rsvp-msg').value}`;
             window.open(`https://wa.me/${D.wa}?text=${encodeURIComponent(text)}`, '_blank');
         });
     }
@@ -206,11 +255,12 @@ document.addEventListener('DOMContentLoaded', () => {
         btnWa?.addEventListener('click', async (e) => {
             const name = $('rsvp-name').value.trim();
             if (!name) return;
+            const att = document.querySelector('input[name="att"]:checked').value;
             try {
                 await fetch(`${D.surl}/rest/v1/rsvp`, {
                     method: 'POST',
                     headers: { 'apikey': D.skey, 'Authorization': `Bearer ${D.skey}`, 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ invitation_id: D.invId, name: name, attendance: $('rsvp-att').value, message: $('rsvp-msg').value })
+                    body: JSON.stringify({ invitation_id: D.invId, name: name, attendance: att, message: $('rsvp-msg').value })
                 });
             } catch (err) { console.error(err); }
         });

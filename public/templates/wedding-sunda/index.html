@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="page-title">Undangan Pernikahan Adat Sunda</title>
+    <meta name="description" content="Sampurasun: Kahadiran anjeun mangrupikeun kabungah pikeun kami">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="icon" type="image/png" href="../../../favicon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ─── Scroll Progress ─── -->
+<div class="scroll-progress" id="scrollBar"></div>
+
+<!-- ══════════════════════ COVER ══════════════════════ -->
+<div id="cover" class="cover">
+    <div class="cover-bg">
+        <div class="megamendung-overlay"></div>
+        <div class="cover-vignette"></div>
+    </div>
+    
+    <div class="cover-content">
+        <p class="cover-salam">Sampurasun</p>
+        <h2 class="cover-guest-label">Katur dhumateng</h2>
+        <h2 class="cover-guest" id="c-guest">Bapak / Ibu / Saudara/i</h2>
+        
+        <div class="cover-main">
+            <p class="cover-label">The Wedding of</p>
+            <h1 class="cover-names" id="c-couple">Asep &amp; Neneng</h1>
+            <div class="cover-divider"></div>
+            <p class="cover-date" id="c-date">25 Desember 2026</p>
+        </div>
+
+        <button id="btn-open" class="cover-open-btn">
+            <span>Buka Seratan</span>
+            <i class="fa-solid fa-envelope-open"></i>
+        </button>
+    </div>
+</div>
+
+<!-- ══════════════════════ MAIN ══════════════════════ -->
+<div id="main" class="main hidden">
+    <!-- HERO -->
+    <section class="hero-section" id="home">
+        <div class="hero-bg"></div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <div class="hero-decor reveal">
+                <i class="fa-solid fa-seedling"></i>
+            </div>
+            <p class="hero-eyebrow reveal">WALIMATUL 'URSY</p>
+            <h1 class="hero-names reveal" id="hero-names">Asep &amp; Neneng</h1>
+            <p class="hero-date reveal" id="hero-date">Minggu, 25 Desember 2026</p>
+            
+            <!-- Countdown -->
+            <div class="countdown reveal" id="countdown">
+                <div class="cd-item"><span id="days">00</span><small>Dinten</small></div>
+                <div class="cd-sep">:</div>
+                <div class="cd-item"><span id="hours">00</span><small>Tabuh</small></div>
+                <div class="cd-sep">:</div>
+                <div class="cd-item"><span id="minutes">00</span><small>Menit</small></div>
+                <div class="cd-sep">:</div>
+                <div class="cd-item"><span id="seconds">00</span><small>Detik</small></div>
+            </div>
+        </div>
+        <div class="scroll-hint">
+            <p>Gulung ka handap</p>
+            <div class="mouse"></div>
+        </div>
+    </section>
+
+    <!-- QUOTE -->
+    <section class="section quote-section">
+        <div class="container narrow">
+            <div class="quote-frame reveal">
+                <div class="flower-icon top"><i class="fa-solid fa-leaf"></i></div>
+                <p class="arabic-text">وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّن| أَنفُسِكُمْ أَزْوَاجًا</p>
+                <p class="arabic-trans">"Jeung di antara tanda-tanda kakawasaan-Na, Anjeunna nyiptakeun pikeun hidep pasangan tina jenis hidep sorangan, supaya hidep ngarasa tengtram ka manehna..."<br><em>― Ar-Rum: 21</em></p>
+                <div class="quote-sep"></div>
+                <p class="intro-text" id="intro-text">Kalayan nyebat jenengan Allah nu Maha Welas tur Maha Asih, sim kuring sakulawarga bade ngondang Bapak/Ibu/Saderek dina raraga pernikahan putra-putri urang.</p>
+                <div class="flower-icon bottom"><i class="fa-solid fa-leaf"></i></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MEMPELAI -->
+    <section class="section mempelai-section" id="couple">
+        <div class="container">
+            <div class="mempelai-grid">
+                <div class="mempelai-card reveal rv-l">
+                    <div class="photo-wrap">
+                        <div class="photo-frame"></div>
+                        <div class="photo-inner">
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=400" alt="Pria" class="p-img">
+                        </div>
+                    </div>
+                    <h3 class="mempelai-name" id="groom-fullname">Asep Sunandar, S.Kom.</h3>
+                    <p class="mempelai-parent" id="groom-parent">Putra ka-2 ti Bapak H. Nana & Ibu Hj. Siti</p>
+                    <div class="social-links">
+                        <a href="#" class="social-pill" id="groom-ig"><i class="fa-brands fa-instagram"></i> @asep_s</a>
+                    </div>
+                </div>
+
+                <div class="mempelai-and reveal rv-z">
+                    <div class="and-symbol">&amp;</div>
+                    <div class="and-line"></div>
+                </div>
+
+                <div class="mempelai-card reveal rv-r">
+                    <div class="photo-wrap">
+                        <div class="photo-frame"></div>
+                        <div class="photo-inner">
+                            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=400" alt="Wanita" class="p-img">
+                        </div>
+                    </div>
+                    <h3 class="mempelai-name" id="bride-fullname">Neneng Kurnia, S.Pd.</h3>
+                    <p class="mempelai-parent" id="bride-parent">Putri ka-1 ti Bapak Dadang & Ibu Enny</p>
+                    <div class="social-links">
+                        <a href="#" class="social-pill" id="bride-ig"><i class="fa-brands fa-instagram"></i> @neneng_k</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- STORY -->
+    <section class="section story-section" id="story">
+        <div class="container">
+            <h2 class="section-title reveal">Lalakon Asih</h2>
+            <div class="story-timeline">
+                <div class="story-item reveal rv-l">
+                    <div class="story-card">
+                        <div class="story-year" id="s1-year">2020</div>
+                        <h3 class="story-title" id="s1-title">Patepang</h3>
+                        <p class="story-desc" id="s1-desc">Waktos harita urang patepang di kampus, mimitina mah ukur kenalan biasa.</p>
+                    </div>
+                </div>
+                <div class="story-item reveal rv-r">
+                    <div class="story-card">
+                        <div class="story-year" id="s2-year">2022</div>
+                        <h3 class="story-title" id="s2-title">Bobogohan</h3>
+                        <p class="story-desc" id="s2-desc">Saatos kenal langkung caket, urang sapuk bade ngajalin hubungan nu langkung serius.</p>
+                    </div>
+                </div>
+                <div class="story-item reveal rv-l">
+                    <div class="story-card">
+                        <div class="story-year" id="s3-year">2024</div>
+                        <h3 class="story-title" id="s3-title">Khitbah</h3>
+                        <p class="story-desc" id="s3-desc">Kalayan restu ti sepuh dua pihak, urang ngayakeun acara khitbah/lamaran.</p>
+                    </div>
+                </div>
+                <div class="story-item reveal rv-r">
+                    <div class="story-card highlight">
+                        <div class="story-year" id="s4-year">2026</div>
+                        <h3 class="story-title" id="s4-title">Nikah</h3>
+                        <p class="story-desc" id="s4-desc">Dinten ieu, urang bade ngamimitian hirup anyar dina beungkeutan pernikahan.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ACARA -->
+    <section class="section acara-section" id="event">
+        <div class="container">
+            <div class="acara-grid">
+                <div class="acara-item reveal rv-l">
+                    <div class="item-decor"><i class="fa-solid fa-leaf"></i></div>
+                    <h3 class="item-title">Akad Nikah</h3>
+                    <div class="item-info">
+                        <div class="ii-row"><i class="fa-regular fa-calendar"></i> <span id="akad-date">Minggu, 25 Des 2026</span></div>
+                        <div class="ii-row"><i class="fa-regular fa-clock"></i> <span id="akad-time">08.00 - 10.00 WIB</span></div>
+                        <div class="ii-row"><i class="fa-solid fa-location-dot"></i> <div><strong id="akad-place">Masjid Raya Bandung</strong><p id="akad-address">Jl. Dalem Kaum No.14, Bandung</p></div></div>
+                    </div>
+                    <button class="btn-maps" id="btn-akad-maps">Petunjuk Lokasi <i class="fa-solid fa-diamond-turn-right"></i></button>
+                </div>
+
+                <div class="acara-item reveal rv-r">
+                    <div class="item-decor"><i class="fa-solid fa-leaf"></i></div>
+                    <h3 class="item-title">Resepsi</h3>
+                    <div class="item-info">
+                        <div class="ii-row"><i class="fa-regular fa-calendar"></i> <span id="resepsi-date">Minggu, 25 Des 2026</span></div>
+                        <div class="ii-row"><i class="fa-regular fa-clock"></i> <span id="resepsi-time">11.00 - Selesai</span></div>
+                        <div class="ii-row"><i class="fa-solid fa-location-dot"></i> <div><strong id="resepsi-place">Gedung Sate Bandung</strong><p id="resepsi-address">Jl. Diponegoro No.22, Bandung</p></div></div>
+                    </div>
+                    <button class="btn-maps" id="btn-resepsi-maps">Petunjuk Lokasi <i class="fa-solid fa-diamond-turn-right"></i></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- GALERI -->
+    <section class="section gallery-section" id="gallery">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2 class="section-title">Momen Bagja</h2>
+                <p class="section-desc">Kasatiaan jeung kanyaah nu bakal langgeng salawasna.</p>
+            </div>
+            <div class="gallery-masonry reveal rv-z">
+                <div class="gm-item" onclick="openLb(0)"><img src="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=600"></div>
+                <div class="gm-item" onclick="openLb(1)"><img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=600"></div>
+                <div class="gm-item" onclick="openLb(2)"><img src="https://images.unsplash.com/photo-1520854221256-17451cc331bf?q=80&w=600"></div>
+                <div class="gm-item" onclick="openLb(3)"><img src="https://images.unsplash.com/photo-1606800052052-a08af7148866?q=80&w=600"></div>
+                <div class="gm-item" onclick="openLb(4)"><img src="https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?q=80&w=600"></div>
+                <div class="gm-item" onclick="openLb(5)"><img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?q=80&w=600"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- GIFT -->
+    <section class="section gift-section" id="gift">
+        <div class="container narrow">
+            <div class="gift-card reveal">
+                <h2 class="section-title">Tanda Kasih</h2>
+                <p class="gift-intro">Kangge Bapak/Ibu/Saderek nu bade masihan tanda kasih, tiasa ngalangkungan amplop digital di handap ieu:</p>
+                <div class="bank-grid">
+                    <div class="bank-item">
+                        <div class="bank-decor"></div>
+                        <div class="bank-content">
+                            <h3 id="g-bank-name">Bank BCA</h3>
+                            <p class="bank-acc" id="g-bank-acc">1234567890</p>
+                            <p class="bank-holder" id="g-bank-holder">a.n Asep Sunandar</p>
+                            <button class="btn-copy" data-copy="1234567890">Salin Rekening <i class="fa-solid fa-copy"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- RSVP -->
+    <section class="section rsvp-section" id="rsvp">
+        <div class="container narrow">
+            <div class="rsvp-card reveal">
+                <h2 class="section-title">Konfirmasi Kahadiran</h2>
+                <p class="rsvp-desc">Mangga eusian formulir di handap ieu pikeun konfirmasi kahadiran.</p>
+                <div class="fg">
+                    <label>Nami Lengkap</label>
+                    <input type="text" id="rsvp-name" placeholder="Eusi nami anjeun...">
+                </div>
+                <div class="fg">
+                    <label>Kahadiran</label>
+                    <div class="radio-group">
+                        <label class="radio-item">
+                            <input type="radio" name="att" value="Hadir" checked>
+                            <span>Hadir</span>
+                        </label>
+                        <label class="radio-item">
+                            <input type="radio" name="att" value="Tidak Hadir">
+                            <span>Moal Hadir</span>
+                        </label>
+                    </div>
+                    <select id="rsvp-att" class="hidden"><option value="Hadir">Hadir</option><option value="Tidak Hadir">Tidak Hadir</option></select>
+                </div>
+                <div class="fg">
+                    <label>Seratan Doa</label>
+                    <textarea id="rsvp-msg" rows="4" placeholder="Tuliskeun doa & harepan anjeun..."></textarea>
+                </div>
+                <button id="btn-wa" class="btn-sunda">Kirim via WhatsApp <i class="fa-brands fa-whatsapp"></i></button>
+            </div>
+        </div>
+    </section>
+
+    <!-- CLOSING -->
+    <section class="section closing-section">
+        <div class="closing-bg"></div>
+        <div class="container text-center">
+            <div class="closing-decor reveal"><i class="fa-solid fa-heart"></i></div>
+            <p class="reveal">Hatur nuhun kana kahadiranana.</p>
+            <h2 class="closing-names reveal" id="closing-names">Asep &amp; Neneng</h2>
+            <div class="closing-date reveal" id="closing-date">25 Desember 2026</div>
+            <a href="../../../index.html" class="btn-back reveal"><i class="fa-solid fa-arrow-left"></i> Balik ka Beranda</a>
+        </div>
+    </section>
+
+    <!-- UI ELEMENTS -->
+    <div class="audio-control" id="audioBtn">
+        <div class="audio-disc">
+            <i class="fa-solid fa-music" id="audioIcon"></i>
+        </div>
+    </div>
+    <audio id="bgAudio" loop><source src="/musik/Cinta Terakhir.mp3" type="audio/mpeg"></audio>
+
+    <div class="lightbox" id="lightbox" onclick="closeLb()">
+        <button class="lb-close"><i class="fa-solid fa-xmark"></i></button>
+        <img id="lb-img" src="">
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <nav class="bottom-nav">
+        <a href="#home" class="bn-item active"><i class="fa-solid fa-house"></i><span>Home</span></a>
+        <a href="#couple" class="bn-item"><i class="fa-solid fa-heart"></i><span>Mempelai</span></a>
+        <a href="#story" class="bn-item"><i class="fa-solid fa-book-open"></i><span>Lalakon</span></a>
+        <a href="#event" class="bn-item"><i class="fa-solid fa-calendar-check"></i><span>Acara</span></a>
+        <a href="#gallery" class="bn-item"><i class="fa-solid fa-images"></i><span>Galeri</span></a>
+        <a href="#rsvp" class="bn-item"><i class="fa-solid fa-message"></i><span>RSVP</span></a>
+    </nav>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

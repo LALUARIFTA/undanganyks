@@ -15,6 +15,9 @@ const TEMPLATE_PATHS = {
     bali: '/templates/wedding-bali/index.html',
     aether: '/templates/wedding-aether/index.html',
     premium: '/templates/wedding-premium/index.html',
+    minang: '/templates/wedding-minang/index.html',
+    batak: '/templates/wedding-batak/index.html',
+    sunda: '/templates/wedding-sunda/index.html',
 };
 const TEMPLATE_META = {
     midnight: { icon: '🌙', color: 'rgba(212,175,55,0.25)', label: 'Midnight Gold' },
@@ -24,6 +27,9 @@ const TEMPLATE_META = {
     bali: { icon: '🌺', color: 'rgba(20,184,166,0.25)', label: 'Bali Pura' },
     aether: { icon: '✨', color: 'rgba(124,58,237,0.25)', label: '3D Aether' },
     premium: { icon: '💎', color: 'rgba(79,70,229,0.25)', label: 'Premium Luxe' },
+    minang: { icon: '🕌', color: 'rgba(122,0,0,0.25)', label: 'Minang Baralek' },
+    batak: { icon: '🥁', color: 'rgba(160,0,0,0.25)', label: 'Batak Nauli' },
+    sunda: { icon: '🌿', color: 'rgba(79,121,66,0.25)', label: 'Sunda Kembang Kol' },
 };
 
 // ─── State
@@ -97,6 +103,23 @@ window.copyToClipboard = function(text) {
 };
 
 // ════════════════════════════════════════════════════════════
+// 0. LOGIN VISUALS
+// ════════════════════════════════════════════════════════════
+function initLoginVisuals() {
+    const loginScreen = $('loginScreen');
+    if (!loginScreen) return;
+
+    loginScreen.addEventListener('mousemove', (e) => {
+        const { clientX, clientY } = e;
+        const x = (clientX / window.innerWidth - 0.5);
+        const y = (clientY / window.innerHeight - 0.5);
+
+        loginScreen.style.setProperty('--mx', x);
+        loginScreen.style.setProperty('--my', y);
+    });
+}
+
+
 // ════════════════════════════════════════════════════════════
 // 1. LOGIN / LOGOUT (Supabase Auth - Admin Only)
 // ════════════════════════════════════════════════════════════
@@ -181,6 +204,20 @@ async function initAuth() {
             $('loginPassword')?.addEventListener('keypress', (e) => {
                 if (e.key === 'Enter') handleAuth();
             });
+
+            // Password Toggle
+            const togglePw = $('togglePw');
+            const loginPassword = $('loginPassword');
+            if (togglePw && loginPassword) {
+                togglePw.addEventListener('click', () => {
+                    const isPw = loginPassword.type === 'password';
+                    loginPassword.type = isPw ? 'text' : 'password';
+                    togglePw.innerHTML = isPw ? '<i class="fa-solid fa-eye-slash"></i>' : '<i class="fa-solid fa-eye"></i>';
+                });
+            }
+
+            // Init Visuals
+            initLoginVisuals();
         }
     } catch (err) {
         console.error('Auth Init Error:', err);
