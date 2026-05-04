@@ -61,6 +61,14 @@ function getAdaptiveUrl(originalUrl) {
     }
 }
 
+function getShortUrl(inv) {
+    if (!inv) return '';
+    if (inv.slug) {
+        return `${window.location.origin}/v/index.html?s=${inv.slug}`;
+    }
+    return getAdaptiveUrl(inv.url);
+}
+
 window.copyToClipboard = function(text) {
     if (navigator.clipboard && window.isSecureContext) {
         navigator.clipboard.writeText(text).then(() => toast('📋 Berhasil disalin!')).catch(() => toast('❌ Gagal menyalin'));
@@ -981,8 +989,7 @@ function initGuestList() {
     $('btnRefreshGuest')?.addEventListener('click', () => {
         const sel = $('tamuSelectInv');
         if (sel && sel.value) {
-            const inv = getSaved().find(i => i.url === sel.value);
-            if (inv) loadGuestsFromCloud(inv.id);
+            loadGuestsFromCloud(sel.value);
         } else {
             toast('⚠️ Pilih undangan terlebih dahulu');
         }
@@ -1007,8 +1014,7 @@ function initGuestList() {
             return;
         }
         
-        const inv = getSaved().find(i => i.url === sel.value);
-        if (!inv) return;
+        const invId = sel.value;
 
         const reader = new FileReader();
         reader.onload = async (event) => {
@@ -1023,7 +1029,7 @@ function initGuestList() {
                 return;
             }
 
-            await saveMultipleGuestsToCloud(inv.id, names);
+            await saveMultipleGuestsToCloud(invId, names);
             e.target.value = '';
         };
         reader.readAsText(file);
@@ -1034,23 +1040,25 @@ function populateTamuSelect() {
     const sel = $('tamuSelectInv');
     if (!sel) return;
     const saved = getSaved();
-    sel.innerHTML = '<option value="">-- Pilih undangan --</option>' + saved.map(i => `<option value="${i.url}">${i.groom} & ${i.bride} (${i.date})</option>`).join('');
+    sel.innerHTML = '<option value="">-- Pilih undangan --</option>' + saved.map(i => `<option value="${i.id}">${i.groom} & ${i.bride} (${i.date})</option>`).join('');
     
     // Auto-select if we are already editing an invitation
     if (editingId) {
         const currentInv = saved.find(i => i.id.toString() === editingId.toString());
         if (currentInv) {
-            sel.value = currentInv.url;
-            $('tamuBaseUrl').value = getAdaptiveUrl(currentInv.url);
+            sel.value = currentInv.id;
+            $('tamuBaseUrl').value = getShortUrl(currentInv);
             loadGuestsFromCloud(editingId);
         }
     }
 
     sel.onchange = () => { 
         if (sel.value) {
-            $('tamuBaseUrl').value = getAdaptiveUrl(sel.value); 
-            const inv = saved.find(i => i.url === sel.value);
-            if (inv) loadGuestsFromCloud(inv.id);
+            const inv = saved.find(i => i.id.toString() === sel.value);
+            if (inv) {
+                $('tamuBaseUrl').value = getShortUrl(inv); 
+                loadGuestsFromCloud(inv.id);
+            }
         }
     };
 }
@@ -1093,9 +1101,7 @@ async function addSingleGuestToCloud() {
     const sel = $('tamuSelectInv');
     if (!sel || !sel.value) { toast('⚠️ Pilih undangan terlebih dahulu!'); return; }
     
-    const inv = getSaved().find(i => i.url === sel.value);
-    const invId = inv ? inv.id : null;
-    if (!invId) return;
+    const invId = sel.value;
     
     const nameInput = $('newGuestName');
     const name = nameInput.value.trim();
@@ -1165,9 +1171,7 @@ async function deleteGuestListFromCloud() {
     
     if (!confirm('Apakah Anda yakin ingin menghapus SELURUH daftar tamu untuk undangan ini dari Cloud?')) return;
     
-    const inv = getSaved().find(i => i.url === sel.value);
-    const invId = inv ? inv.id : null;
-    if (!invId) return;
+    const invId = sel.value;
     
     const btn = $('btnDeleteGuestCloud');
     btn.disabled = true;
@@ -1199,8 +1203,7 @@ window.deleteGuest = async function(id) {
         toast('🗑️ Tamu berhasil dihapus');
         
         const sel = $('tamuSelectInv');
-        const inv = getSaved().find(i => i.url === sel.value);
-        if (inv) await loadGuestsFromCloud(inv.id);
+        if (sel && sel.value) await loadGuestsFromCloud(sel.value);
     } catch (err) {
         toast('❌ Gagal menghapus: ' + err.message);
     }
