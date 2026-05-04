@@ -52,7 +52,8 @@ function getAdaptiveUrl(originalUrl) {
     if (!originalUrl) return '';
     try {
         const uObj = new URL(originalUrl);
-        uObj.host = window.location.host;
+        uObj.hostname = window.location.hostname;
+        uObj.port = window.location.port;
         uObj.protocol = window.location.protocol;
         return uObj.toString();
     } catch(e) {
