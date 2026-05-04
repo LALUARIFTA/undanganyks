@@ -81,6 +81,13 @@
                 urlObj.searchParams.set('surl', SUPABASE_URL);
                 urlObj.searchParams.set('skey', SUPABASE_ANON_KEY);
                 
+                // Forward original parameters (like guest)
+                for (const [key, value] of params.entries()) {
+                    if (key !== 's') {
+                        urlObj.searchParams.set(key, value);
+                    }
+                }
+                
                 document.getElementById('msg').textContent = 'Mempersiapkan undangan Anda...';
                 
                 // Redirect to the template

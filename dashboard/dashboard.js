@@ -60,6 +60,28 @@ function getAdaptiveUrl(originalUrl) {
     }
 }
 
+window.copyToClipboard = function(text) {
+    if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(() => toast('📋 Berhasil disalin!')).catch(() => toast('❌ Gagal menyalin'));
+    } else {
+        let textArea = document.createElement("textarea");
+        textArea.value = text;
+        textArea.style.position = "fixed";
+        textArea.style.left = "-999999px";
+        textArea.style.top = "-999999px";
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        try {
+            document.execCommand('copy');
+            toast('📋 Berhasil disalin!');
+        } catch (err) {
+            toast('❌ Gagal menyalin');
+        }
+        textArea.remove();
+    }
+};
+
 // ════════════════════════════════════════════════════════════
 // ════════════════════════════════════════════════════════════
 // 1. LOGIN / LOGOUT (Supabase Auth - Admin Only)
@@ -351,7 +373,7 @@ function initEditor() {
     // Copy Link
     $('btnCopyLink')?.addEventListener('click', () => {
         if (!currentUrl) return;
-        navigator.clipboard.writeText(currentUrl).then(() => toast('📋 Link berhasil disalin!'));
+        window.copyToClipboard(currentUrl);
     });
 
     // Share WA
@@ -940,7 +962,7 @@ function initGuestList() {
 
     $('btnCopyAll')?.addEventListener('click', () => {
         const txt = (window._tamuLinks || []).map(l => `${l.name}: ${l.url}`).join('\n');
-        if (txt) navigator.clipboard.writeText(txt).then(() => toast('📋 Semua disalin!'));
+        if (txt) window.copyToClipboard(txt);
     });
 
     $('btnExportCsv')?.addEventListener('click', exportGuestCsv);
@@ -1198,7 +1220,7 @@ function renderGuestTable(filter = '') {
             <td><strong>${l.name}</strong></td>
             <td class="tamu-link-cell" title="${l.url}">${l.url}</td>
             <td class="tamu-btns">
-                <button class="tbl-btn" title="Salin Link" onclick="navigator.clipboard.writeText('${l.url}').then(()=>toast('📋 Link disalin!'))">
+                <button class="tbl-btn" title="Salin Link" onclick="copyToClipboard('${l.url}')">
                     <i class="fa-regular fa-copy"></i>
                 </button>
                 <button class="tbl-btn tbl-btn-wa" title="WhatsApp" onclick="window.open('https://wa.me/?text='+encodeURIComponent('Halo *${l.name}*,\\n\\nTanpa mengurangi rasa hormat, kami mengundang Anda ke acara pernikahan kami.\\n\\nLihat undangan:\\n${l.url}'))">
