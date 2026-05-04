@@ -741,7 +741,18 @@ async function saveInvitation() {
         btn.disabled = true;
         btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Menyimpan...';
 
-        const slug = val('f-slug').toLowerCase().replace(/[^a-z0-9-]/g, '');
+        const slugRaw = val('f-slug');
+        let slug = slugRaw ? slugRaw.toLowerCase().replace(/[^a-z0-9-]/g, '') : '';
+        if (!slug) {
+            // Auto generate slug using groom and bride names or random id
+            const g = groom.toLowerCase().replace(/[^a-z0-9]/g, '');
+            const b = bride.toLowerCase().replace(/[^a-z0-9]/g, '');
+            slug = (g && b) ? `${g}-${b}-${Math.floor(Math.random() * 1000)}` : `inv-${Date.now().toString(36)}`;
+            
+            // Update input so user sees it
+            const slugInput = $('f-slug');
+            if (slugInput) slugInput.value = slug;
+        }
 
         const invData = {
             user_id: user.id,
