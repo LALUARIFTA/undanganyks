@@ -64,7 +64,12 @@ function getAdaptiveUrl(originalUrl) {
 function getShortUrl(inv) {
     if (!inv) return '';
     if (inv.slug) {
-        return `${window.location.origin}/v/index.html?s=${inv.slug}`;
+        // Menggunakan fitur Vercel Rewrites agar link jauh lebih pendek
+        return `${window.location.origin}/to/${inv.slug}`;
+    }
+    // Fallback for old invitations without slug: use ID instead of massive query string
+    if (inv.id) {
+        return `${window.location.origin}/v?id=${inv.id}`;
     }
     return getAdaptiveUrl(inv.url);
 }
@@ -362,7 +367,7 @@ function initEditor() {
         if (slug) {
             const cleanSlug = slug.toLowerCase().replace(/[^a-z0-9-]/g, '');
             // In development, origin is likely localhost:5173
-            currentUrl = `${window.location.origin}/v/index.html?s=${cleanSlug}`;
+            currentUrl = `${window.location.origin}/to/${cleanSlug}`;
         } else {
             currentUrl = buildUrl();
         }

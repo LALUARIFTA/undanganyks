@@ -49,22 +49,26 @@
         async function resolveSlug() {
             const params = new URLSearchParams(window.location.search);
             const slug = params.get('s');
+            const id = params.get('id');
 
-            if (!slug) {
-                document.getElementById('msg').textContent = 'Error: Slug tidak ditemukan.';
+            if (!slug && !id) {
+                document.getElementById('msg').textContent = 'Error: Slug atau ID tidak ditemukan.';
                 return;
             }
 
             try {
                 const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
                 
-                document.getElementById('msg').textContent = `Mencari undangan: ${slug}...`;
+                document.getElementById('msg').textContent = `Mencari undangan...`;
                 
-                const { data, error } = await supabase
-                    .from('invitations')
-                    .select('*')
-                    .eq('slug', slug)
-                    .single();
+                let query = supabase.from('invitations').select('*');
+                if (slug) {
+                    query = query.eq('slug', slug);
+                } else {
+                    query = query.eq('id', id);
+                }
+
+                const { data, error } = await query.single();
 
                 if (error || !data) {
                     document.getElementById('msg').textContent = 'Undangan tidak ditemukan atau link sudah kadaluarsa.';
