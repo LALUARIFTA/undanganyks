@@ -45,6 +45,8 @@ const D = {
     // Google Sheets & RSVP
     sheetsUrl:      param('sheetsUrl',      ''),
     invId:          param('invId',          ''),
+    surl:           param('surl',           ''),
+    skey:           param('skey',           ''),
 };
 
 // ─── 2. DOM SETTER ─────────────────────────────────────────
@@ -369,39 +371,49 @@ function initRsvp() {
         window.open(`https://wa.me/${D.wa}?text=${encodeURIComponent(text)}`, '_blank');
     });
 
-    // Google Sheets button
-    $('btn-send-sheets')?.addEventListener('click', () => {
-        const { name, hadir, msg } = collect();
-        if (!name) { toast('⚠️ Silakan isi nama Anda terlebih dahulu'); return; }
-        if (!D.sheetsUrl) { toast('⚠️ URL Google Sheets belum dikonfigurasi'); return; }
 
-        const payload = {
-            invId:      D.invId,
-            couple:     `${D.groom} & ${D.bride}`,
-            name,
-            attendance: hadir,
-            message:    msg,
-            guest:      D.guest,
-        };
+    // Cloud RSVP (Supabase)
+    const btnSend = $('btn-send-rsvp');
+    if (D.invId && D.surl && D.skey) {
+        // Change button behavior to send to Cloud first, then WA
+        btnSend?.addEventListener('click', async (e) => {
+            e.preventDefault();
+            const { name, hadir, msg } = collect();
+            if (!name) return; // Toast handled by original listener
 
-        // Send to Google Apps Script (no-cors — fire and forget)
-        fetch(D.sheetsUrl, {
-            method: 'POST',
-            mode:   'no-cors',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload),
-        })
-        .then(() => {
-            const successEl = $('rsvp-success');
-            if (successEl) successEl.style.display = 'block';
-            if ($('rsvp-name'))  $('rsvp-name').value  = '';
-            if ($('rsvp-msg'))   $('rsvp-msg').value   = '';
-            toast('✅ RSVP berhasil dikirim ke Google Sheets!');
-        })
-        .catch(() => {
-            toast('✅ Terkirim! (cek koneksi jika tidak muncul di Sheets)');
+            btnSend.disabled = true;
+            btnSend.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Mengirim...';
+
+            try {
+                const res = await fetch(`${D.surl}/rest/v1/rsvp`, {
+                    method: 'POST',
+                    headers: {
+                        'apikey': D.skey,
+                        'Authorization': `Bearer ${D.skey}`,
+                        'Content-Type': 'application/json',
+                        'Prefer': 'return=minimal'
+                    },
+                    body: JSON.stringify({
+                        invitation_id: D.invId,
+                        name: name,
+                        attendance: hadir,
+                        message: msg
+                    })
+                });
+
+                if (res.ok) {
+                    toast('✅ Konfirmasi kehadiran berhasil disimpan!');
+                    $('rsvp-success') ? $('rsvp-success').style.display = 'block' : null;
+                    // Keep original WA behavior after cloud save
+                }
+            } catch (err) {
+                console.error('Cloud RSVP Error:', err);
+            } finally {
+                btnSend.disabled = false;
+                btnSend.innerHTML = '<i class="fa-brands fa-whatsapp"></i> Kirim via WhatsApp';
+            }
         });
-    });
+    }
 }
 
 

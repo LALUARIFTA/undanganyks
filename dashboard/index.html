@@ -56,22 +56,31 @@
         <div class="admin-main">
             <header class="topbar">
                 <div class="topbar-left">
-                    <a href="#" class="sidebar-logo" style="font-size: 1.3rem; margin-right: 20px;">Lumina<span>Panel</span></a>
-                    <div class="topbar-badges">
-                        <span class="tbadge green"><i class="fa-solid fa-circle"></i> Server Aktif</span>
-                    </div>
+                    <button id="toggleSidebar" class="topbar-toggle"><i class="fa-solid fa-bars-staggered"></i></button>
                 </div>
                 
                 <h1 class="topbar-title" id="topbarTitle" style="position: absolute; left: 50%; transform: translateX(-50%); margin: 0;">Live Editor</h1>
                 
                 <div class="topbar-right" style="display: flex; align-items: center; gap: 12px;">
-                    <button id="btnResetEditor" class="btn-s btn-sm"><i class="fa-solid fa-plus"></i> Undangan Baru</button>
-                    <button id="btnSaveGlobal" class="btn-p btn-sm hidden"><i class="fa-solid fa-floppy-disk"></i> Simpan</button>
+                    <button id="btnTogglePreview" class="btn-s btn-sm" title="Toggle Preview"><i class="fa-solid fa-eye-slash"></i></button>
                     <div class="topbar-divider" style="width: 1px; height: 24px; background: rgba(255,255,255,0.1); margin: 0 5px;"></div>
-                    <a href="../index.html" class="btn-s btn-sm" title="Website Utama"><i class="fa-solid fa-house"></i></a>
+                    <div class="sidebar-user" style="margin: 0; padding: 5px 12px; border: none; background: rgba(255,255,255,0.05);">
+                        <div class="user-avatar" style="width: 28px; height: 28px; font-size: 0.7rem;"><i class="fa-solid fa-user"></i></div>
+                        <div class="user-info">
+                            <span class="user-email" id="displayUserEmail" style="font-size: 11px;">Loading...</span>
+                            <span class="user-status">Logged In</span>
+                        </div>
+                    </div>
                     <button id="btnLogout" class="btn-s btn-sm sl-danger" style="color: #f43f5e; border-color: rgba(244, 63, 94, 0.3);" title="Keluar"><i class="fa-solid fa-right-from-bracket"></i></button>
                 </div>
             </header>
+
+            <nav class="sidebar-nav-horizontal" style="display: flex; gap: 10px; padding: 15px 40px; border-bottom: 1px solid rgba(255,255,255,0.05); background: rgba(255,255,255,0.01);">
+                <button class="sl active" data-page="editor"><i class="fa-solid fa-pen-to-square"></i> Live Editor</button>
+                <button class="sl" data-page="saved"><i class="fa-solid fa-box-archive"></i> Undangan Tersimpan</button>
+                <button class="sl" data-page="rsvp"><i class="fa-solid fa-envelope-open-text"></i> Data RSVP</button>
+                <button class="sl" data-page="guest"><i class="fa-solid fa-users"></i> Daftar Tamu</button>
+            </nav>
 
             <!-- ─── PAGE: LIVE EDITOR ─── -->
             <div id="page-editor" class="admin-page editor-page active">
@@ -258,9 +267,22 @@
                                 (format: 628xxx)</label><input type="text" id="f-wa"></div>
                     </div>
 
+                    <!-- Custom URL -->
+                    <div class="form-section">
+                        <h3 class="fst"><span class="num">6</span> Custom URL (Link Pendek)</h3>
+                        <div class="fg">
+                            <label>Link Cantik untuk Undangan Anda</label>
+                            <div class="input-group" style="display: flex; gap: 8px;">
+                                <span style="display: flex; align-items: center; padding: 0 12px; background: rgba(255,255,255,0.05); border-radius: 8px; font-size: 0.9rem; color: var(--text-tertiary); border: 1px solid rgba(255,255,255,0.1);">lumina.id/</span>
+                                <input type="text" id="f-slug" class="f-control" placeholder="contoh: budi-siti" style="flex: 1;">
+                            </div>
+                            <p style="font-size: 0.75rem; color: var(--text-tertiary); margin-top: 5px;">*Gunakan huruf kecil, angka, dan tanda hubung (-) saja.</p>
+                        </div>
+                    </div>
+
                     <!-- Foto & Galeri -->
                     <div class="form-section">
-                        <h3 class="fst"><span class="num">6</span> Foto & Galeri <span class="badge-new">NEW</span></h3>
+                        <h3 class="fst"><span class="num">7</span> Foto & Galeri <span class="badge-new">NEW</span></h3>
                         <p class="fg-hint">Unggah foto dari perangkat Anda atau masukkan URL foto secara manual.</p>
 
                         <div class="fg-stack">
@@ -268,10 +290,14 @@
                                 <label>Foto Utama (Header/Hero)</label>
                                 <div class="input-with-upload">
                                     <div class="field-row">
-                                        <input type="text" id="f-imgHero" placeholder="URL Foto..."
-                                            onkeyup="updatePreview()">
-                                        <label class="btn-upload"><i class="fa-solid fa-cloud-arrow-up"></i><input type="file" class="f-upload" data-target="f-imgHero"
-                                                accept="image/*"></label>
+                                        <div class="input-group" style="display: flex; gap: 8px;">
+                                            <input type="text" id="f-imgHero" class="f-control" 
+                                                placeholder="URL Foto Hero (Utama)..." onkeyup="updatePreview()">
+                                            <label class="btn-s btn-sm" style="cursor: pointer; display: flex; align-items: center; gap: 5px; flex-shrink: 0;">
+                                                <i class="fa-solid fa-cloud-arrow-up"></i>
+                                                <input type="file" class="f-upload" data-target="f-imgHero" accept="image/*" style="display: none;">
+                                            </label>
+                                        </div>
                                     </div>
                                     <div class="img-preview-box" id="p-imgHero"></div>
                                 </div>
@@ -281,11 +307,14 @@
                                 <label>Mempelai Pria</label>
                                 <div class="input-with-upload">
                                     <div class="field-row">
-                                        <input type="text" id="f-imgPria" placeholder="URL Foto..."
-                                            onkeyup="updatePreview()">
-                                        <label class="btn-upload"><i class="fa-solid fa-cloud-arrow-up"></i><input
-                                                type="file" class="f-upload" data-target="f-imgPria"
-                                                accept="image/*"></label>
+                                        <div class="input-group" style="display: flex; gap: 8px;">
+                                            <input type="text" id="f-imgPria" class="f-control" 
+                                                placeholder="URL Foto Mempelai Pria..." onkeyup="updatePreview()">
+                                            <label class="btn-s btn-sm" style="cursor: pointer; display: flex; align-items: center; gap: 5px; flex-shrink: 0;">
+                                                <i class="fa-solid fa-cloud-arrow-up"></i>
+                                                <input type="file" class="f-upload" data-target="f-imgPria" accept="image/*" style="display: none;">
+                                            </label>
+                                        </div>
                                     </div>
                                     <div class="img-preview-box sm" id="p-imgPria"></div>
                                 </div>
@@ -294,11 +323,14 @@
                                 <label>Mempelai Wanita</label>
                                 <div class="input-with-upload">
                                     <div class="field-row">
-                                        <input type="text" id="f-imgWanita" placeholder="URL Foto..."
-                                            onkeyup="updatePreview()">
-                                        <label class="btn-upload"><i class="fa-solid fa-cloud-arrow-up"></i><input
-                                                type="file" class="f-upload" data-target="f-imgWanita"
-                                                accept="image/*"></label>
+                                        <div class="input-group" style="display: flex; gap: 8px;">
+                                            <input type="text" id="f-imgWanita" class="f-control" 
+                                                placeholder="URL Foto Mempelai Wanita..." onkeyup="updatePreview()">
+                                            <label class="btn-s btn-sm" style="cursor: pointer; display: flex; align-items: center; gap: 5px; flex-shrink: 0;">
+                                                <i class="fa-solid fa-cloud-arrow-up"></i>
+                                                <input type="file" class="f-upload" data-target="f-imgWanita" accept="image/*" style="display: none;">
+                                            </label>
+                                        </div>
                                     </div>
                                     <div class="img-preview-box sm" id="p-imgWanita"></div>
                                 </div>
@@ -308,7 +340,7 @@
 
                     <!-- Musik Latar Tambahan -->
                     <div class="form-section">
-                        <h3 class="fst"><span class="num">7</span> Musik Latar <span class="badge-new">NEW</span></h3>
+                        <h3 class="fst"><span class="num">8</span> Musik Latar <span class="badge-new">NEW</span></h3>
                         <p class="fg-hint">Ganti lagu default dengan menyisipkan link lagu (MP3/WAV/Direct Link).</p>
                         <div class="fg">
                             <label><i class="fa-solid fa-music"></i> Link Lagu Utama</label>
@@ -435,11 +467,9 @@
 
                     <!-- Editor Actions -->
                     <div class="editor-actions">
-                        <button id="btnGenLink" class="btn-p" disabled><i class="fa-solid fa-link"></i> Generate Link</button>
-                        <button id="btnCopyLink" class="btn-s" disabled><i class="fa-regular fa-copy"></i> Salin
-                            Link</button>
-                        <button id="btnSaveInv" class="btn-gold"><i class="fa-solid fa-floppy-disk"></i> Simpan
-                            Undangan</button>
+                        <button id="btnGenLink" class="btn-premium-p" disabled><i class="fa-solid fa-link"></i> Generate Link</button>
+                        <button id="btnCopyLink" class="btn-premium-s" disabled><i class="fa-regular fa-copy"></i> Salin Link</button>
+                        <button id="btnSaveInv" class="btn-premium-gold"><i class="fa-solid fa-floppy-disk"></i> Simpan Undangan</button>
                     </div>
                     <div class="generated-url" id="generatedUrl">
                         <p class="url-ph"><i class="fa-solid fa-arrow-up"></i> Klik "Generate Link" untuk membuat tautan
@@ -458,14 +488,9 @@
                                     class="fa-solid fa-desktop"></i></button>
                             <button class="pdev-btn" data-w="430px" data-mode="mobile" title="Mobile View"><i
                                     class="fa-solid fa-mobile-screen"></i></button>
-                            <span class="pdev-sep"></span>
-                            <button id="btnSwapLayout" class="pdev-btn" title="Swap Form & Preview Position"><i
-                                    class="fa-solid fa-right-left"></i></button>
-                        </div>
-                        <div class="preview-status" id="previewStatus"><span class="pulse-dot"></span> Live Preview
-                        </div>
-                        <button id="btnOpenNewTab" class="btn-s btn-sm"><i
-                                class="fa-solid fa-arrow-up-right-from-square"></i> Buka Tab Baru</button>
+                            </div>
+                        <div class="preview-status" id="previewStatus"><span class="pulse-dot"></span> Live Preview</div>
+                        <button id="btnOpenNewTab" class="btn-tool" title="Buka Tab Baru"><i class="fa-solid fa-arrow-up-right-from-square"></i></button>
                     </div>
                     <div class="preview-frame-wrap" id="previewFrameWrap">
                         <iframe id="previewIframe" class="preview-iframe" src="../templates/wedding-midnight/index.html"
@@ -474,6 +499,146 @@
                 </div>
             </div>
 
+            <!-- ─── PAGE: SAVED INVITATIONS ─── -->
+            <div id="page-saved" class="admin-page">
+                <div class="page-header" style="margin-bottom: 30px;">
+                    <h2 style="font-family: 'Cinzel', serif; font-size: 2rem; color: #fff;">Undangan <span style="color: var(--color-brand-gold);">Tersimpan</span></h2>
+                    <p style="color: var(--text-secondary); margin-top: 5px;" id="invTotalStat">Total: 0 Undangan</p>
+                </div>
+                
+                <div id="invList" class="inv-list">
+                    <!-- Cards rendered by JS -->
+                    <div class="loading-state" style="padding: 100px; text-align: center; color: var(--text-secondary);">
+                        <i class="fa-solid fa-circle-notch fa-spin fa-2x"></i>
+                        <p style="margin-top: 15px;">Memuat daftar undangan...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ─── PAGE: RSVP DATA ─── -->
+            <div id="page-rsvp" class="admin-page">
+                <div class="page-header" style="margin-bottom: 30px;">
+                    <h2 style="font-family: 'Cinzel', serif; font-size: 2rem; color: #fff;">Data <span style="color: var(--color-brand-gold);">RSVP</span></h2>
+                    <p style="color: var(--text-secondary); margin-top: 5px;">Pantau siapa saja yang akan hadir di acara Anda.</p>
+                </div>
+
+                <div class="rsvp-stats" id="rsvpStatsSummary" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 30px;">
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: rgba(16, 185, 129, 0.1); color: #10b981;"><i class="fa-solid fa-check"></i></div>
+                        <div class="stat-content">
+                            <span class="stat-num" id="stat-hadir">0</span>
+                            <span class="stat-label">Hadir</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: rgba(244, 63, 94, 0.1); color: #f43f5e;"><i class="fa-solid fa-xmark"></i></div>
+                        <div class="stat-content">
+                            <span class="stat-num" id="stat-tidak">0</span>
+                            <span class="stat-label">Tidak Hadir</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: rgba(245, 158, 11, 0.1); color: #f59e0b;"><i class="fa-solid fa-question"></i></div>
+                        <div class="stat-content">
+                            <span class="stat-num" id="stat-ragu">0</span>
+                            <span class="stat-label">Ragu-ragu</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <div class="flex-row" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                        <h3 class="fst" style="margin-bottom: 0;"><i class="fa-solid fa-comments"></i> Ucapan & Konfirmasi</h3>
+                        <button id="btnRefreshRsvp" class="btn-s btn-sm"><i class="fa-solid fa-rotate"></i> Refresh</button>
+                    </div>
+
+                    <div class="table-wrap" style="overflow-x: auto; background: rgba(0,0,0,0.2); border-radius: 16px; border: 1px solid rgba(255,255,255,0.05);">
+                        <table style="width: 100%; border-collapse: collapse; text-align: left;">
+                            <thead>
+                                <tr style="border-bottom: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.02);">
+                                    <th style="padding: 15px 20px; font-size: 0.8rem; text-transform: uppercase; color: var(--text-tertiary);">Waktu</th>
+                                    <th style="padding: 15px 20px; font-size: 0.8rem; text-transform: uppercase; color: var(--text-tertiary);">Nama</th>
+                                    <th style="padding: 15px 20px; font-size: 0.8rem; text-transform: uppercase; color: var(--text-tertiary);">Status</th>
+                                    <th style="padding: 15px 20px; font-size: 0.8rem; text-transform: uppercase; color: var(--text-tertiary);">Pesan / Ucapan</th>
+                                    <th style="padding: 15px 20px; font-size: 0.8rem; text-transform: uppercase; color: var(--text-tertiary); text-align: right;">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody id="rsvpTableBody">
+                                <tr>
+                                    <td colspan="4" style="padding: 40px; text-align: center; color: var(--text-tertiary);">Pilih undangan untuk melihat data RSVP</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ─── PAGE: GUEST LIST ─── -->
+            <div id="page-guest" class="admin-page">
+                <div class="page-header" style="margin-bottom: 30px;">
+                    <h2 style="font-family: 'Cinzel', serif; font-size: 2rem; color: #fff;">Daftar <span style="color: var(--color-brand-gold);">Tamu</span></h2>
+                    <p style="color: var(--text-secondary); margin-top: 5px;">Kelola daftar tamu dan buat link personal.</p>
+                </div>
+
+                <div class="form-section">
+                    <h3 class="fst"><span class="num">1</span> Setup Guest Links</h3>
+                    <div class="fg">
+                        <label>Base URL Undangan</label>
+                        <select id="tamuSelectInv" class="w-full"></select>
+                    </div>
+                    <div class="fg">
+                        <label>URL (Otomatis)</label>
+                        <input type="url" id="tamuBaseUrl" readonly placeholder="Pilih undangan di atas..." style="opacity: 0.7; background: rgba(0,0,0,0.4);">
+                    </div>
+                    
+                    <div style="margin-top: 25px; padding-top: 25px; border-top: 1px dashed rgba(255,255,255,0.1);">
+                        <h4 style="font-size: 1rem; margin-bottom: 15px; color: var(--color-brand-gold);">Tambah Tamu Baru</h4>
+                        <div style="display: flex; gap: 10px;">
+                            <input type="text" id="newGuestName" placeholder="Masukkan nama tamu baru..." style="flex: 1;">
+                            <button id="btnAddSingleGuest" class="btn-premium-p" style="padding: 12px 24px; min-width: 150px;"><i class="fa-solid fa-plus"></i> Tambah</button>
+                        </div>
+                        <p style="font-size: 0.75rem; color: var(--text-tertiary); margin-top: 8px;">*Kapasitas maksimal penyimpanan: 50 nama tamu.</p>
+                    </div>
+                </div>
+
+                <div id="tamuResult" class="form-section hidden">
+                    <div class="flex-row" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; flex-wrap: wrap; gap: 15px;">
+                        <div style="display: flex; align-items: center; gap: 15px;">
+                            <h3 class="fst" style="margin-bottom: 0;"><span class="num">2</span> Daftar Link Tamu</h3>
+                            <div class="search-box" style="position: relative;">
+                                <i class="fa-solid fa-magnifying-glass" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: rgba(255,255,255,0.3); font-size: 0.8rem;"></i>
+                                <input type="text" id="searchTamu" placeholder="Cari nama tamu..." style="padding-left: 35px; height: 38px; width: 220px; font-size: 0.8rem; background: rgba(255,255,255,0.03);">
+                            </div>
+                        </div>
+                        <div class="btn-group" style="margin-top: 0;">
+                            <span id="tamuCount" class="tbadge info" style="padding: 10px 15px;">0 Link</span>
+                            <button id="btnRefreshGuest" class="btn-tool" title="Muat Ulang"><i class="fa-solid fa-rotate"></i></button>
+                            <button id="btnCopyAll" class="btn-tool"><i class="fa-regular fa-copy"></i> Salin</button>
+                            <label class="btn-tool" style="cursor: pointer; display: flex; align-items: center; gap: 8px;">
+                                <i class="fa-solid fa-file-import"></i> Import CSV
+                                <input type="file" id="importTamuCsv" accept=".csv" style="display: none;">
+                            </label>
+                            <button id="btnExportCsv" class="btn-tool"><i class="fa-solid fa-file-csv"></i> Export CSV</button>
+                            <button id="btnPrintGuest" class="btn-tool btn-tool-emerald"><i class="fa-solid fa-print"></i> Cetak</button>
+                            <button id="btnDeleteGuestCloud" class="btn-tool" style="color: #f43f5e; border-color: rgba(244,63,94,0.2);"><i class="fa-solid fa-trash-can"></i> Hapus Semua</button>
+                        </div>
+                    </div>
+                    
+                    <div class="table-wrap" style="overflow-x: auto; background: rgba(0,0,0,0.2); border-radius: 16px; border: 1px solid rgba(255,255,255,0.05);">
+                        <table style="width: 100%; border-collapse: collapse; text-align: left;">
+                            <thead>
+                                <tr style="border-bottom: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.02);">
+                                    <th style="padding: 15px 20px; font-size: 0.8rem; text-transform: uppercase; color: var(--text-tertiary);">No</th>
+                                    <th style="padding: 15px 20px; font-size: 0.8rem; text-transform: uppercase; color: var(--text-tertiary);">Nama Tamu</th>
+                                    <th style="padding: 15px 20px; font-size: 0.8rem; text-transform: uppercase; color: var(--text-tertiary);">Link Undangan</th>
+                                    <th style="padding: 15px 20px; font-size: 0.8rem; text-transform: uppercase; color: var(--text-tertiary);">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tamuTableBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
 
         </div><!-- /admin-main -->
     </div><!-- /dashboard -->

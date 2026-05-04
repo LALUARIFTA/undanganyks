@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" class="scroll-smooth">
 
 <head>
     <meta charset="UTF-8">
@@ -8,477 +8,556 @@
     <meta name="description"
         content="Jasa pembuatan undangan digital pernikahan premium, elegan, dan interaktif. Bagikan kebahagiaan dengan tampilan yang memukau.">
     
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500;1,600&display=swap" rel="stylesheet">
     <link rel="icon" type="image/png" href="favicon.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="src/styles/main.css">
 </head>
 
-<body class="bg-bg-base text-white font-outfit antialiased selection:bg-brand-gold/30">
+<body class="bg-bg-base text-slate-300 font-outfit antialiased selection:bg-brand-gold/30 relative overflow-x-hidden">
+    
+    <!-- Noise Overlay for premium texture -->
+    <div class="pointer-events-none fixed inset-0 z-[9999] opacity-[0.025] mix-blend-overlay" style="background-image: url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.85%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E');"></div>
 
     <!-- ======== NAVBAR ======== -->
-    <nav id="navbar" class="fixed top-0 left-0 right-0 z-[900] flex items-center justify-between px-6 py-5 transition-all duration-300 md:px-12">
-        <a href="#" class="font-serif-cormorant text-2xl font-bold tracking-tight text-white">Lumina<span class="text-brand-gold">Invites</span></a>
-        <ul class="hidden gap-8 list-none lg:flex">
-            <li><a href="#beranda" class="text-sm font-medium transition-colors text-slate-400 hover:text-brand-gold">Beranda</a></li>
-            <li><a href="#fitur" class="text-sm font-medium transition-colors text-slate-400 hover:text-brand-gold">Fitur</a></li>
-            <li><a href="#template" class="text-sm font-medium transition-colors text-slate-400 hover:text-brand-gold">Template</a></li>
-            <li><a href="#kontak" class="text-sm font-medium transition-colors text-slate-400 hover:text-brand-gold">Kontak</a></li>
+    <nav id="navbar" class="fixed top-0 left-0 right-0 z-[900] flex items-center justify-between px-6 py-4 transition-all duration-500 md:px-12 backdrop-blur-md border-b border-white/5 bg-bg-base/60">
+        <a href="#" class="font-serif-cormorant text-2xl md:text-3xl font-bold tracking-tight text-white group flex items-center gap-1">
+            <i class="fa-solid fa-sparkles text-brand-gold text-sm transition-transform group-hover:rotate-12"></i>
+            Lumina<span class="text-brand-gold font-light italic">Invites</span>
+        </a>
+        <ul class="hidden gap-10 list-none lg:flex">
+            <li><a href="#beranda" class="text-xs uppercase tracking-[0.2em] font-medium transition-colors text-slate-400 hover:text-brand-gold">Beranda</a></li>
+            <li><a href="#fitur" class="text-xs uppercase tracking-[0.2em] font-medium transition-colors text-slate-400 hover:text-brand-gold">Fitur</a></li>
+            <li><a href="#template" class="text-xs uppercase tracking-[0.2em] font-medium transition-colors text-slate-400 hover:text-brand-gold">Template</a></li>
+            <li><a href="#kontak" class="text-xs uppercase tracking-[0.2em] font-medium transition-colors text-slate-400 hover:text-brand-gold">Kontak</a></li>
         </ul>
-        <div class="hidden items-center gap-4 lg:flex">
-            <a href="/dashboard/index.html" class="rounded-xl border border-white/10 bg-white/5 px-5 py-2.5 text-sm font-medium transition-all text-slate-300 hover:border-brand-gold/50 hover:bg-brand-gold/10 hover:text-brand-gold"><i class="fa-solid fa-user-circle mr-2"></i> Dashboard</a>
-            <a href="#kontak" class="rounded-full bg-linear-to-br from-brand-gold to-brand-gold/80 px-6 py-2.5 text-sm font-bold text-black shadow-lg transition-all hover:-translate-y-0.5 hover:shadow-brand-gold/20">Mulai Sekarang</a>
+        <div class="hidden items-center gap-5 lg:flex">
+            <a href="/dashboard/index.html" class="text-sm font-medium transition-colors text-slate-400 hover:text-white">Sign In</a>
+            <a href="/dashboard/index.html" class="group relative overflow-hidden rounded-full bg-white px-6 py-2.5 text-sm font-medium text-black transition-all hover:shadow-[0_0_20px_rgba(255,255,255,0.2)]">
+                <span class="relative z-10">Mulai Sekarang</span>
+                <div class="absolute inset-0 h-full w-full bg-brand-gold scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100"></div>
+                <span class="absolute inset-0 z-10 flex items-center justify-center text-black opacity-0 transition-opacity duration-300 group-hover:opacity-100">Mulai Sekarang</span>
+            </a>
         </div>
-        <button class="flex h-10 w-10 items-center justify-center rounded-lg border border-white/10 text-white lg:hidden" id="mobileMenuToggle"><i class="fa-solid fa-bars"></i></button>
+        <button class="flex h-10 w-10 items-center justify-center rounded-full bg-white/5 border border-white/10 text-white lg:hidden transition-colors hover:bg-white/10" id="mobileMenuToggle"><i class="fa-solid fa-bars-staggered"></i></button>
     </nav>
 
     <!-- Mobile Nav Drawer -->
-    <div class="fixed top-0 left-0 z-[1000] h-full w-[300px] -translate-x-full bg-bg-surface p-10 transition-transform duration-500 ease-in-out [&.open]:translate-x-0" id="mobileDrawer">
-        <button class="absolute top-5 right-5 flex h-10 w-10 items-center justify-center rounded-lg bg-white/5 text-white" id="drawerClose"><i class="fa-solid fa-xmark"></i></button>
-        <div class="flex flex-col gap-6 pt-10">
-            <a href="#beranda" class="drawer-link text-lg font-medium text-slate-400 hover:text-brand-gold">Beranda</a>
-            <a href="#fitur" class="drawer-link text-lg font-medium text-slate-400 hover:text-brand-gold">Fitur Unggulan</a>
-            <a href="#template" class="drawer-link text-lg font-medium text-slate-400 hover:text-brand-gold">Koleksi Template</a>
-            <a href="#kontak" class="drawer-link text-lg font-medium text-slate-400 hover:text-brand-gold">Kontak</a>
-            <hr class="border-white/10">
-            <a href="/dashboard/index.html" class="drawer-link flex items-center gap-2 text-sm text-slate-500 hover:text-brand-gold"><i class="fa-solid fa-user-circle"></i> Dashboard User</a>
+    <div class="fixed top-0 left-0 z-[1000] h-full w-full max-w-sm -translate-x-full bg-bg-surface/95 backdrop-blur-2xl p-10 transition-transform duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] [&.open]:translate-x-0 border-r border-white/5" id="mobileDrawer">
+        <button class="absolute top-6 right-6 flex h-10 w-10 items-center justify-center rounded-full bg-white/5 text-white transition-colors hover:bg-white/10 hover:text-brand-gold" id="drawerClose"><i class="fa-solid fa-xmark"></i></button>
+        <div class="flex flex-col gap-8 pt-16">
+            <a href="#beranda" class="drawer-link text-3xl font-serif-cormorant italic text-white hover:text-brand-gold transition-colors">Beranda</a>
+            <a href="#fitur" class="drawer-link text-3xl font-serif-cormorant italic text-white hover:text-brand-gold transition-colors">Keunggulan</a>
+            <a href="#template" class="drawer-link text-3xl font-serif-cormorant italic text-white hover:text-brand-gold transition-colors">Koleksi</a>
+            <a href="#kontak" class="drawer-link text-3xl font-serif-cormorant italic text-white hover:text-brand-gold transition-colors">Konsultasi</a>
+            <div class="mt-8 pt-8 border-t border-white/10 flex flex-col gap-4">
+                <a href="/dashboard/index.html" class="drawer-link flex items-center justify-between rounded-2xl bg-white/5 px-6 py-4 text-sm font-medium text-white hover:bg-white/10 transition-colors">
+                    <span>Masuk Dashboard</span>
+                    <i class="fa-solid fa-arrow-right text-brand-gold"></i>
+                </a>
+            </div>
         </div>
     </div>
-    <div class="fixed inset-0 z-[999] bg-black/60 opacity-0 pointer-events-none transition-opacity duration-500 backdrop-blur-sm [&.active]:opacity-100 [&.active]:pointer-events-auto" id="drawerOverlay"></div>
+    <div class="fixed inset-0 z-[999] bg-black/80 opacity-0 pointer-events-none transition-opacity duration-500 backdrop-blur-sm [&.active]:opacity-100 [&.active]:pointer-events-auto" id="drawerOverlay"></div>
 
     <!-- ======== HERO SECTION ======== -->
-    <section id="beranda" class="relative flex min-h-screen items-center overflow-hidden px-6 pt-32 pb-20 md:px-12">
-        <!-- Background Accents -->
-        <div class="absolute inset-0 z-0 opacity-20" id="particles">
-            <div class="absolute top-[-10%] right-[-10%] h-[600px] w-[600px] rounded-full bg-brand-gold/20 blur-[120px]"></div>
-            <div class="absolute bottom-[-10%] left-[-10%] h-[500px] w-[500px] rounded-full bg-brand-violet/20 blur-[120px]"></div>
+    <section id="beranda" class="relative flex min-h-screen flex-col items-center justify-center overflow-hidden pt-32 pb-20">
+        <!-- Abstract glowing orbs -->
+        <div class="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+            <div class="absolute top-[-10%] right-[10%] h-[600px] w-[600px] rounded-full bg-brand-gold/10 blur-[120px] mix-blend-screen animate-[float_8s_ease-in-out_infinite]"></div>
+            <div class="absolute bottom-[-10%] left-[10%] h-[600px] w-[600px] rounded-full bg-indigo-500/10 blur-[120px] mix-blend-screen animate-[float_10s_ease-in-out_infinite_reverse]"></div>
         </div>
         
-        <div class="container relative z-10 mx-auto flex flex-col items-center gap-16 lg:flex-row">
-            <div class="max-w-2xl text-center lg:text-left">
-                <div class="mb-8 inline-flex animate-bounce items-center gap-2 rounded-full border border-brand-gold/30 bg-brand-gold/10 px-4 py-2 text-xs font-bold tracking-widest text-brand-gold uppercase">
-                    <i class="fa-solid fa-star"></i> #1 Jasa Undangan Digital Indonesia
-                </div>
-                <h1 class="mb-6 font-serif-cormorant text-5xl font-bold leading-tight md:text-7xl">
-                    Undangan Digital <br><em class="not-italic text-brand-gold">yang Membuat Tamu Terpesona</em>
-                </h1>
-                <p class="mb-10 text-lg leading-relaxed text-slate-400">
-                    Kami menghadirkan undangan pernikahan digital yang elegan, interaktif, dan tak terlupakan. Bergabunglah dengan 500+ pasangan yang telah mempercayakan momen bahagia mereka kepada kami.
-                </p>
-                <div class="flex flex-wrap justify-center gap-4 lg:justify-start">
-                    <a href="#template" class="inline-flex items-center gap-3 rounded-full bg-linear-to-br from-brand-gold to-brand-gold/80 px-8 py-4 text-lg font-bold text-black shadow-xl transition-all hover:-translate-y-1 hover:shadow-brand-gold/30">
-                        <i class="fa-solid fa-wand-magic-sparkles"></i> Buat Sekarang
-                    </a>
-                    <a href="#fitur" class="inline-flex items-center gap-3 rounded-full border border-white/10 px-8 py-4 text-lg font-medium text-white transition-all hover:border-brand-gold hover:text-brand-gold">
-                        Pelajari Fitur <i class="fa-solid fa-arrow-right"></i>
-                    </a>
+        <div class="container relative z-10 mx-auto px-6 text-center">
+            <div class="inline-flex mb-8 animate-[fade-in-up_1s_ease-out] items-center gap-3 rounded-full border border-brand-gold/20 bg-brand-gold/5 px-5 py-2 text-xs font-medium tracking-widest text-brand-gold uppercase backdrop-blur-md">
+                <span class="relative flex h-2 w-2">
+                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-gold opacity-75"></span>
+                  <span class="relative inline-flex rounded-full h-2 w-2 bg-brand-gold"></span>
+                </span>
+                100% Gratis Tanpa Syarat
+            </div>
+            
+            <h1 class="mx-auto mb-8 max-w-5xl font-serif-cormorant text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-light leading-[1.1] tracking-tight text-white animate-[fade-in-up_1.2s_ease-out]">
+                Momen Sempurna <br>
+                <em class="font-serif-cormorant italic text-brand-gold">Karya Elegan,</em>
+                <span class="font-outfit text-white font-medium text-4xl sm:text-5xl md:text-6xl lg:text-7xl"> Tanpa Batas.</span>
+            </h1>
+            
+            <p class="mx-auto mb-12 max-w-2xl text-base sm:text-lg font-light leading-relaxed text-slate-400 animate-[fade-in-up_1.4s_ease-out]">
+                Platform pembuatan undangan pernikahan digital premium. Hadirkan kesan mewah dengan desain eksklusif, fitur interaktif lengkap, tanpa biaya berlangganan.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-6 animate-[fade-in-up_1.6s_ease-out]">
+                <a href="#template" class="group relative flex items-center justify-center gap-3 overflow-hidden rounded-full bg-white px-8 py-4 text-sm font-medium text-black transition-all hover:shadow-[0_0_30px_rgba(255,255,255,0.3)]">
+                    <span class="relative z-10 flex items-center gap-2">Jelajahi Koleksi <i class="fa-solid fa-arrow-right transition-transform group-hover:translate-x-1"></i></span>
+                </a>
+                <a href="#fitur" class="flex items-center gap-3 px-8 py-4 text-sm font-medium text-slate-300 transition-colors hover:text-white group">
+                    <div class="flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-white/5 transition-colors group-hover:bg-white/10 group-hover:border-white/40">
+                        <i class="fa-solid fa-play ml-1 text-xs text-brand-gold"></i>
+                    </div>
+                    Cara Kerja
+                </a>
+            </div>
+        </div>
+
+        <!-- Premium Mockup Display -->
+        <div class="relative mx-auto mt-24 w-full max-w-6xl px-6 opacity-0 animate-[fade-in-up_2s_ease-out_forwards]">
+            <div class="relative aspect-[16/9] sm:aspect-[21/9] w-full overflow-hidden rounded-[2rem] border border-white/10 bg-white/5 backdrop-blur-md shadow-2xl">
+                <!-- Abstract interior representing templates -->
+                <div class="absolute inset-0 bg-gradient-to-br from-bg-surface via-bg-base to-black/80"></div>
+                <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1520854221256-17451cc331bf?q=80&w=1200&auto=format&fit=crop')] bg-cover bg-center opacity-10 mix-blend-overlay"></div>
+                
+                <div class="absolute inset-0 flex items-center justify-center gap-4 sm:gap-8 p-8 transform scale-110 rotate-[-2deg] opacity-70">
+                    <!-- Left card -->
+                    <div class="w-48 sm:w-64 aspect-[9/16] rounded-2xl border border-white/10 bg-black/50 backdrop-blur-xl shadow-2xl overflow-hidden translate-y-8 transition-transform duration-700 hover:-translate-y-2">
+                        <div class="h-full w-full bg-gradient-to-b from-slate-800 to-black p-6 text-center flex flex-col justify-center border-t border-white/10">
+                            <span class="font-serif-cormorant text-2xl text-brand-gold">A & M</span>
+                            <div class="mt-4 h-px w-12 mx-auto bg-brand-gold/30"></div>
+                        </div>
+                    </div>
+                    <!-- Center card (Main focus) -->
+                    <div class="w-56 sm:w-72 aspect-[9/16] rounded-2xl border border-brand-gold/30 bg-black backdrop-blur-xl shadow-[0_0_50px_rgba(201,164,68,0.15)] overflow-hidden z-10 transition-transform duration-700 hover:-translate-y-4">
+                        <div class="h-full w-full relative bg-gradient-to-br from-zinc-900 to-black p-6 text-center flex flex-col items-center justify-center">
+                            <div class="absolute top-0 left-0 w-full h-1/2 bg-gradient-to-b from-brand-gold/10 to-transparent"></div>
+                            <span class="text-[0.5rem] tracking-[0.4em] text-brand-gold uppercase mb-4">The Wedding Of</span>
+                            <span class="font-serif-cormorant text-4xl text-white italic">Romeo <br>& Juliet</span>
+                            <div class="mt-8 flex gap-2">
+                                <div class="h-1.5 w-1.5 rounded-full bg-brand-gold"></div>
+                                <div class="h-1.5 w-1.5 rounded-full bg-brand-gold/40"></div>
+                                <div class="h-1.5 w-1.5 rounded-full bg-brand-gold/20"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Right card -->
+                    <div class="w-48 sm:w-64 aspect-[9/16] rounded-2xl border border-white/10 bg-black/50 backdrop-blur-xl shadow-2xl overflow-hidden translate-y-12 transition-transform duration-700 hover:-translate-y-2 hidden sm:block">
+                        <div class="h-full w-full bg-gradient-to-br from-rose-950 to-black p-6 text-center flex flex-col justify-center border-t border-rose-500/10">
+                            <span class="font-serif-cormorant text-2xl text-rose-300">S & N</span>
+                            <div class="mt-4 h-px w-12 mx-auto bg-rose-300/30"></div>
+                        </div>
+                    </div>
                 </div>
                 
-                <div class="mt-12 flex justify-center gap-8 lg:justify-start">
-                    <div class="flex flex-col">
-                        <span class="font-serif-cormorant text-3xl font-bold text-brand-gold">500+</span>
-                        <span class="text-xs tracking-wider text-slate-500 uppercase">Pasangan Puas</span>
-                    </div>
-                    <div class="h-10 w-px bg-white/10"></div>
-                    <div class="flex flex-col">
-                        <span class="font-serif-cormorant text-3xl font-bold text-brand-gold">15+</span>
-                        <span class="text-xs tracking-wider text-slate-500 uppercase">Pilihan Template</span>
-                    </div>
-                    <div class="h-10 w-px bg-white/10"></div>
-                    <div class="flex flex-col">
-                        <span class="font-serif-cormorant text-3xl font-bold text-brand-gold">24/7</span>
-                        <span class="text-xs tracking-wider text-slate-500 uppercase">Support Aktif</span>
-                    </div>
-                </div>
+                <!-- Fade overlay -->
+                <div class="absolute inset-0 bg-gradient-to-t from-bg-base via-transparent to-transparent pointer-events-none"></div>
             </div>
-
-            <!-- Mockup -->
-            <div class="relative hidden flex-1 justify-center lg:flex">
-                <div class="animate-float relative z-10 w-72 rounded-[3rem] border-2 border-brand-gold/30 bg-bg-surface p-3 shadow-2xl shadow-brand-gold/10">
-                    <div class="relative aspect-[9/19] overflow-hidden rounded-[2.5rem] bg-black">
-                         <div class="absolute inset-0 bg-linear-to-b from-black/80 via-transparent to-black/80"></div>
-                         <img src="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=400&auto=format&fit=crop" class="h-full w-full object-cover opacity-60" alt="Preview">
-                         <div class="absolute inset-0 flex flex-col items-center justify-center p-6 text-center">
-                            <span class="mb-2 font-serif-cormorant text-[0.6rem] tracking-[0.3em] text-brand-gold uppercase">The Wedding Of</span>
-                            <h2 class="font-serif-cormorant text-2xl italic text-white">Romeo & Juliet</h2>
-                         </div>
-                    </div>
-                </div>
-                <!-- Decoration -->
-                <div class="absolute top-1/2 left-1/2 -z-10 h-80 w-80 -translate-x-1/2 -translate-y-1/2 rounded-full bg-brand-gold/10 blur-[60px]"></div>
-            </div>
-        </div>
-        
-        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce text-center text-[0.6rem] tracking-[0.2em] text-slate-500 uppercase">
-            <span>Scroll Down</span><br>
-            <i class="fa-solid fa-chevron-down mt-2 text-brand-gold"></i>
         </div>
     </section>
 
-    <!-- ======== FITUR SECTION ======== -->
-    <section id="fitur" class="bg-bg-surface py-24">
-        <div class="container mx-auto px-6">
-            <div class="mb-20 text-center">
-                <span class="mb-4 inline-block rounded-full border border-brand-gold/30 bg-brand-gold/10 px-4 py-1 text-xs font-bold tracking-widest text-brand-gold uppercase">Mengapa Kami?</span>
-                <h2 class="mb-6 font-serif-cormorant text-4xl font-bold md:text-5xl">Fitur Premium <em class="not-italic text-brand-gold">Tanpa Biaya Tambahan</em></h2>
-                <p class="mx-auto max-w-2xl text-slate-400">Setiap undangan yang kami buat sudah dilengkapi dengan rangkaian fitur modern yang akan memukau tamu Anda.</p>
+    <!-- ======== FITUR SECTION (BENTO BOX LAYOUT) ======== -->
+    <section id="fitur" class="relative py-32 z-10 bg-bg-base">
+        <div class="container mx-auto px-6 md:px-12">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-8">
+                <div class="max-w-2xl">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="h-px w-8 bg-brand-gold"></div>
+                        <span class="font-outfit text-xs font-semibold tracking-[0.2em] text-brand-gold uppercase">Standar Baru</span>
+                    </div>
+                    <h2 class="font-serif-cormorant text-5xl md:text-6xl font-light leading-[1.1] text-white">
+                        Pengalaman Premium,<br><em class="italic text-slate-400">Fitur Eksklusif.</em>
+                    </h2>
+                </div>
+                <p class="max-w-sm text-slate-400 font-light text-base md:text-lg pb-2 border-b border-white/10">
+                    Satu platform terintegrasi dengan segala kebutuhan untuk mewujudkan undangan modern impian Anda.
+                </p>
             </div>
-            <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-                <!-- Feature Cards -->
-                <div class="glass-premium group rounded-premium p-8 transition-all hover:-translate-y-2">
-                    <div class="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-amber-500/10 text-2xl text-amber-500 ring-1 ring-amber-500/30">
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[minmax(180px,auto)]">
+                <!-- Bento 1: Large Span -->
+                <div class="group relative overflow-hidden rounded-[2rem] border border-white/5 bg-white/[0.02] p-8 md:col-span-2 md:row-span-2 min-h-[400px] transition-all duration-500 hover:bg-white/[0.04] hover:border-white/10">
+                    <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=800&auto=format&fit=crop')] bg-cover bg-center opacity-10 transition-transform duration-1000 group-hover:scale-105 group-hover:opacity-20 mix-blend-luminosity"></div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-bg-surface via-bg-surface/60 to-transparent"></div>
+                    <div class="relative z-10 flex h-full flex-col justify-end">
+                        <div class="mb-6 inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-brand-gold/10 text-brand-gold backdrop-blur-md border border-brand-gold/20">
+                            <i class="fa-solid fa-palette text-xl"></i>
+                        </div>
+                        <h3 class="mb-3 font-serif-cormorant text-3xl font-medium text-white">Desain Terkurasi Estetik</h3>
+                        <p class="max-w-md text-sm text-slate-400 font-light leading-relaxed">Tinggalkan template generik yang kaku. Koleksi kami dirancang dengan prinsip desain tata letak majalah untuk memberikan kesan mewah, elegan, dan personal pada setiap karya.</p>
+                    </div>
+                </div>
+
+                <!-- Bento 2 -->
+                <div class="group relative overflow-hidden rounded-[2rem] border border-white/5 bg-white/[0.02] p-8 transition-all duration-500 hover:bg-white/[0.04] hover:border-white/10">
+                    <div class="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-white/5 text-white border border-white/10">
                         <i class="fa-solid fa-music"></i>
                     </div>
-                    <h3 class="mb-3 text-xl font-bold">Musik Latar Elegan</h3>
-                    <p class="text-sm leading-relaxed text-slate-400">Putar musik romantis otomatis saat undangan dibuka, dengan kontrol play/pause yang intuitif.</p>
+                    <h3 class="mb-2 text-lg font-medium text-white">Audio Imersif</h3>
+                    <p class="text-sm text-slate-400 font-light">Alunan musik latar yang menyatu sempurna saat undangan diakses tamu.</p>
                 </div>
 
-                <div class="glass-premium group rounded-premium p-8 transition-all hover:-translate-y-2">
-                    <div class="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-rose-500/10 text-2xl text-rose-500 ring-1 ring-rose-500/30">
-                        <i class="fa-solid fa-images"></i>
+                <!-- Bento 3 -->
+                <div class="group relative overflow-hidden rounded-[2rem] border border-white/5 bg-white/[0.02] p-8 transition-all duration-500 hover:bg-white/[0.04] hover:border-white/10">
+                    <div class="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-white/5 text-white border border-white/10">
+                        <i class="fa-brands fa-whatsapp text-lg"></i>
                     </div>
-                    <h3 class="mb-3 text-xl font-bold">Galeri Foto Interaktif</h3>
-                    <p class="text-sm leading-relaxed text-slate-400">Tampilkan foto prewedding dengan galeri lembut yang terlihat indah di semua perangkat.</p>
+                    <h3 class="mb-2 text-lg font-medium text-white">RSVP Otomatis</h3>
+                    <p class="text-sm text-slate-400 font-light">Konfirmasi kehadiran langsung terkirim dengan format rapi ke WhatsApp.</p>
                 </div>
 
-                <div class="glass-premium group rounded-premium p-8 transition-all hover:-translate-y-2">
-                    <div class="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-emerald-500/10 text-2xl text-emerald-500 ring-1 ring-emerald-500/30">
-                        <i class="fa-solid fa-location-dot"></i>
+                <!-- Bento 4: Wide -->
+                <div class="group relative overflow-hidden rounded-[2rem] border border-white/5 bg-white/[0.02] p-8 md:col-span-2 flex flex-col sm:flex-row sm:items-center gap-8 transition-all duration-500 hover:bg-white/[0.04] hover:border-white/10">
+                    <div class="flex-1">
+                        <div class="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-white/5 text-white border border-white/10">
+                            <i class="fa-solid fa-gift"></i>
+                        </div>
+                        <h3 class="mb-2 text-xl font-medium text-white">Amplop & QRIS Digital</h3>
+                        <p class="text-sm text-slate-400 font-light max-w-sm">Fasilitasi tamu untuk mengirim hadiah atau angpao secara aman melalui integrasi transfer bank dan scan QRIS digital yang elegan.</p>
                     </div>
-                    <h3 class="mb-3 text-xl font-bold">Navigasi & Maps</h3>
-                    <p class="text-sm leading-relaxed text-slate-400">Tombol navigasi langsung terhubung ke Google Maps sehingga tamu mudah menemukan lokasi.</p>
+                    <div class="w-full sm:w-48 h-32 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center relative overflow-hidden group-hover:border-white/20 transition-colors">
+                        <i class="fa-solid fa-qrcode text-5xl text-white/20 group-hover:text-white/40 transition-colors"></i>
+                        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-brand-gold/10 to-transparent -translate-y-full group-hover:animate-[scan_2s_ease-in-out_infinite]"></div>
+                    </div>
                 </div>
 
-                <div class="glass-premium group rounded-premium p-8 transition-all hover:-translate-y-2">
-                    <div class="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-500/10 text-2xl text-blue-500 ring-1 ring-blue-500/30">
-                        <i class="fa-solid fa-calendar-check"></i>
+                <!-- Bento 5 -->
+                <div class="group relative overflow-hidden rounded-[2rem] border border-white/5 bg-white/[0.02] p-8 transition-all duration-500 hover:bg-white/[0.04] hover:border-white/10 flex flex-col justify-between">
+                    <div>
+                        <div class="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-white/5 text-white border border-white/10">
+                            <i class="fa-solid fa-location-dot"></i>
+                        </div>
+                        <h3 class="mb-2 text-lg font-medium text-white">Navigasi Peta</h3>
+                        <p class="text-sm text-slate-400 font-light">Tamu tidak akan tersasar berkat integrasi akurat Google Maps langsung di undangan.</p>
                     </div>
-                    <h3 class="mb-3 text-xl font-bold">Save the Date</h3>
-                    <p class="text-sm leading-relaxed text-slate-400">Tamu dapat langsung menyimpan tanggal pernikahan Anda ke Google Calendar mereka.</p>
-                </div>
-
-                <div class="glass-premium group rounded-premium p-8 transition-all hover:-translate-y-2">
-                    <div class="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-violet-500/10 text-2xl text-violet-500 ring-1 ring-violet-500/30">
-                        <i class="fa-brands fa-whatsapp"></i>
-                    </div>
-                    <h3 class="mb-3 text-xl font-bold">RSVP ke WhatsApp</h3>
-                    <p class="text-sm leading-relaxed text-slate-400">Konfirmasi kehadiran tamu langsung terkirim ke nomor WhatsApp Anda dalam format rapi.</p>
-                </div>
-
-                <div class="glass-premium group rounded-premium p-8 transition-all hover:-translate-y-2">
-                    <div class="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-red-500/10 text-2xl text-red-500 ring-1 ring-red-500/30">
-                        <i class="fa-solid fa-qrcode"></i>
-                    </div>
-                    <h3 class="mb-3 text-xl font-bold">Amplop & QRIS</h3>
-                    <p class="text-sm leading-relaxed text-slate-400">Tampilkan nomor rekening dan QRIS digital sehingga tamu mudah memberikan hadiah.</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- ======== TEMPLATE SECTION ======== -->
-    <section id="template" class="bg-bg-base py-24">
-        <div class="container mx-auto px-6">
-            <div class="mb-16 text-center">
-                <span class="mb-4 inline-block rounded-full border border-brand-gold/30 bg-brand-gold/10 px-4 py-1 text-xs font-bold tracking-widest text-brand-gold uppercase">Koleksi</span>
-                <h2 class="mb-6 font-serif-cormorant text-4xl font-bold md:text-5xl">Template <em class="not-italic text-brand-gold">Kami yang Populer</em></h2>
-                <p class="mx-auto max-w-2xl text-slate-400">Pilih dari berbagai tema impian Anda. Setiap template dapat dikustomisasi sepenuhnya sesuai kebutuhan.</p>
-            </div>
-            
-            <div class="mb-12 flex flex-wrap justify-center gap-3">
-                <button class="filter-btn active rounded-full border border-brand-gold/30 bg-brand-gold/20 px-6 py-2 text-sm font-medium text-brand-gold transition-all hover:bg-brand-gold/30" data-filter="all">Semua</button>
-                <button class="filter-btn rounded-full border border-white/10 bg-white/5 px-6 py-2 text-sm font-medium text-slate-400 transition-all hover:border-brand-gold/30 hover:text-brand-gold" data-filter="pernikahan">Pernikahan</button>
-                <button class="filter-btn rounded-full border border-white/10 bg-white/5 px-6 py-2 text-sm font-medium text-slate-400 transition-all hover:border-brand-gold/30 hover:text-brand-gold" data-filter="modern">Modern</button>
-                <button class="filter-btn rounded-full border border-white/10 bg-white/5 px-6 py-2 text-sm font-medium text-slate-400 transition-all hover:border-brand-gold/30 hover:text-brand-gold" data-filter="floral">Floral</button>
-            </div>
-
-            <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3" id="templatesGrid">
-                <!-- Template Card 1 -->
-                <div class="template-card glass overflow-hidden rounded-premium transition-all hover:-translate-y-2 hover:border-brand-gold/30 hover:shadow-2xl" data-category="pernikahan modern">
-                    <div class="relative flex h-52 items-center justify-center bg-linear-to-br from-slate-900 to-black p-8">
-                        <div class="text-center">
-                            <span class="block font-serif-cormorant text-3xl text-brand-gold">R & J</span>
-                            <span class="text-[0.6rem] tracking-[0.3em] text-brand-gold/60 uppercase">The Wedding Of</span>
-                        </div>
-                    </div>
-                    <div class="p-6">
-                        <div class="mb-2 flex items-center justify-between text-xs font-bold text-slate-500 uppercase tracking-widest">
-                            <span>Pernikahan • Modern</span>
-                            <span class="text-amber-500"><i class="fa-solid fa-star"></i> 4.9</span>
-                        </div>
-                        <h3 class="mb-2 text-xl font-bold">Midnight Gold</h3>
-                        <p class="mb-6 text-sm leading-relaxed text-slate-400">Keanggunan mewah dengan tema gelap dan sentuhan emas. Cocok untuk pernikahan formal.</p>
-                        <div class="flex items-center justify-between">
-                            <a href="templates/wedding-midnight/index.html" target="_blank" class="rounded-full border border-brand-gold/30 bg-brand-gold/10 px-6 py-2 text-sm font-bold text-brand-gold transition-all hover:bg-brand-gold hover:text-black">
-                                <i class="fa-solid fa-eye mr-2"></i> Preview
-                            </a>
-                        </div>
-                    </div>
+    <section id="template" class="relative py-32 bg-bg-surface/30 border-y border-white/5">
+        <div class="container mx-auto px-6 md:px-12">
+            <div class="text-center mb-20">
+                <div class="flex items-center justify-center gap-3 mb-6">
+                    <div class="h-px w-8 bg-brand-gold/50"></div>
+                    <span class="font-outfit text-xs font-semibold tracking-[0.2em] text-brand-gold uppercase">Karya Kami</span>
+                    <div class="h-px w-8 bg-brand-gold/50"></div>
                 </div>
-
-                <!-- Template Card 2 -->
-                <div class="template-card glass overflow-hidden rounded-premium transition-all hover:-translate-y-2 hover:border-brand-gold/30 hover:shadow-2xl" data-category="pernikahan floral">
-                    <div class="relative flex h-52 items-center justify-center bg-linear-to-br from-rose-50 to-rose-100 p-8">
-                        <div class="text-center">
-                            <span class="block font-serif-cormorant text-3xl text-rose-600">A & B</span>
-                            <span class="text-[0.6rem] tracking-[0.3em] text-rose-500/60 uppercase">Wedding Invitation</span>
-                        </div>
-                    </div>
-                    <div class="p-6">
-                        <div class="mb-2 flex items-center justify-between text-xs font-bold text-slate-500 uppercase tracking-widest">
-                            <span>Pernikahan • Floral</span>
-                            <span class="text-amber-500"><i class="fa-solid fa-star"></i> 4.8</span>
-                        </div>
-                        <h3 class="mb-2 text-xl font-bold">Blossom Blush</h3>
-                        <p class="mb-6 text-sm leading-relaxed text-slate-400">Tema bunga mawar merah muda yang lembut dan romantis. Sempurna untuk outdoor.</p>
-                        <div class="flex items-center justify-between">
-                            <a href="templates/wedding-blossom/index.html" target="_blank" class="rounded-full border border-brand-gold/30 bg-brand-gold/10 px-6 py-2 text-sm font-bold text-brand-gold transition-all hover:bg-brand-gold hover:text-black">
-                                <i class="fa-solid fa-eye mr-2"></i> Preview
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Template Card 3 (Aether) -->
-                <div class="template-card glass overflow-hidden rounded-premium transition-all hover:-translate-y-2 hover:border-brand-gold/30 hover:shadow-2xl" data-category="pernikahan modern">
-                    <div class="relative flex h-52 items-center justify-center bg-linear-to-br from-slate-900 to-slate-950 p-8">
-                        <div class="text-center">
-                            <span class="block font-serif-cormorant text-3xl text-brand-gold">A & M</span>
-                            <span class="text-[0.6rem] tracking-[0.3em] text-brand-gold/60 uppercase">3D AETHER</span>
-                        </div>
-                    </div>
-                    <div class="p-6">
-                        <div class="mb-2 flex items-center justify-between text-xs font-bold text-slate-500 uppercase tracking-widest">
-                            <span>Pernikahan • Modern 3D</span>
-                            <span class="text-amber-500"><i class="fa-solid fa-star"></i> 5.0</span>
-                        </div>
-                        <h3 class="mb-2 text-xl font-bold">Aether 3D Art</h3>
-                        <p class="mb-6 text-sm leading-relaxed text-slate-400">Karya seni 3 Dimensi berlayer dengan efek paralaks yang memukau dan partikel emas.</p>
-                        <div class="flex items-center justify-between">
-                            <a href="templates/wedding-aether/index.html" target="_blank" class="rounded-full border border-brand-gold/30 bg-brand-gold/10 px-6 py-2 text-sm font-bold text-brand-gold transition-all hover:bg-brand-gold hover:text-black">
-                                <i class="fa-solid fa-eye mr-2"></i> Preview
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Template Card 4 (Rustic) -->
-                <div class="template-card glass overflow-hidden rounded-premium transition-all hover:-translate-y-2 hover:border-brand-gold/30 hover:shadow-2xl" data-category="pernikahan floral">
-                    <div class="relative flex h-52 items-center justify-center bg-linear-to-br from-amber-900 to-black p-8">
-                        <div class="text-center">
-                            <span class="block font-serif-cormorant text-3xl text-amber-500">S & N</span>
-                            <span class="text-[0.6rem] tracking-[0.3em] text-amber-500/60 uppercase">Rustic Garden</span>
-                        </div>
-                    </div>
-                    <div class="p-6">
-                        <div class="mb-2 flex items-center justify-between text-xs font-bold text-slate-500 uppercase tracking-widest">
-                            <span>Pernikahan • Rustic</span>
-                            <span class="text-amber-500"><i class="fa-solid fa-star"></i> 4.8</span>
-                        </div>
-                        <h3 class="mb-2 text-xl font-bold">Rustic Garden</h3>
-                        <p class="mb-6 text-sm leading-relaxed text-slate-400">Sentuhan kayu dan dedaunan kering yang memancarkan kehangatan alam.</p>
-                        <div class="flex items-center justify-between">
-                            <a href="templates/wedding-rustic/index.html" target="_blank" class="rounded-full border border-brand-gold/30 bg-brand-gold/10 px-6 py-2 text-sm font-bold text-brand-gold transition-all hover:bg-brand-gold hover:text-black">
-                                <i class="fa-solid fa-eye mr-2"></i> Preview
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Template Card 5 (Jawa) -->
-                <div class="template-card glass overflow-hidden rounded-premium transition-all hover:-translate-y-2 hover:border-brand-gold/30 hover:shadow-2xl" data-category="pernikahan">
-                    <div class="relative flex h-52 items-center justify-center bg-linear-to-br from-red-900 to-black p-8">
-                        <div class="text-center">
-                            <span class="block font-serif-cormorant text-3xl text-red-500">B & D</span>
-                            <span class="text-[0.6rem] tracking-[0.3em] text-red-500/60 uppercase">Adat Jawa</span>
-                        </div>
-                    </div>
-                    <div class="p-6">
-                        <div class="mb-2 flex items-center justify-between text-xs font-bold text-slate-500 uppercase tracking-widest">
-                            <span>Pernikahan • Tradisional</span>
-                            <span class="text-amber-500"><i class="fa-solid fa-star"></i> 4.9</span>
-                        </div>
-                        <h3 class="mb-2 text-xl font-bold">Jawa Kraton</h3>
-                        <p class="mb-6 text-sm leading-relaxed text-slate-400">Kemegahan dan kesakralan motif batik klasik khas istana tanah Jawa.</p>
-                        <div class="flex items-center justify-between">
-                            <a href="templates/wedding-jawa/index.html" target="_blank" class="rounded-full border border-brand-gold/30 bg-brand-gold/10 px-6 py-2 text-sm font-bold text-brand-gold transition-all hover:bg-brand-gold hover:text-black">
-                                <i class="fa-solid fa-eye mr-2"></i> Preview
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Template Card 6 (Bali) -->
-                <div class="template-card glass overflow-hidden rounded-premium transition-all hover:-translate-y-2 hover:border-brand-gold/30 hover:shadow-2xl" data-category="pernikahan">
-                    <div class="relative flex h-52 items-center justify-center bg-linear-to-br from-teal-900 to-black p-8">
-                        <div class="text-center">
-                            <span class="block font-serif-cormorant text-3xl text-teal-400">W & K</span>
-                            <span class="text-[0.6rem] tracking-[0.3em] text-teal-400/60 uppercase">Adat Bali</span>
-                        </div>
-                    </div>
-                    <div class="p-6">
-                        <div class="mb-2 flex items-center justify-between text-xs font-bold text-slate-500 uppercase tracking-widest">
-                            <span>Pernikahan • Tradisional</span>
-                            <span class="text-amber-500"><i class="fa-solid fa-star"></i> 4.9</span>
-                        </div>
-                        <h3 class="mb-2 text-xl font-bold">Bali Pura</h3>
-                        <p class="mb-6 text-sm leading-relaxed text-slate-400">Nuansa eksotis pulau dewata dengan ornamen ukiran pura yang elegan.</p>
-                        <div class="flex items-center justify-between">
-                            <a href="templates/wedding-bali/index.html" target="_blank" class="rounded-full border border-brand-gold/30 bg-brand-gold/10 px-6 py-2 text-sm font-bold text-brand-gold transition-all hover:bg-brand-gold hover:text-black">
-                                <i class="fa-solid fa-eye mr-2"></i> Preview
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Template Card 7 (Premium) -->
-                <div class="template-card glass overflow-hidden rounded-premium transition-all hover:-translate-y-2 hover:border-brand-gold/30 hover:shadow-2xl" data-category="pernikahan modern">
-                    <div class="relative flex h-52 items-center justify-center bg-linear-to-br from-indigo-900 to-black p-8">
-                        <div class="text-center">
-                            <span class="block font-serif-cormorant text-3xl text-indigo-400">E & V</span>
-                            <span class="text-[0.6rem] tracking-[0.3em] text-indigo-400/60 uppercase">Premium Luxe</span>
-                        </div>
-                    </div>
-                    <div class="p-6">
-                        <div class="mb-2 flex items-center justify-between text-xs font-bold text-slate-500 uppercase tracking-widest">
-                            <span>Pernikahan • Eksklusif</span>
-                            <span class="text-amber-500"><i class="fa-solid fa-star"></i> 5.0</span>
-                        </div>
-                        <h3 class="mb-2 text-xl font-bold">Premium Luxe</h3>
-                        <p class="mb-6 text-sm leading-relaxed text-slate-400">Desain minimalis eksklusif dengan tipografi modern dan palet elegan.</p>
-                        <div class="flex items-center justify-between">
-                            <a href="templates/wedding-premium/index.html" target="_blank" class="rounded-full border border-brand-gold/30 bg-brand-gold/10 px-6 py-2 text-sm font-bold text-brand-gold transition-all hover:bg-brand-gold hover:text-black">
-                                <i class="fa-solid fa-eye mr-2"></i> Preview
-                            </a>
-                        </div>
-                    </div>
+                <h2 class="font-serif-cormorant text-5xl md:text-6xl font-light leading-tight text-white mb-6">
+                    Koleksi <em class="italic text-slate-400">Eksklusif</em>
+                </h2>
+                
+                <!-- Minimalist Filter -->
+                <div class="inline-flex flex-wrap justify-center gap-2 p-1.5 rounded-full border border-white/10 bg-white/5 backdrop-blur-md mt-6">
+                    <button class="filter-btn active rounded-full px-6 py-2 text-xs font-medium tracking-wider text-white bg-white/10 transition-colors" data-filter="all">SEMUA</button>
+                    <button class="filter-btn rounded-full px-6 py-2 text-xs font-medium tracking-wider text-slate-400 hover:text-white transition-colors" data-filter="modern">MODERN</button>
+                    <button class="filter-btn rounded-full px-6 py-2 text-xs font-medium tracking-wider text-slate-400 hover:text-white transition-colors" data-filter="floral">FLORAL</button>
+                    <button class="filter-btn rounded-full px-6 py-2 text-xs font-medium tracking-wider text-slate-400 hover:text-white transition-colors" data-filter="tradisional">TRADISIONAL</button>
                 </div>
             </div>
-        </div>
-    </section>
 
-    <!-- ======== CTA SECTION ======== -->
-    <section class="bg-bg-base py-24">
-        <div class="container mx-auto px-6">
-            <div class="glass-premium relative overflow-hidden rounded-premium p-12 text-center">
-                <div class="absolute inset-0 -z-10 opacity-30">
-                    <div class="absolute top-0 right-0 h-64 w-64 rounded-full bg-brand-gold/20 blur-[80px]"></div>
-                    <div class="absolute bottom-0 left-0 h-64 w-64 rounded-full bg-brand-violet/20 blur-[80px]"></div>
+            <!-- Sleek Horizontal / Grid Layout for Templates -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="templatesGrid">
+                
+                <!-- Card 1: Midnight Gold -->
+                <div class="group relative rounded-[2rem] border border-white/5 bg-bg-base overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:border-brand-gold/30 hover:shadow-[0_20px_40px_rgba(0,0,0,0.5)]">
+                    <div class="aspect-[4/5] w-full relative bg-zinc-950 p-8 flex flex-col justify-between overflow-hidden">
+                        <!-- BG elements -->
+                        <div class="absolute top-0 right-0 w-64 h-64 bg-brand-gold/5 rounded-full blur-3xl"></div>
+                        <div class="relative z-10 flex justify-between items-start">
+                            <span class="inline-flex items-center rounded-full border border-white/10 bg-black/50 backdrop-blur-md px-3 py-1 text-[10px] font-medium tracking-widest text-slate-300 uppercase">Modern</span>
+                            <span class="text-brand-gold/80 text-sm"><i class="fa-solid fa-star text-[10px] mr-1"></i>4.9</span>
+                        </div>
+                        <div class="relative z-10 text-center my-auto transform transition-transform duration-700 group-hover:scale-105">
+                            <span class="block font-serif-cormorant text-5xl text-brand-gold font-light mb-2">R & J</span>
+                            <span class="text-[0.6rem] tracking-[0.4em] text-slate-500 uppercase">The Wedding</span>
+                        </div>
+                        <div class="relative z-10 translate-y-4 opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100 flex justify-center">
+                            <a href="templates/wedding-midnight/index.html" target="_blank" class="rounded-full bg-white text-black px-6 py-2.5 text-xs font-bold uppercase tracking-wider hover:bg-brand-gold transition-colors">Lihat Preview</a>
+                        </div>
+                    </div>
+                    <div class="p-6 border-t border-white/5">
+                        <h3 class="text-xl font-serif-cormorant font-medium text-white mb-1">Midnight Gold</h3>
+                        <p class="text-xs text-slate-500 font-light">Eksklusif, gelap, dan sentuhan emas minimalis.</p>
+                    </div>
                 </div>
-                <h2 class="mb-6 font-serif-cormorant text-4xl font-bold md:text-5xl">Gunakan Semua Fitur <br><em class="not-italic text-brand-gold">Secara Gratis Selamanya</em></h2>
-                <p class="mx-auto mb-10 max-w-2xl text-slate-400">Tanpa biaya berlangganan, tanpa batasan fitur. Kami ingin membantu momen bahagia Anda menjadi lebih berkesan.</p>
-                <a href="#kontak" class="inline-flex items-center gap-3 rounded-full bg-linear-to-br from-brand-gold to-brand-gold/80 px-10 py-5 text-xl font-bold text-black shadow-xl transition-all hover:-translate-y-1 hover:shadow-brand-gold/30">
-                    Mulai Buat Undangan <i class="fa-solid fa-arrow-right"></i>
+
+                <!-- Card 2: Blossom Blush -->
+                <div class="group relative rounded-[2rem] border border-white/5 bg-bg-base overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:border-rose-500/30 hover:shadow-[0_20px_40px_rgba(0,0,0,0.5)]">
+                    <div class="aspect-[4/5] w-full relative bg-rose-950/20 p-8 flex flex-col justify-between overflow-hidden">
+                        <div class="absolute inset-0 bg-gradient-to-b from-transparent to-bg-base/80"></div>
+                        <!-- Abstract floral accent -->
+                        <div class="absolute -bottom-10 -left-10 w-48 h-48 bg-rose-500/10 rounded-full blur-2xl"></div>
+                        <div class="relative z-10 flex justify-between items-start">
+                            <span class="inline-flex items-center rounded-full border border-white/10 bg-black/50 backdrop-blur-md px-3 py-1 text-[10px] font-medium tracking-widest text-slate-300 uppercase">Floral</span>
+                            <span class="text-brand-gold/80 text-sm"><i class="fa-solid fa-star text-[10px] mr-1"></i>4.8</span>
+                        </div>
+                        <div class="relative z-10 text-center my-auto transform transition-transform duration-700 group-hover:scale-105">
+                            <span class="block font-serif-cormorant text-5xl text-rose-300 font-light mb-2">A & B</span>
+                            <span class="text-[0.6rem] tracking-[0.4em] text-slate-500 uppercase">Invitation</span>
+                        </div>
+                        <div class="relative z-10 translate-y-4 opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100 flex justify-center">
+                            <a href="templates/wedding-blossom/index.html" target="_blank" class="rounded-full bg-white text-black px-6 py-2.5 text-xs font-bold uppercase tracking-wider hover:bg-rose-300 transition-colors">Lihat Preview</a>
+                        </div>
+                    </div>
+                    <div class="p-6 border-t border-white/5">
+                        <h3 class="text-xl font-serif-cormorant font-medium text-white mb-1">Blossom Blush</h3>
+                        <p class="text-xs text-slate-500 font-light">Romantis dengan palet warna rose yang lembut.</p>
+                    </div>
+                </div>
+
+                <!-- Card 3: Aether 3D -->
+                <div class="group relative rounded-[2rem] border border-white/5 bg-bg-base overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:border-slate-400/30 hover:shadow-[0_20px_40px_rgba(0,0,0,0.5)]">
+                    <div class="aspect-[4/5] w-full relative bg-slate-900 p-8 flex flex-col justify-between overflow-hidden">
+                        <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=800&auto=format&fit=crop')] bg-cover bg-center opacity-20 mix-blend-overlay group-hover:scale-110 transition-transform duration-1000"></div>
+                        <div class="relative z-10 flex justify-between items-start">
+                            <span class="inline-flex items-center rounded-full border border-white/10 bg-black/50 backdrop-blur-md px-3 py-1 text-[10px] font-medium tracking-widest text-slate-300 uppercase">Modern 3D</span>
+                            <span class="text-brand-gold/80 text-sm"><i class="fa-solid fa-star text-[10px] mr-1"></i>5.0</span>
+                        </div>
+                        <div class="relative z-10 text-center my-auto transform transition-transform duration-700 group-hover:scale-105">
+                            <span class="block font-outfit text-4xl text-white font-bold mb-2 tracking-tight">A & M</span>
+                            <span class="text-[0.6rem] tracking-[0.4em] text-slate-400 uppercase">Aether Art</span>
+                        </div>
+                        <div class="relative z-10 translate-y-4 opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100 flex justify-center">
+                            <a href="templates/wedding-aether/index.html" target="_blank" class="rounded-full bg-white text-black px-6 py-2.5 text-xs font-bold uppercase tracking-wider hover:bg-slate-200 transition-colors">Lihat Preview</a>
+                        </div>
+                    </div>
+                    <div class="p-6 border-t border-white/5">
+                        <h3 class="text-xl font-serif-cormorant font-medium text-white mb-1">Aether 3D Art</h3>
+                        <p class="text-xs text-slate-500 font-light">Eksperimental dengan paralaks 3D yang memukau.</p>
+                    </div>
+                </div>
+
+                 <!-- Card 4: Rustic -->
+                 <div class="group relative rounded-[2rem] border border-white/5 bg-bg-base overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:border-amber-700/30 hover:shadow-[0_20px_40px_rgba(0,0,0,0.5)]">
+                    <div class="aspect-[4/5] w-full relative bg-[#1a120b] p-8 flex flex-col justify-between overflow-hidden">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+                        <div class="relative z-10 flex justify-between items-start">
+                            <span class="inline-flex items-center rounded-full border border-white/10 bg-black/50 backdrop-blur-md px-3 py-1 text-[10px] font-medium tracking-widest text-slate-300 uppercase">Floral</span>
+                            <span class="text-brand-gold/80 text-sm"><i class="fa-solid fa-star text-[10px] mr-1"></i>4.8</span>
+                        </div>
+                        <div class="relative z-10 text-center my-auto transform transition-transform duration-700 group-hover:scale-105">
+                            <span class="block font-serif-cormorant text-5xl text-amber-500/80 font-light mb-2">S & N</span>
+                            <span class="text-[0.6rem] tracking-[0.4em] text-slate-500 uppercase">Rustic Garden</span>
+                        </div>
+                        <div class="relative z-10 translate-y-4 opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100 flex justify-center">
+                            <a href="templates/wedding-rustic/index.html" target="_blank" class="rounded-full bg-white text-black px-6 py-2.5 text-xs font-bold uppercase tracking-wider hover:bg-amber-600 transition-colors">Lihat Preview</a>
+                        </div>
+                    </div>
+                    <div class="p-6 border-t border-white/5">
+                        <h3 class="text-xl font-serif-cormorant font-medium text-white mb-1">Rustic Garden</h3>
+                        <p class="text-xs text-slate-500 font-light">Kehangatan nuansa kayu dan dedaunan kering.</p>
+                    </div>
+                </div>
+
+                 <!-- Card 5: Jawa Kraton -->
+                 <div class="group relative rounded-[2rem] border border-white/5 bg-bg-base overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:border-red-900/40 hover:shadow-[0_20px_40px_rgba(0,0,0,0.5)]">
+                    <div class="aspect-[4/5] w-full relative bg-[#1c0b0b] p-8 flex flex-col justify-between overflow-hidden">
+                        <div class="absolute top-0 right-0 w-64 h-64 bg-red-900/10 rounded-full blur-3xl"></div>
+                        <div class="relative z-10 flex justify-between items-start">
+                            <span class="inline-flex items-center rounded-full border border-white/10 bg-black/50 backdrop-blur-md px-3 py-1 text-[10px] font-medium tracking-widest text-slate-300 uppercase">Tradisional</span>
+                            <span class="text-brand-gold/80 text-sm"><i class="fa-solid fa-star text-[10px] mr-1"></i>4.9</span>
+                        </div>
+                        <div class="relative z-10 text-center my-auto transform transition-transform duration-700 group-hover:scale-105">
+                            <span class="block font-serif-cormorant text-5xl text-red-400 font-light mb-2">B & D</span>
+                            <span class="text-[0.6rem] tracking-[0.4em] text-slate-500 uppercase">Adat Jawa</span>
+                        </div>
+                        <div class="relative z-10 translate-y-4 opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100 flex justify-center">
+                            <a href="templates/wedding-jawa/index.html" target="_blank" class="rounded-full bg-white text-black px-6 py-2.5 text-xs font-bold uppercase tracking-wider hover:bg-red-800 hover:text-white transition-colors">Lihat Preview</a>
+                        </div>
+                    </div>
+                    <div class="p-6 border-t border-white/5">
+                        <h3 class="text-xl font-serif-cormorant font-medium text-white mb-1">Jawa Kraton</h3>
+                        <p class="text-xs text-slate-500 font-light">Kesakralan motif klasik khas istana tanah Jawa.</p>
+                    </div>
+                </div>
+
+                 <!-- Card 6: Premium Luxe -->
+                 <div class="group relative rounded-[2rem] border border-white/5 bg-bg-base overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:border-white/20 hover:shadow-[0_20px_40px_rgba(255,255,255,0.1)]">
+                    <div class="aspect-[4/5] w-full relative bg-zinc-900 p-8 flex flex-col justify-between overflow-hidden">
+                        <div class="absolute inset-0 border-[10px] border-white/5 m-4 rounded-xl"></div>
+                        <div class="relative z-10 flex justify-between items-start">
+                            <span class="inline-flex items-center rounded-full border border-white/10 bg-black/50 backdrop-blur-md px-3 py-1 text-[10px] font-medium tracking-widest text-slate-300 uppercase">Modern</span>
+                            <span class="text-brand-gold/80 text-sm"><i class="fa-solid fa-star text-[10px] mr-1"></i>5.0</span>
+                        </div>
+                        <div class="relative z-10 text-center my-auto transform transition-transform duration-700 group-hover:scale-105">
+                            <span class="block font-serif-cormorant text-5xl text-white font-light mb-2">E & V</span>
+                            <span class="text-[0.6rem] tracking-[0.4em] text-slate-400 uppercase">Luxe Series</span>
+                        </div>
+                        <div class="relative z-10 translate-y-4 opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100 flex justify-center">
+                            <a href="templates/wedding-premium/index.html" target="_blank" class="rounded-full bg-white text-black px-6 py-2.5 text-xs font-bold uppercase tracking-wider hover:bg-slate-200 transition-colors">Lihat Preview</a>
+                        </div>
+                    </div>
+                    <div class="p-6 border-t border-white/5">
+                        <h3 class="text-xl font-serif-cormorant font-medium text-white mb-1">Premium Luxe</h3>
+                        <p class="text-xs text-slate-500 font-light">Tipografi minimalis dan struktur paling elegan.</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="mt-16 text-center">
+                <a href="#kontak" class="inline-flex items-center gap-2 text-sm font-medium text-white hover:text-brand-gold transition-colors pb-1 border-b border-brand-gold/30 hover:border-brand-gold">
+                    Lihat Seluruh Koleksi <i class="fa-solid fa-arrow-right text-xs"></i>
                 </a>
             </div>
         </div>
     </section>
 
-    <!-- ======== KONTAK SECTION ======== -->
-    <section id="kontak" class="bg-bg-base py-24">
-        <div class="container mx-auto px-6">
-            <div class="grid grid-cols-1 gap-16 lg:grid-cols-2">
-                <div>
-                    <span class="mb-4 inline-block rounded-full border border-brand-gold/30 bg-brand-gold/10 px-4 py-1 text-xs font-bold tracking-widest text-brand-gold uppercase">Hubungi Kami</span>
-                    <h2 class="mb-6 font-serif-cormorant text-4xl font-bold md:text-5xl">Siap Membuat <em class="not-italic text-brand-gold">Undangan Impian?</em></h2>
-                    <p class="mb-10 text-slate-400">Tim kami siap membantu Anda 24/7. Konsultasikan kebutuhan undangan Anda sekarang juga, gratis!</p>
-                    
-                    <div class="flex flex-col gap-4">
-                        <a href="#" class="flex items-center gap-6 rounded-2xl border border-white/10 bg-white/5 p-5 transition-all hover:border-brand-gold/30">
-                            <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-brand-gold/10 text-brand-gold"><i class="fa-brands fa-whatsapp text-2xl"></i></div>
-                            <div>
-                                <strong class="block text-sm font-bold">WhatsApp</strong>
-                                <span class="text-xs text-slate-500">+62 812-3456-7890</span>
-                            </div>
-                        </a>
-                        <a href="#" class="flex items-center gap-6 rounded-2xl border border-white/10 bg-white/5 p-5 transition-all hover:border-brand-gold/30">
-                            <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-brand-gold/10 text-brand-gold"><i class="fa-brands fa-instagram text-2xl"></i></div>
-                            <div>
-                                <strong class="block text-sm font-bold">Instagram</strong>
-                                <span class="text-xs text-slate-500">@luminainvites</span>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-                
-                <form class="glass-premium rounded-premium p-8 md:p-10" id="contactForm">
-                    <h3 class="mb-8 text-2xl font-bold">Konsultasi Gratis</h3>
-                    <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
-                        <div class="flex flex-col gap-2">
-                            <label class="text-xs font-bold text-slate-500 uppercase">Nama Anda</label>
-                            <input type="text" class="rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm focus:border-brand-gold focus:outline-none" placeholder="Misal: Budi & Siti">
-                        </div>
-                        <div class="flex flex-col gap-2">
-                            <label class="text-xs font-bold text-slate-500 uppercase">WhatsApp</label>
-                            <input type="tel" class="rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm focus:border-brand-gold focus:outline-none" placeholder="08xxxxxxxxxx">
-                        </div>
-                    </div>
-                    <div class="mt-6 flex flex-col gap-2">
-                        <label class="text-xs font-bold text-slate-500 uppercase">Pilih Tema</label>
-                        <select class="rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm focus:border-brand-gold focus:outline-none">
-                            <option>Midnight Gold</option>
-                            <option selected>Blossom Blush</option>
-                            <option>Aether 3D Art</option>
-                        </select>
-                    </div>
-                    <div class="mt-6 flex flex-col gap-2">
-                        <label class="text-xs font-bold text-slate-500 uppercase">Pesan</label>
-                        <textarea class="h-32 rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm focus:border-brand-gold focus:outline-none" placeholder="Ceritakan tema impian Anda..."></textarea>
-                    </div>
-                    <button class="mt-8 flex w-full items-center justify-center gap-3 rounded-xl bg-emerald-500 py-4 font-bold text-white shadow-lg shadow-emerald-500/20 transition-all hover:bg-emerald-600 hover:shadow-emerald-500/40">
-                        <i class="fa-brands fa-whatsapp"></i> Kirim Konsultasi
-                    </button>
-                </form>
-            </div>
+    <!-- ======== CTA SECTION ======== -->
+    <section class="relative py-32 overflow-hidden">
+        <!-- Parallax Background Image -->
+        <div class="absolute inset-0 z-0 bg-[url('https://images.unsplash.com/photo-1469334031218-e382a71b716b?q=80&w=2000&auto=format&fit=crop')] bg-cover bg-fixed bg-center opacity-30 mix-blend-luminosity"></div>
+        <div class="absolute inset-0 z-0 bg-gradient-to-b from-bg-base via-black/60 to-bg-base"></div>
+        
+        <div class="container relative z-10 mx-auto px-6 text-center">
+            <h2 class="font-serif-cormorant text-5xl md:text-7xl font-light leading-[1.1] text-white mb-8">
+                Buat Undangan Digital<br>
+                <em class="italic text-brand-gold">Dalam Hitungan Menit</em>
+            </h2>
+            <p class="mx-auto max-w-xl text-slate-300 font-light mb-12">Tanpa keahlian desain, tanpa biaya tersembunyi. Mulai buat undangan pernikahan eksklusif Anda hari ini juga.</p>
+            <a href="/dashboard/index.html" class="inline-flex items-center gap-3 rounded-full bg-white px-10 py-5 text-sm uppercase tracking-widest font-bold text-black shadow-[0_0_40px_rgba(255,255,255,0.2)] transition-all hover:scale-105 hover:bg-brand-gold hover:shadow-[0_0_40px_rgba(201,164,68,0.4)]">
+                Buat Sekarang Gratis
+            </a>
         </div>
     </section>
 
-    <!-- ======== FOOTER ======== -->
-    <footer class="border-t border-white/10 bg-bg-surface py-20">
-        <div class="container mx-auto px-6">
-            <div class="grid grid-cols-1 gap-16 md:grid-cols-3">
-                <div class="col-span-1 md:col-span-1">
-                    <a href="#" class="mb-6 block font-serif-cormorant text-3xl font-bold text-white">Lumina<span class="text-brand-gold">Invites</span></a>
-                    <p class="mb-8 max-w-xs text-sm leading-relaxed text-slate-400">Menghadirkan undangan digital yang elegan dan tak terlupakan untuk hari paling istimewa dalam hidup Anda.</p>
+    <!-- ======== KONTAK & FOOTER SECTION ======== -->
+    <footer id="kontak" class="relative bg-bg-base pt-32 pb-10 border-t border-white/5">
+        <div class="container mx-auto px-6 md:px-12">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-8 mb-24">
+                
+                <!-- Brand Info (Left) -->
+                <div class="lg:col-span-5">
+                    <a href="#" class="inline-block font-serif-cormorant text-4xl font-bold text-white mb-6 group">
+                        Lumina<span class="text-brand-gold italic font-light">Invites</span>
+                    </a>
+                    <p class="text-slate-400 font-light leading-relaxed max-w-sm mb-10">Platform pembuatan undangan pernikahan digital premium. Hadirkan kesan mewah dengan desain eksklusif, tanpa biaya berlangganan.</p>
+                    
                     <div class="flex gap-4">
-                        <a href="#" class="flex h-10 w-10 items-center justify-center rounded-lg border border-white/10 text-slate-400 transition-all hover:border-brand-gold hover:text-brand-gold"><i class="fa-brands fa-instagram"></i></a>
-                        <a href="#" class="flex h-10 w-10 items-center justify-center rounded-lg border border-white/10 text-slate-400 transition-all hover:border-brand-gold hover:text-brand-gold"><i class="fa-brands fa-tiktok"></i></a>
+                        <a href="#" class="flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white transition-all hover:bg-brand-gold hover:border-brand-gold hover:text-black">
+                            <i class="fa-brands fa-instagram"></i>
+                        </a>
+                        <a href="#" class="flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white transition-all hover:bg-brand-gold hover:border-brand-gold hover:text-black">
+                            <i class="fa-brands fa-tiktok"></i>
+                        </a>
+                        <a href="#" class="flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white transition-all hover:bg-brand-gold hover:border-brand-gold hover:text-black">
+                            <i class="fa-brands fa-whatsapp"></i>
+                        </a>
                     </div>
                 </div>
-                
-                <div class="flex flex-col gap-4">
-                    <h4 class="mb-4 text-xs font-bold tracking-widest text-slate-500 uppercase">Layanan</h4>
-                    <a href="#" class="text-sm text-slate-400 hover:text-brand-gold">Koleksi Template</a>
-                    <a href="#" class="text-sm text-slate-400 hover:text-brand-gold">Fitur Unggulan</a>
-                </div>
 
-                <div class="flex flex-col gap-4">
-                    <h4 class="mb-4 text-xs font-bold tracking-widest text-slate-500 uppercase">Bantuan</h4>
-                    <a href="#" class="text-sm text-slate-400 hover:text-brand-gold">Cara Penggunaan</a>
-                    <a href="#" class="text-sm text-slate-400 hover:text-brand-gold">FAQ</a>
-                    <a href="#" class="text-sm text-slate-400 hover:text-brand-gold">Kontak</a>
+                <!-- Minimalist Contact Form (Right) -->
+                <div class="lg:col-span-7 lg:pl-16">
+                    <h3 class="font-serif-cormorant text-3xl text-white mb-8">Butuh Konsultasi?</h3>
+                    <form id="contactForm" class="flex flex-col gap-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="relative">
+                                <input type="text" id="name" class="block px-0 pb-2.5 pt-4 w-full text-sm text-white bg-transparent border-0 border-b border-white/20 appearance-none focus:outline-none focus:ring-0 focus:border-brand-gold peer" placeholder=" " />
+                                <label for="name" class="absolute text-sm text-slate-500 duration-300 transform -translate-y-6 scale-75 top-4 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-brand-gold peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 uppercase tracking-wider font-medium">Nama Anda</label>
+                            </div>
+                            <div class="relative">
+                                <input type="tel" id="whatsapp" class="block px-0 pb-2.5 pt-4 w-full text-sm text-white bg-transparent border-0 border-b border-white/20 appearance-none focus:outline-none focus:ring-0 focus:border-brand-gold peer" placeholder=" " />
+                                <label for="whatsapp" class="absolute text-sm text-slate-500 duration-300 transform -translate-y-6 scale-75 top-4 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-brand-gold peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 uppercase tracking-wider font-medium">No. WhatsApp</label>
+                            </div>
+                        </div>
+                        <div class="relative mt-4">
+                            <textarea id="message" rows="3" class="block px-0 pb-2.5 pt-4 w-full text-sm text-white bg-transparent border-0 border-b border-white/20 appearance-none focus:outline-none focus:ring-0 focus:border-brand-gold peer resize-none" placeholder=" "></textarea>
+                            <label for="message" class="absolute text-sm text-slate-500 duration-300 transform -translate-y-6 scale-75 top-4 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-brand-gold peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 uppercase tracking-wider font-medium">Ceritakan Kebutuhan Anda</label>
+                        </div>
+                        <div class="mt-4">
+                            <button type="button" class="group relative overflow-hidden rounded-full border border-white/20 bg-transparent px-8 py-3 text-xs font-bold uppercase tracking-widest text-white transition-all hover:border-brand-gold">
+                                <span class="relative z-10 flex items-center gap-2">Kirim Pesan <i class="fa-solid fa-arrow-right-long group-hover:translate-x-1 transition-transform"></i></span>
+                                <div class="absolute inset-0 h-full w-full bg-brand-gold/10 scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100"></div>
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
-            
-            <div class="mt-20 flex flex-col items-center justify-between border-t border-white/5 pt-10 md:flex-row">
-                <p class="text-xs text-slate-600">© 2026 Lumina Invites. Dibuat dengan <i class="fa-solid fa-heart text-brand-rose"></i> untuk kebahagiaan Anda.</p>
-                <a href="admin/index.html" class="mt-4 text-xs text-slate-600 hover:text-brand-gold md:mt-0"><i class="fa-solid fa-user mr-2"></i> User Dashboard</a>
+
+            <!-- Bottom Bar -->
+            <div class="flex flex-col md:flex-row items-center justify-between border-t border-white/10 pt-8 pb-4">
+                <p class="text-xs text-slate-500 font-light mb-4 md:mb-0">
+                    &copy; 2026 Lumina Invites. Didesain dengan <span class="text-rose-500 px-1">&hearts;</span> untuk Anda.
+                </p>
+                <div class="flex gap-6">
+                    <a href="/dashboard/index.html" class="text-xs text-slate-500 hover:text-white transition-colors">Client Dashboard</a>
+                    <a href="/admin/index.html" class="text-xs text-slate-500 hover:text-white transition-colors">Admin Panel</a>
+                </div>
             </div>
         </div>
     </footer>
 
+    <!-- CSS Keyframes for Animations -->
+    <style>
+        @keyframes fade-in-up {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-30px) scale(1.05); }
+        }
+        @keyframes scan {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100%); }
+        }
+        
+        /* Custom Scrollbar for a more premium feel */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #050507; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1f1f23; 
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #c9a444; 
+        }
+        
+        .active-filter {
+            background-color: rgba(255,255,255,0.1);
+            color: white;
+        }
+    </style>
+
     <script type="module" src="src/main.js"></script>
     <script>
-        // Simple Navbar Scroll Effect
+        // Premium Navbar Scroll Effect
         window.addEventListener('scroll', () => {
             const nav = document.getElementById('navbar');
             if (window.scrollY > 50) {
-                nav.classList.add('bg-bg-base/80', 'backdrop-blur-xl', 'border-b', 'border-white/10', 'py-4');
-                nav.classList.remove('py-5');
+                nav.classList.add('py-3', 'bg-bg-base/80', 'border-white/10', 'shadow-[0_4px_30px_rgba(0,0,0,0.3)]');
+                nav.classList.remove('py-4', 'bg-bg-base/60', 'border-white/5');
             } else {
-                nav.classList.remove('bg-bg-base/80', 'backdrop-blur-xl', 'border-b', 'border-white/10', 'py-4');
-                nav.classList.add('py-5');
+                nav.classList.add('py-4', 'bg-bg-base/60', 'border-white/5');
+                nav.classList.remove('py-3', 'bg-bg-base/80', 'border-white/10', 'shadow-[0_4px_30px_rgba(0,0,0,0.3)]');
             }
+        });
+
+        // Simple Mobile Menu Toggle
+        const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+        const drawerClose = document.getElementById('drawerClose');
+        const mobileDrawer = document.getElementById('mobileDrawer');
+        const drawerOverlay = document.getElementById('drawerOverlay');
+
+        function toggleMenu() {
+            mobileDrawer.classList.toggle('open');
+            drawerOverlay.classList.toggle('active');
+        }
+
+        mobileMenuToggle?.addEventListener('click', toggleMenu);
+        drawerClose?.addEventListener('click', toggleMenu);
+        drawerOverlay?.addEventListener('click', toggleMenu);
+
+        document.querySelectorAll('.drawer-link').forEach(link => {
+            link.addEventListener('click', toggleMenu);
+        });
+
+        // Simple Template Filter Logic
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Remove active class from all
+                filterBtns.forEach(b => {
+                    b.classList.remove('bg-white/10', 'text-white');
+                    b.classList.add('text-slate-400');
+                });
+                // Add active class to clicked
+                btn.classList.add('bg-white/10', 'text-white');
+                btn.classList.remove('text-slate-400');
+            });
         });
     </script>
 </body>
