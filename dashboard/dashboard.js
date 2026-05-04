@@ -48,6 +48,18 @@ function toast(msg, dur = 2800) {
     setTimeout(() => el.classList.remove('show'), dur);
 }
 
+function getAdaptiveUrl(originalUrl) {
+    if (!originalUrl) return '';
+    try {
+        const uObj = new URL(originalUrl);
+        uObj.host = window.location.host;
+        uObj.protocol = window.location.protocol;
+        return uObj.toString();
+    } catch(e) {
+        return originalUrl;
+    }
+}
+
 // ════════════════════════════════════════════════════════════
 // ════════════════════════════════════════════════════════════
 // 1. LOGIN / LOGOUT (Supabase Auth - Admin Only)
@@ -1006,14 +1018,14 @@ function populateTamuSelect() {
         const currentInv = saved.find(i => i.id.toString() === editingId.toString());
         if (currentInv) {
             sel.value = currentInv.url;
-            $('tamuBaseUrl').value = currentInv.url;
+            $('tamuBaseUrl').value = getAdaptiveUrl(currentInv.url);
             loadGuestsFromCloud(editingId);
         }
     }
 
     sel.onchange = () => { 
         if (sel.value) {
-            $('tamuBaseUrl').value = sel.value; 
+            $('tamuBaseUrl').value = getAdaptiveUrl(sel.value); 
             const inv = saved.find(i => i.url === sel.value);
             if (inv) loadGuestsFromCloud(inv.id);
         }
@@ -1035,7 +1047,7 @@ async function loadGuestsFromCloud(invId) {
         if (error) throw error;
         
         window._tamuLinks = [];
-        const baseUrl = $('tamuBaseUrl').value;
+        const baseUrl = getAdaptiveUrl($('tamuBaseUrl').value);
         
         if (data && data.length > 0) {
             window._tamuLinks = data.map((g, i) => {
